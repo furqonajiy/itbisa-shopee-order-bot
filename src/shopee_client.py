@@ -12,6 +12,13 @@ Why this file exists:
 Public functions (used by main.py):
   - get_ready_to_ship_orders() -> list of order dicts
   - get_shipping_label_pdf(order_id) -> bytes (or None if not ready yet)
+
+Fake mode:
+  When config.USE_FAKE_SHOPEE is True, the public functions below delegate
+  to shopee_client_fake instead of calling the real Shopee API. This is
+  used during local development when sandbox access is not available.
+  To remove fake mode entirely, delete shopee_client_fake.py and remove
+  the if-blocks at the top of each public function below.
 """
 
 import hashlib
@@ -94,6 +101,11 @@ def get_ready_to_ship_orders():
         - recipient_name, courier, items: used for the Telegram caption
     """
 
+    # STEP 0: In fake mode, delegate to the fake client and return early.
+    if config.USE_FAKE_SHOPEE:
+        from src import shopee_client_fake
+        return shopee_client_fake.get_ready_to_ship_orders()
+
     # STEP 1: Build the URL for the "get order list" endpoint.
     path = "/api/v2/order/get_order_list"
     url = _build_request_url(path)
@@ -126,6 +138,9 @@ def get_ready_to_ship_orders():
     # STEP 5: Fetch full details for those orders (recipient name, items, etc).
     return _get_order_details(order_sns)
 
+# ============================================================
+# More internal helpers (used only by the public functions above)
+# ============================================================
 
 def _get_order_details(order_sns):
     """
@@ -171,6 +186,11 @@ def get_shipping_label_pdf(order_sn):
     Returns:
       PDF file contents as bytes, OR None if the label is not ready yet.
     """
+
+    # STEP 0: In fake mode, delegate to the fake client and return early.
+    if config.USE_FAKE_SHOPEE:
+        from src import shopee_client_fake
+        return shopee_client_fake.get_shipping_label_pdf(order_sn)
 
     # STEP 1: Ask Shopee to create the shipping document.
     _create_shipping_document(order_sn)
