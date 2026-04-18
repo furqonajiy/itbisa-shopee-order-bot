@@ -61,26 +61,35 @@ def _build_request_url(path):
     """
     Builds the full URL with all the common query parameters that Shopee
     requires (partner_id, timestamp, access_token, shop_id, sign).
+
+    This function calls shopee_auth.get_valid_access_token() which handles
+    token freshness checking and refreshing transparently.
     """
 
-    # STEP 1: Get the current Unix timestamp. Shopee rejects requests with
+    # STEP 1: Get a fresh access token. This call is cheap when the stored
+    # token is still valid, and triggers a refresh when it is not.
+    # We import inside the function to avoid a circular import at module load time.
+    from src import shopee_auth
+    access_token = shopee_auth.get_valid_access_token()
+
+    # STEP 2: Get the current Unix timestamp. Shopee rejects requests with
     # timestamps that are too old, so we generate a fresh one each call.
     timestamp = int(time.time())
 
-    # STEP 2: Generate the signature for this specific call.
+    # STEP 3: Generate the signature for this specific call.
     signature = _make_signature(
         path=path,
         timestamp=timestamp,
-        access_token=config.SHOPEE_ACCESS_TOKEN,
+        access_token=access_token,
         shop_id=config.SHOPEE_SHOP_ID,
     )
 
-    # STEP 3: Assemble the full URL with required query params.
+    # STEP 4: Assemble the full URL with required query params.
     url = (
         f"{config.SHOPEE_API_BASE_URL}{path}"
         f"?partner_id={config.SHOPEE_PARTNER_ID}"
         f"&timestamp={timestamp}"
-        f"&access_token={config.SHOPEE_ACCESS_TOKEN}"
+        f"&access_token={access_token}"
         f"&shop_id={config.SHOPEE_SHOP_ID}"
         f"&sign={signature}"
     )
@@ -138,35 +147,6 @@ def get_ready_to_ship_orders():
     # STEP 5: Fetch full details for those orders (recipient name, items, etc).
     return _get_order_details(order_sns)
 
-# ============================================================
-# More internal helpers (used only by the public functions above)
-# ============================================================
-
-def _get_order_details(order_sns):
-    """
-    Fetches full details for a list of order numbers.
-
-    Shopee's get_order_list only returns IDs, so we need a second call
-    to get the actual recipient name, items, and courier.
-    """
-
-    # STEP 1: Build URL for the "get order detail" endpoint.
-    path = "/api/v2/order/get_order_detail"
-    url = _build_request_url(path)
-
-    # STEP 2: Ask for the specific fields we need for the Telegram caption.
-    params = {
-        "order_sn_list": ",".join(order_sns),
-        "response_optional_fields": "recipient_address,item_list,buyer_username",
-    }
-
-    # STEP 3: Make the call and return the order list.
-    response = requests.get(url, params=params, timeout=30)
-    response.raise_for_status()
-    data = response.json()
-
-    return data.get("response", {}).get("order_list", [])
-
 
 def get_shipping_label_pdf(order_sn):
     """
@@ -209,6 +189,36 @@ def get_shipping_label_pdf(order_sn):
     # STEP 3: Give up for this run. The next scheduled run will try again.
     print(f"  Label for {order_sn} still not ready, will retry next run")
     return None
+
+
+# ============================================================
+# More internal helpers (used only by the public functions above)
+# ============================================================
+
+def _get_order_details(order_sns):
+    """
+    Fetches full details for a list of order numbers.
+
+    Shopee's get_order_list only returns IDs, so we need a second call
+    to get the actual recipient name, items, and courier.
+    """
+
+    # STEP 1: Build URL for the "get order detail" endpoint.
+    path = "/api/v2/order/get_order_detail"
+    url = _build_request_url(path)
+
+    # STEP 2: Ask for the specific fields we need for the Telegram caption.
+    params = {
+        "order_sn_list": ",".join(order_sns),
+        "response_optional_fields": "recipient_address,item_list,buyer_username",
+    }
+
+    # STEP 3: Make the call and return the order list.
+    response = requests.get(url, params=params, timeout=30)
+    response.raise_for_status()
+    data = response.json()
+
+    return data.get("response", {}).get("order_list", [])
 
 
 def _create_shipping_document(order_sn):

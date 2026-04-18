@@ -20,7 +20,14 @@ The GitHub Actions workflow runs this script on a schedule.
 import sys
 from datetime import datetime, timezone, timedelta
 
-from src import config, shopee_client, label_processor, telegram_sender, state_manager
+from src import (
+    config,
+    shopee_client,
+    shopee_auth,
+    label_processor,
+    telegram_sender,
+    state_manager,
+)
 
 
 # Jakarta is UTC+7. We use this to format the time in summaries.
@@ -39,11 +46,35 @@ def run():
     print("ITBisa Shopee Order Bot - starting run")
     print("=" * 60)
 
+    # STEP 0: Wrap the whole run in a try block so we can catch the one
+    # error that requires a human response: an expired refresh_token.
+    # Any other error is allowed to bubble up and fail the GitHub Actions
+    # run, which is the right behavior for unexpected problems.
+    try:
+        _do_run()
+    except shopee_auth.RefreshTokenExpiredError as e:
+        # This happens roughly once every 30 days. The bot cannot recover
+        # on its own, so we notify the shop owner via Telegram and exit.
+        alert = (
+            f"🔐 {_now_jakarta_hhmm()} - Otorisasi Shopee kadaluarsa. "
+            f"Mohon otorisasi ulang aplikasi di Shopee Open Platform Console, "
+            f"lalu update file data/shopee_tokens.json dengan token baru."
+        )
+        telegram_sender.send_summary(alert)
+        print(f"\n{alert}")
+        print(f"Details: {e}")
+        sys.exit(1)
+
+
+def _do_run():
+    """The actual run logic. Separated so run() can wrap it in error handling."""
+
     # STEP 1: Load the dictionary of orders we already processed.
     processed = state_manager.load()
     print(f"Loaded state: {len(processed)} previously processed orders remembered")
 
     # STEP 2: Fetch the current list of ready-to-ship orders from Shopee.
+    # The shopee_client will automatically refresh tokens if needed.
     print("Fetching orders from Shopee...")
     orders = shopee_client.get_ready_to_ship_orders()
     print(f"Shopee returned {len(orders)} ready-to-ship orders")
