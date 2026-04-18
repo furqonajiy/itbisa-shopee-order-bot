@@ -55,7 +55,7 @@ def run():
     # STEP 4: If there are no new orders, send a heartbeat and exit.
     # We still send a message so the employee knows the bot is healthy.
     if not new_orders:
-        summary = f"✅ {_now_jakarta_hhmm()} - 0 new orders"
+        summary = telegram_sender.build_summary(_now_jakarta_hhmm(), 0, 0)
         telegram_sender.send_summary(summary)
         print(f"Sent heartbeat: {summary}")
         return
@@ -64,10 +64,8 @@ def run():
     # probably wrong (e.g. state file got deleted). Stop and alert instead of
     # flooding the employee with hundreds of Telegram messages.
     if len(new_orders) > config.MAX_ORDERS_PER_RUN:
-        warning = (
-            f"⚠️ {_now_jakarta_hhmm()} - SAFETY STOP: {len(new_orders)} new "
-            f"orders exceeds the cap of {config.MAX_ORDERS_PER_RUN}. "
-            f"Investigate before continuing."
+        warning = telegram_sender.build_safety_stop_message(
+            _now_jakarta_hhmm(), len(new_orders), config.MAX_ORDERS_PER_RUN
         )
         telegram_sender.send_summary(warning)
         print(warning)
@@ -110,13 +108,9 @@ def run():
     print(f"\nState saved.")
 
     # STEP 8: Send a summary heartbeat so the employee knows what happened.
-    if skipped_count == 0:
-        summary = f"✅ {_now_jakarta_hhmm()} - {success_count} labels sent"
-    else:
-        summary = (
-            f"⚠️ {_now_jakarta_hhmm()} - {success_count} sent, "
-            f"{skipped_count} skipped (will retry next run)"
-        )
+    summary = telegram_sender.build_summary(
+        _now_jakarta_hhmm(), success_count, skipped_count
+    )
     telegram_sender.send_summary(summary)
 
     # STEP 9: Print a summary so the GitHub Actions log is easy to scan.
