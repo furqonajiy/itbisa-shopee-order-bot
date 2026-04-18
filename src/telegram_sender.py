@@ -73,6 +73,46 @@ def send_label(png_bytes, caption):
     return True
 
 
+def send_summary(text):
+    """
+    Sends a plain text status message to the Telegram chat.
+
+    Used at the end of every run as a "heartbeat" so the employee knows the
+    bot is alive, even when there are zero new orders to process.
+
+    Args:
+      text: the message to send (plain text, no images).
+
+    Returns:
+      True if delivered, False otherwise. We do not retry on failure
+      because the next scheduled run will send another summary anyway.
+    """
+
+    # STEP 1: Build the URL for the sendMessage endpoint.
+    # Note: this is a different endpoint than sendPhoto.
+    url = f"{_TELEGRAM_API_URL}/sendMessage"
+
+    # STEP 2: Prepare the request body.
+    data = {
+        "chat_id": config.TELEGRAM_CHAT_ID,
+        "text": text,
+    }
+
+    # STEP 3: Send the request.
+    try:
+        response = requests.post(url, data=data, timeout=30)
+    except requests.RequestException as e:
+        print(f"  Telegram summary failed: {e}")
+        return False
+
+    # STEP 4: Check the response.
+    if response.status_code != 200:
+        print(f"  Telegram returned status {response.status_code}: {response.text}")
+        return False
+
+    return True
+
+
 def build_caption(order):
     """
     Builds a human-readable caption for a single order.
