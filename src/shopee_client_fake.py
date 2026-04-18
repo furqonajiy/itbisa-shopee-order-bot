@@ -43,10 +43,15 @@ _FAKE_ORDERS = [
                             "KOTA JAKARTA TIMUR, DUREN SAWIT, DKI JAKARTA, ID, 13430",
         },
         "item_list": [
+            # Order 1: a product with no variants. model_sku is empty,
+            # so the caption falls back to item_sku.
             {
                 "item_name": "ITBisa - Socket IC DIP 16 Pin 2.54mm Narrow 2x8 "
                              "Lubang 8x2 Dudukan IC DIP16 untuk PCB Arduino & "
                              "Project Elektronika",
+                "item_sku": "ITBISA-SOCKET-IC-DIP16-NARROW",
+                "model_name": "",
+                "model_sku": "",
                 "model_quantity_purchased": 10,
             }
         ],
@@ -60,13 +65,23 @@ _FAKE_ORDERS = [
             "full_address": "Jl. Sudirman No. 45, Bandung, JAWA BARAT, ID, 40115",
         },
         "item_list": [
+            # Order 2: same parent product in two colors.
+            # Both entries share the same item_name and item_sku (parent),
+            # and differ only in model_name and model_sku (the variant).
+            # This matches how Shopee actually structures variant orders.
             {
-                "item_name": "ITBisa - Kabel HDMI 2 Meter High Speed",
-                "model_quantity_purchased": 2,
+                "item_name": "ITBisa - LED Super Bright 5mm All Color",
+                "item_sku": "ITBISA-LED-SUPERBRIGHT-5MM",
+                "model_name": "Red",
+                "model_sku": "ITBISA-LED-SUPERBRIGHT-5MM-RED",
+                "model_quantity_purchased": 20,
             },
             {
-                "item_name": "ITBisa - Adaptor USB-C 65W Fast Charging",
-                "model_quantity_purchased": 1,
+                "item_name": "ITBisa - LED Super Bright 5mm All Color",
+                "item_sku": "ITBISA-LED-SUPERBRIGHT-5MM",
+                "model_name": "Green",
+                "model_sku": "ITBISA-LED-SUPERBRIGHT-5MM-GREEN",
+                "model_quantity_purchased": 15,
             },
         ],
     },
@@ -79,8 +94,12 @@ _FAKE_ORDERS = [
             "full_address": "Jl. Diponegoro No. 12, Surabaya, JAWA TIMUR, ID, 60241",
         },
         "item_list": [
+            # Order 3: another non-variant product.
             {
                 "item_name": "ITBisa - Resistor Pack 1/4W 1% Toleransi 100 Nilai",
+                "item_sku": "ITBISA-RES-PACK-100",
+                "model_name": "",
+                "model_sku": "",
                 "model_quantity_purchased": 1,
             }
         ],
