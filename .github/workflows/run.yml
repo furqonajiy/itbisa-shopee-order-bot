@@ -54,23 +54,25 @@ jobs:
         run: pip install -r requirements.txt
 
       # STEP 8: Run the bot. Secrets come from GitHub Actions Secrets.
+      # Note: SHOPEE_ACCESS_TOKEN is NOT here because it lives in
+      # data/shopee_tokens.json and is refreshed dynamically.
       - name: Run order processor
         env:
           SHOPEE_PARTNER_ID: ${{ secrets.SHOPEE_PARTNER_ID }}
           SHOPEE_PARTNER_KEY: ${{ secrets.SHOPEE_PARTNER_KEY }}
           SHOPEE_SHOP_ID: ${{ secrets.SHOPEE_SHOP_ID }}
-          SHOPEE_ACCESS_TOKEN: ${{ secrets.SHOPEE_ACCESS_TOKEN }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python -m src.main
 
-      # STEP 9: Commit the updated state file back to the repo, but only if
-      # it actually changed. The "|| echo" pattern means the step does not
+      # STEP 9: Commit the updated state files back to the repo, but only if
+      # they actually changed. The "|| echo" pattern means the step does not
       # fail when there is nothing to commit.
+      # Two files may change: processed_orders.json and shopee_tokens.json.
       - name: Commit updated state
         run: |
           git config user.name "itbisa-bot"
           git config user.email "bot@itbisa.local"
-          git add data/processed_orders.json
-          git diff --staged --quiet || git commit -m "Update processed orders [skip ci]"
+          git add data/processed_orders.json data/shopee_tokens.json
+          git diff --staged --quiet || git commit -m "Update state [skip ci]"
           git push
