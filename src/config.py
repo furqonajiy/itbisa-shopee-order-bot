@@ -8,11 +8,22 @@ Why this file exists:
   as environment variables at runtime, and this file is the ONLY place that
   reads them. Every other module gets these values by importing from here.
 
-If you are running locally for testing, you can put these in a .env file
-and load them with `export $(cat .env | xargs)` before running.
+For local development:
+  Create a .env file in the project root (copy from .env.example) and the
+  load_dotenv() call below will read it automatically. In GitHub Actions
+  there is no .env file, so load_dotenv() does nothing and the values come
+  from the workflow's `env:` block instead.
 """
 
 import os
+
+from dotenv import load_dotenv
+
+
+# STEP 0: Load .env file if it exists (for local development only).
+# In production this is a no-op because the .env file is git-ignored
+# and never deployed to GitHub Actions.
+load_dotenv()
 
 
 # STEP 1: Read Shopee API credentials.
@@ -32,7 +43,7 @@ TELEGRAM_CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
 
 # STEP 3: Define constants that control behavior.
 # These are not secrets, just settings we might want to tweak later.
-SHOPEE_API_BASE_URL = "https://partner.shopeemobile.com"
+SHOPEE_API_BASE_URL = "https://openplatform.sandbox.test-stable.shopee.sg"
 STATE_FILE_PATH = "data/processed_orders.json"
 MAX_ORDERS_PER_RUN = 30  # Safety cap. If we see more than this, something is wrong.
 LABEL_IMAGE_DPI = 200    # Resolution for PDF -> PNG conversion.
