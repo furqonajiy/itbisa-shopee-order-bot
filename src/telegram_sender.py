@@ -120,6 +120,12 @@ def build_caption(order):
     The caption appears below the label image in Telegram and helps the
     employee match the printed label with the right items in the warehouse.
 
+    We show the SKU instead of the product name because product names on
+    Shopee are very long (e.g. "ITBisa - Socket IC DIP 16 Pin 2.54mm
+    Narrow 2x8 Lubang 8x2 Dudukan IC DIP16 untuk PCB Arduino & Project
+    Elektronika"), but warehouse shelves are organized by SKU. SKU is
+    short, precise, and matches how items are physically labeled.
+
     Args:
       order: the order dict returned by shopee_client.
 
@@ -132,13 +138,13 @@ def build_caption(order):
     recipient = order.get("recipient_address", {}).get("name", "?")
     courier = order.get("shipping_carrier", "?")
 
-    # STEP 2: Build a short summary of items in the order.
+    # STEP 2: Build a short summary of items using SKUs.
     items = order.get("item_list", [])
     item_lines = []
     for item in items:
-        name = item.get("item_name", "?")
         qty = item.get("model_quantity_purchased", 1)
-        item_lines.append(f"  • {qty}x {name}")
+        sku = _pick_sku(item)
+        item_lines.append(f"  • {qty} x {sku}")
     items_text = "\n".join(item_lines) if item_lines else "  (tidak ada barang)"
 
     # STEP 3: Assemble the caption in Bahasa Indonesia.
@@ -151,6 +157,42 @@ def build_caption(order):
         f"{items_text}"
     )
     return caption
+
+
+def _pick_sku(item):
+    """
+    Returns the most specific SKU for a Shopee order item.
+
+    Shopee's item_list entries may include both:
+      - item_sku:  the parent product SKU ("SKU Utama")
+      - model_sku: the variant SKU when the product has variants ("SKU Varian")
+
+    The rule: if the variant SKU exists, use it. Otherwise fall back to the
+    main SKU. This matches how the warehouse organizes stock, where variants
+    like colors and sizes each have their own shelf location.
+
+    Example:
+      - LED 5mm has no variants -> model_sku is empty, use item_sku ITBISA-LED-5MM.
+      - LED 5mm Red is a variant -> use model_sku ITBISA-LED-5MM-RED.
+
+    If both SKUs are missing (seller forgot to assign them), we fall back to
+    the product name. A long name is still more useful to the employee than
+    a cryptic placeholder, because it at least tells them what the item is.
+    """
+
+    # STEP 1: Prefer the variant SKU when it is present and non-empty.
+    model_sku = item.get("model_sku", "").strip()
+    if model_sku:
+        return model_sku
+
+    # STEP 2: Fall back to the main product SKU.
+    item_sku = item.get("item_sku", "").strip()
+    if item_sku:
+        return item_sku
+
+    # STEP 3: Last resort - use the product name. Still useful for identification
+    # even if it is long, and better than a blank or cryptic placeholder.
+    return item.get("item_name", "(tidak ada nama)")
 
 
 def build_summary(time_hhmm, success_count, skipped_count):

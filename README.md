@@ -238,9 +238,15 @@ For each new order, a label image arrives with a caption like:
 🚚 Kurir: SPX Express
 
 Barang:
-  • 2x Kabel HDMI 2 Meter
-  • 1x Adaptor USB-C 65W
+  • 20 x ITBISA-LED-5MM-RED
+  • 15 x ITBISA-LED-5MM-GREEN
 ```
+
+The caption uses SKU instead of the product name because product names
+on Shopee are very long (often 100+ characters), while SKUs are short
+and match how the warehouse is organized. When a product has variants
+(like different colors), the variant SKU is shown. When a product has
+no variants, the main product SKU is shown.
 
 At the end of every run, a short heartbeat message appears:
 
