@@ -16,6 +16,7 @@ For local development:
 """
 
 import os
+from pathlib import Path
 
 from dotenv import load_dotenv
 
@@ -26,13 +27,21 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-# STEP 1: Check if we are running in fake mode.
+# STEP 1: Compute the project root folder.
+# __file__ is the path to this config.py file, e.g. /path/to/repo/src/config.py
+# .parent goes up to src/, another .parent goes up to the project root.
+# We use absolute paths so the data folder ends up in the same place no
+# matter which directory Python was launched from.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+
+# STEP 2: Check if we are running in fake mode.
 # When fake mode is on, the Shopee credentials are not required because
 # we never call the real API. This makes local testing easier.
 USE_FAKE_SHOPEE = os.environ.get("USE_FAKE_SHOPEE", "false").lower() == "true"
 
 
-# STEP 2: Read Shopee API credentials.
+# STEP 3: Read Shopee API credentials.
 # You get these from the Shopee Open Platform when you register your app.
 # In fake mode these are optional, so we use .get() with empty string defaults.
 #
@@ -49,17 +58,18 @@ else:
     SHOPEE_SHOP_ID = int(os.environ["SHOPEE_SHOP_ID"])
 
 
-# STEP 3: Read Telegram bot credentials.
+# STEP 4: Read Telegram bot credentials.
 # Always required, even in fake mode, because we still send real Telegram messages.
 TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 TELEGRAM_CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
 
 
-# STEP 4: Define constants that control behavior.
-# These are not secrets, just settings we might want to tweak later.
+# STEP 5: Define constants that control behavior.
+# File paths are anchored to PROJECT_ROOT so they always resolve to the same
+# place regardless of where Python was launched from.
 SHOPEE_API_BASE_URL = "https://partner.shopeemobile.com"
-STATE_FILE_PATH = "data/processed_orders.json"
-TOKENS_FILE_PATH = "data/shopee_tokens.json"  # Dynamic token storage, see shopee_auth.py
+STATE_FILE_PATH = str(PROJECT_ROOT / "data" / "processed_orders.json")
+TOKENS_FILE_PATH = str(PROJECT_ROOT / "data" / "shopee_tokens.json")
 MAX_ORDERS_PER_RUN = 30  # Safety cap. If we see more than this, something is wrong.
 LABEL_IMAGE_DPI = 200    # Resolution for PDF -> PNG conversion.
 STATE_RETENTION_DAYS = 30  # How long to remember processed orders before pruning.
