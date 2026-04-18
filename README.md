@@ -1,107 +1,342 @@
 # ITBisa Shopee Order Bot
 
 Automatically fetches new Shopee orders, converts shipping labels to images,
-and sends them to a Telegram bot for the warehouse employee to print.
+and sends them to a Telegram bot so the warehouse employee can print them
+from their phone without any manual downloading.
 
 ## What it does
 
 Every hour from 09:00 to 17:00 Jakarta time, GitHub Actions runs a Python
 script that:
 
-1. Asks Shopee for orders ready to ship.
+1. Asks Shopee for orders that are ready to ship.
 2. Skips any orders already processed in a previous run.
-3. For each new order, downloads the shipping label PDF, converts it to a
+3. For each new order: downloads the shipping label PDF, converts it to a
    PNG image, and sends it to a Telegram chat with a caption describing
-   the order.
-4. Remembers which orders were processed by committing a small JSON file
-   back to this repository.
+   the order in Bahasa Indonesia.
+4. Sends a heartbeat summary at the end of every run so the employee knows
+   the bot is alive, even when no new orders came in.
+5. Remembers what was processed by committing small JSON files back to the
+   repository.
+
+Everything runs on the GitHub Actions free tier. There is no server, no
+cloud VM, and no database.
 
 ## Project structure
 
 ```
 itbisa-shopee-bot/
-├── .github/workflows/run.yml    # GitHub Actions cron schedule
+├── .github/workflows/
+│   └── run.yml                      # GitHub Actions cron schedule
+├── data/                            # Runtime state, auto-committed by the bot
+│   ├── processed_orders.json        # Which orders we already sent to Telegram
+│   └── shopee_tokens.json           # Current access + refresh tokens (created by bootstrap)
+├── scripts/
+│   └── bootstrap_tokens.py          # One-time script to seed shopee_tokens.json
 ├── src/
-│   ├── main.py                  # Entry point, orchestrates the flow
-│   ├── config.py                # Reads secrets from environment variables
-│   ├── shopee_client.py         # Shopee API calls + HMAC signing
-│   ├── label_processor.py       # PDF → PNG conversion
-│   ├── telegram_sender.py       # Sends image + caption to Telegram
-│   └── state_manager.py         # Loads/saves processed_orders.json
-├── data/
-│   └── processed_orders.json    # State file (committed by the bot)
+│   ├── __init__.py
+│   ├── main.py                      # Entry point, orchestrates the flow
+│   ├── config.py                    # Reads secrets + settings from env
+│   ├── shopee_auth.py               # Token lifecycle (refresh every 4h)
+│   ├── shopee_client.py             # Shopee API calls + HMAC signing
+│   ├── shopee_client_fake.py        # Canned fake data for local testing
+│   ├── label_processor.py           # PDF → PNG conversion
+│   ├── telegram_sender.py           # Sends images + messages in Bahasa
+│   └── state_manager.py             # Loads/saves processed_orders.json
 ├── requirements.txt
 ├── .env.example
 └── README.md
 ```
 
-## Setup
+## Requirements
 
-### 1. Create a private GitHub repository and push this code.
+- Python 3.11 (other versions may work but 3.11 matches production).
+- `poppler` installed on your system for PDF rendering.
+- A Shopee Open Platform app (sandbox for testing, live for production).
+- A Telegram bot and chat ID.
 
-### 2. Add the following secrets in **Settings → Secrets and variables → Actions**:
+## Initial setup
+
+### 1. Clone the repo and install dependencies
+
+Open Anaconda Prompt and run:
+
+```
+conda create -n itbisa_order_bot python=3.11
+conda activate itbisa_order_bot
+conda install -c conda-forge poppler
+cd C:\path\to\itbisa-shopee-bot
+python -m pip install -r requirements.txt
+```
+
+### 2. Configure credentials
+
+Copy `.env.example` to `.env` and fill in your values:
+
+```
+SHOPEE_PARTNER_ID=1234567
+SHOPEE_PARTNER_KEY=your_partner_key_here
+SHOPEE_SHOP_ID=987654321
+
+TELEGRAM_BOT_TOKEN=123456:ABC-DEF...
+TELEGRAM_CHAT_ID=-100123456789
+
+USE_FAKE_SHOPEE=false
+```
+
+Note that `SHOPEE_ACCESS_TOKEN` is NOT in the `.env` file. Access tokens
+are managed in `data/shopee_tokens.json` because they must be refreshed
+every 4 hours. See the authentication section below.
+
+### 3. Point config.py at the right environment
+
+Open `src/config.py` and make sure `SHOPEE_API_BASE_URL` matches the
+environment you are targeting:
+
+- Sandbox: `https://openplatform.sandbox.test-stable.shopee.sg`
+- Live: `https://partner.shopeemobile.com`
+
+Tokens are environment-specific. A sandbox token does not work against
+live, and vice versa. If you change this URL, you must also re-run the
+bootstrap script to get fresh tokens for the new environment.
+
+### 4. Bootstrap the Shopee tokens (one-time)
+
+This step gets your initial access token and refresh token from Shopee.
+
+1. Log in to Shopee Open Platform Console.
+2. Open your app and click **Authorize**.
+3. After the redirect, copy the `code` value from the URL bar. The URL
+   looks like `https://...?code=ABC123...&shop_id=XXXXX`. Copy just the
+   `code` value. It expires in about 10 minutes and can only be used once.
+4. From the project root, run:
+
+   ```
+   python scripts/bootstrap_tokens.py
+   ```
+
+5. Paste the code when prompted. The script writes `data/shopee_tokens.json`
+   with a valid access token plus refresh token pair.
+
+You only need to run this script in three situations: the very first setup,
+when switching between sandbox and live environments, or if the refresh
+token expires (every 30 days of inactivity).
+
+## Running locally
+
+### Test with fake data (no real Shopee needed)
+
+Set `USE_FAKE_SHOPEE=true` in your `.env` file and run:
+
+```
+python -m src.main
+```
+
+The bot returns 3 canned fake orders matching a real Shopee response
+format, generates dummy PDFs with `reportlab`, converts them to PNG,
+and sends them to your Telegram bot. Useful for testing the full
+pipeline without needing a working Shopee connection.
+
+### Test with real Shopee (requires bootstrap done)
+
+Set `USE_FAKE_SHOPEE=false` and run:
+
+```
+python -m src.main
+```
+
+The bot queries your real Shopee shop (sandbox or live depending on
+`SHOPEE_API_BASE_URL`) and processes actual orders.
+
+## Production deployment (GitHub Actions)
+
+### 1. Push code to GitHub
+
+Push your repository to GitHub. Make sure the repo is private because
+it contains your shop configuration and the committed tokens file.
+
+### 2. Add secrets in repository settings
+
+Go to **Settings → Secrets and variables → Actions** and add these five
+secrets. Do NOT add `SHOPEE_ACCESS_TOKEN`, since it lives in the tokens
+file, and do NOT add `USE_FAKE_SHOPEE`, since it should default to false
+in production.
 
 - `SHOPEE_PARTNER_ID`
 - `SHOPEE_PARTNER_KEY`
 - `SHOPEE_SHOP_ID`
-- `SHOPEE_ACCESS_TOKEN`
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_CHAT_ID`
 
-### 3. Enable GitHub Actions.
+### 3. Commit and push data/shopee_tokens.json
 
-Go to the **Actions** tab and enable workflows. The cron will start running
-on the next scheduled hour. You can also click **Run workflow** to trigger
-a run manually.
+The tokens file you bootstrapped locally must be in the repo for the
+workflow to authenticate. After running the bootstrap script:
 
-## Local testing
-
-```bash
-# Install dependencies (requires poppler installed on your system)
-pip install -r requirements.txt
-
-# Copy .env.example to .env and fill in real values
-cp .env.example .env
-
-# Load env vars and run
-export $(cat .env | xargs)
-python -m src.main
+```
+git add data/shopee_tokens.json
+git commit -m "Bootstrap initial tokens"
+git push
 ```
 
-## Operations
+The GitHub Actions workflow will continue updating this file
+automatically as it refreshes tokens over time.
 
-### How to check if it is working
+### 4. Verify the workflow runs
 
-Open the **Actions** tab on GitHub. Each scheduled run appears as a separate
-workflow run. Green checkmark = success. Click into a run to see the
-script output, including how many orders were processed.
+Go to the **Actions** tab, click **Run Shopee Order Bot** in the sidebar,
+then click **Run workflow** to trigger a manual test run. Watch the logs
+to confirm everything works. You should see a heartbeat message arrive
+in your Telegram chat within a minute.
 
-### What to do if a run fails
+After the first successful manual run, the cron takes over and runs the
+bot automatically on schedule.
 
-Most failures are temporary (Shopee API down, Telegram timeout). The next
-scheduled run will retry any order that was not successfully delivered to
-Telegram, because we only mark an order as processed AFTER Telegram
-confirms delivery.
+## How authentication works
 
-If failures persist, check:
-1. Are the GitHub secrets still valid? (Tokens may have expired.)
-2. Is the Shopee API responding? (Try a manual API call with the same credentials.)
-3. Is Telegram reachable from GitHub Actions?
+Shopee uses an OAuth-style flow with three credentials working together:
 
-### What to do if duplicates appear
+- **Authorization code:** single-use ticket you get by clicking Authorize
+  in the Shopee Console. Valid for ~10 minutes. Used only during bootstrap.
+- **Access token:** what the bot attaches to every API call. Valid for
+  4 hours. Refreshed automatically by the bot.
+- **Refresh token:** long-lived credential used to obtain new access
+  tokens. Valid for 30 days. Replaced by a new refresh token on every
+  refresh, which resets the 30-day clock.
 
-Open `data/processed_orders.json` in the repo. Each entry maps an order ID
-to the timestamp it was processed. If you need to re-send a label, delete
-that order's entry and the next run will reprocess it.
+As long as the bot runs at least once every 30 days, the refresh token
+chain continues indefinitely. The bot running 9 times per day on weekdays
+means refreshes happen multiple times per day, so the 30-day limit is
+never hit in normal operation.
 
-### What to do if the state file gets corrupted
+When the access token expires overnight (while the bot is asleep), nothing
+bad happens. The next morning's run simply sees the stale token, calls the
+refresh endpoint, and gets a fresh one before doing any real work.
 
-Delete `data/processed_orders.json`. The next run will create a fresh one.
-The worst case is that the employee receives duplicate labels for orders
-from the last 7 days, which is annoying but not catastrophic.
+The only time a human must intervene is if the refresh token itself
+expires, which would only happen if the bot stopped running completely
+for more than 30 days. When this happens, the bot sends a Telegram alert
+asking you to re-run the bootstrap script.
+
+## Daily schedule
+
+The cron runs 9 times per day during Jakarta business hours:
+
+- **09:00 WIB** — overnight sweep (catches orders placed while asleep)
+- **10:00–16:00 WIB** — 7 hourly runs during active selling window
+- **17:00 WIB** — final sweep before courier pickup
+
+In cron syntax (GitHub Actions uses UTC), this is `0 2-10 * * *`.
+
+## What your employee sees in Telegram
+
+For each new order, a label image arrives with a caption like:
+
+```
+📦 No. Pesanan: 240418ABC123
+👤 Penerima: Budi Santoso
+🚚 Kurir: SPX Express
+
+Barang:
+  • 2x Kabel HDMI 2 Meter
+  • 1x Adaptor USB-C 65W
+```
+
+At the end of every run, a short heartbeat message appears:
+
+- `✅ 11:00 - Tidak ada pesanan baru` (quiet hour)
+- `✅ 12:00 - 3 label terkirim` (normal hour)
+- `⚠️ 13:00 - 2 terkirim, 1 gagal (akan dicoba lagi)` (problem hour)
+
+If the refresh token expires, a rare manual-intervention alert appears:
+
+```
+🔐 14:00 - Otorisasi Shopee kadaluarsa. Mohon otorisasi ulang aplikasi
+di Shopee Open Platform Console, lalu update file data/shopee_tokens.json
+dengan token baru.
+```
+
+## Troubleshooting
+
+### 403 Forbidden from Shopee
+
+This almost always means one of two things. Either the access token in
+`data/shopee_tokens.json` is from the wrong environment (sandbox token
+being used against live URL, or vice versa), or the bootstrap has not
+been done for the current environment yet.
+
+To fix: make sure `SHOPEE_API_BASE_URL` in `src/config.py` matches the
+environment you want, and re-run `python scripts/bootstrap_tokens.py`
+to get tokens for that environment.
+
+### invalid_code during bootstrap
+
+The authorization code you pasted has expired, was already used, or was
+from the wrong environment. Each code is valid for only ~10 minutes and
+can only be used once. Go back to Shopee Console, click Authorize again
+to generate a fresh code, and run the bootstrap script immediately.
+
+### Telegram message not appearing
+
+Check that `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` are correct. Also
+confirm your employee has actually started a conversation with the bot
+(Telegram bots cannot send messages to users who have not initiated
+contact). For group chats, make sure the bot is added to the group and
+that the chat ID has the `-100` prefix.
+
+### Workflow disabled after long inactivity
+
+GitHub Actions disables scheduled workflows on repos with no activity
+for 60 days. Since the bot commits state on every run, this should not
+happen in normal operation. If it does, go to the Actions tab and
+click "Enable workflow" to re-activate it.
+
+### Duplicate labels appearing
+
+Open `data/processed_orders.json`. The file maps each processed order
+ID to the timestamp when it was sent. If you want to re-send a specific
+label, delete that order's entry and the next run will reprocess it.
+
+### State file corrupted
+
+Delete `data/processed_orders.json` entirely. The next run will create
+a fresh one. Worst case, the employee receives duplicate labels for
+orders from the last 7 days, which is annoying but not catastrophic.
+
+## Switching from sandbox to live
+
+When your Shopee app is approved for Go Live:
+
+1. Update `SHOPEE_API_BASE_URL` in `src/config.py` to the live URL.
+2. Update the five GitHub Secrets with your live partner ID, partner key,
+   and shop ID.
+3. Run `python scripts/bootstrap_tokens.py` against the live environment
+   to get live tokens.
+4. Commit the new `data/shopee_tokens.json` and push.
+5. Manually trigger a test run from the Actions tab to verify.
+
+These steps always go together. Forgetting any one of them causes a
+403 error because the tokens file environment does not match the URL.
 
 ## Cost
 
-Free. GitHub Actions provides 2,000 free minutes per month for private
-repositories. This bot uses roughly 9 runs/day × ~1 minute = 270 minutes
-per month, well under the limit.
+Free forever.
+
+- GitHub Actions: 2000 free minutes per month on private repos. The bot
+  uses roughly 9 runs/day × ~1 minute = 270 minutes/month.
+- Telegram Bot API: free, no limits.
+- Shopee Open API: free, generous rate limits.
+
+## A note on premature optimization
+
+This codebase deliberately avoids patterns that would be "nice to have"
+but are not currently needed: no dependency injection, no abstract base
+classes, no utils folder, no multi-marketplace abstraction. Those
+additions should happen when real friction appears, not before.
+
+If you later add a second marketplace like Tokopedia, the right move is
+to copy the whole `src/` folder into a parallel structure and get it
+working independently first, then extract shared patterns once both are
+running. Abstractions designed for two concrete implementations are
+much better than abstractions designed for one implementation and one
+imagined future.
