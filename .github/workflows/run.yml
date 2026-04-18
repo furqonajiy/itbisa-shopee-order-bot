@@ -1,0 +1,76 @@
+# GitHub Actions workflow for the ITBisa Shopee Order Bot.
+#
+# This workflow runs the Python script on a schedule, 9 times per day,
+# during business hours in Jakarta (WIB = UTC+7).
+#
+# Schedule (Jakarta time -> UTC):
+#   09:00 WIB = 02:00 UTC  (overnight sweep)
+#   10:00 WIB = 03:00 UTC  (shop opens)
+#   11:00 WIB = 04:00 UTC
+#   12:00 WIB = 05:00 UTC
+#   13:00 WIB = 06:00 UTC
+#   14:00 WIB = 07:00 UTC
+#   15:00 WIB = 08:00 UTC
+#   16:00 WIB = 09:00 UTC  (orders close)
+#   17:00 WIB = 10:00 UTC  (final sweep before courier pickup)
+
+name: Run Shopee Order Bot
+
+on:
+  # STEP 1: Run on a cron schedule. GitHub Actions cron uses UTC.
+  schedule:
+    - cron: "0 2-10 * * *"
+
+  # STEP 2: Also allow manual triggering from the Actions tab. Useful for
+  # testing or for catching up after a missed run.
+  workflow_dispatch:
+
+jobs:
+  process-orders:
+    runs-on: ubuntu-latest
+
+    # STEP 3: Allow this job to push commits back to the repo (for the
+    # processed_orders.json state file).
+    permissions:
+      contents: write
+
+    steps:
+      # STEP 4: Check out the repository so we can read/write the state file.
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      # STEP 5: Install Python.
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # STEP 6: Install poppler, which pdf2image needs to render PDFs.
+      - name: Install poppler
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
+
+      # STEP 7: Install the Python dependencies.
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      # STEP 8: Run the bot. Secrets come from GitHub Actions Secrets.
+      - name: Run order processor
+        env:
+          SHOPEE_PARTNER_ID: ${{ secrets.SHOPEE_PARTNER_ID }}
+          SHOPEE_PARTNER_KEY: ${{ secrets.SHOPEE_PARTNER_KEY }}
+          SHOPEE_SHOP_ID: ${{ secrets.SHOPEE_SHOP_ID }}
+          SHOPEE_ACCESS_TOKEN: ${{ secrets.SHOPEE_ACCESS_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -m src.main
+
+      # STEP 9: Commit the updated state file back to the repo, but only if
+      # it actually changed. The "|| echo" pattern means the step does not
+      # fail when there is nothing to commit.
+      - name: Commit updated state
+        run: |
+          git config user.name "itbisa-bot"
+          git config user.email "bot@itbisa.local"
+          git add data/processed_orders.json
+          git diff --staged --quiet || git commit -m "Update processed orders [skip ci]"
+          git push
