@@ -33,7 +33,7 @@ cloud VM, and no database.
 itbisa-shopee-bot/
 ├── .github/workflows/
 │   └── run.yml                      # GitHub Actions cron schedule
-├── data/                            # Runtime state, auto-committed by the bot
+├── data/                            # Runtime state, lives on bot-state branch (not main)
 │   ├── processed_orders.json        # Which orders we already sent to Telegram
 │   └── shopee_tokens.json           # Current access + refresh tokens (created by bootstrap)
 ├── scripts/
@@ -173,19 +173,20 @@ in production.
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_CHAT_ID`
 
-### 3. Commit and push data/shopee_tokens.json
+### 3. Push the initial tokens file
 
-The tokens file you bootstrapped locally must be in the repo for the
-workflow to authenticate. After running the bootstrap script:
+The tokens file you bootstrapped locally needs to be on the repo so the
+first workflow run can read it. Push it to main:
 
 ```
-git add data/shopee_tokens.json
-git commit -m "Bootstrap initial tokens"
+git add data/shopee_tokens.json data/processed_orders.json
+git commit -m "Bootstrap initial state files"
 git push
 ```
 
-The GitHub Actions workflow will continue updating this file
-automatically as it refreshes tokens over time.
+After the first workflow run, these files will be moved to the `bot-state`
+branch and main will not be touched by the bot again. See the State
+management section below for details.
 
 ### 4. Verify the workflow runs
 
@@ -196,6 +197,51 @@ in your Telegram chat within a minute.
 
 After the first successful manual run, the cron takes over and runs the
 bot automatically on schedule.
+
+## State management (the bot-state branch)
+
+This repo uses two branches:
+
+- **main** holds the source code. It is protected by branch rules so all
+  changes go through pull requests.
+- **bot-state** holds the runtime state files (`processed_orders.json` and
+  `shopee_tokens.json`). It is updated automatically by the bot on every
+  successful run, with no PR required.
+
+This separation matters because the bot needs to write state files
+constantly (every time it processes an order or refreshes a token), but
+those writes are not "code changes" that warrant code review. Putting them
+on a separate branch keeps `main` clean and lets your branch protection
+rules work as intended.
+
+The bot-state branch is created automatically the first time the workflow
+runs successfully. You do not need to create it manually. The first run
+will detect that bot-state does not exist yet, create it as an orphan
+branch with no shared history, and push the initial state files to it.
+
+### Bootstrapping for the first time
+
+When you initially set up the bot:
+
+1. Run `python scripts/bootstrap_tokens.py` locally to create
+   `data/shopee_tokens.json`.
+2. Push your code to `main` (with `data/processed_orders.json` as `{}`
+   and `data/shopee_tokens.json` from the bootstrap).
+3. Trigger the workflow manually from the Actions tab.
+4. The first run will create the `bot-state` branch and push the state
+   files there. From then on, all state updates go to bot-state and main
+   stays untouched by the bot.
+
+### What you should NOT do
+
+- Do not delete the `bot-state` branch unless you want to lose the bot's
+  memory of which orders were already processed (it will resend recent
+  labels) and which token is current (you will need to re-bootstrap).
+- Do not enable branch protection on `bot-state`. It is supposed to be
+  bot-writable.
+- Do not manually edit files on `bot-state` unless you are recovering
+  from a problem. Any manual edit is at risk of being overwritten by the
+  next scheduled run.
 
 ## How authentication works
 
