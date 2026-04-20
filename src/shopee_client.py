@@ -194,13 +194,21 @@ def get_shipping_label_pdf(order_sn):
     """
     Fetches the shipping label PDF for a single order.
 
-    Shopee's flow has two steps:
-      1. Tell Shopee to generate the label (create_shipping_document).
-      2. Wait a few seconds, then download the generated PDF.
+    The Shopee flow has four steps that must happen in order:
+      1. Get the suggested document type (THERMAL_AIR_WAYBILL or NORMAL).
+      2. Get the tracking number Shopee assigned for this order.
+      3. Tell Shopee to generate the document, passing both the type and
+         the tracking number explicitly.
+      4. Wait briefly, then download the generated PDF.
 
-    Sometimes the label is not ready right away, so we retry up to 3 times
-    within this single function call. If it is still not ready after that,
-    we return None and let the next scheduled run try again.
+    Steps 1 and 2 are required because Shopee rejects create_shipping_document
+    if the tracking number is missing or if the document type does not match
+    what the order needs. Calling them in this order matches what the Shopee
+    Seller App does internally when you tap "Print Label."
+
+    Sometimes the label is not ready right away in step 4, so we retry up to
+    3 times within this single function call. If it is still not ready after
+    that, we return None and let the next scheduled run try again.
 
     Args:
       order_sn: the Shopee order number string.
@@ -214,21 +222,31 @@ def get_shipping_label_pdf(order_sn):
         from src import shopee_client_fake
         return shopee_client_fake.get_shipping_label_pdf(order_sn)
 
-    # STEP 1: Ask Shopee to create the shipping document.
-    _create_shipping_document(order_sn)
+    # STEP 1: Get the suggested document type for this order. Different
+    # orders need different types (THERMAL_AIR_WAYBILL vs NORMAL_AIR_WAYBILL)
+    # depending on the courier and order configuration.
+    document_type = _get_suggested_document_type(order_sn)
 
-    # STEP 2: Try to download the PDF, with short retries for "not ready yet".
+    # STEP 2: Get the tracking number Shopee assigned to this order.
+    # create_shipping_document requires this to be passed explicitly,
+    # otherwise Shopee returns "tracking_number_invalid".
+    tracking_number = _get_tracking_number(order_sn)
+
+    # STEP 3: Ask Shopee to generate the shipping document.
+    _create_shipping_document(order_sn, document_type, tracking_number)
+
+    # STEP 4: Try to download the PDF, with short retries for "not ready yet".
     for attempt in range(3):
         # Wait a bit before each attempt. Shopee usually takes a few seconds.
         time.sleep(5)
 
-        pdf_bytes = _download_shipping_document(order_sn)
+        pdf_bytes = _download_shipping_document(order_sn, document_type)
         if pdf_bytes is not None:
             return pdf_bytes
 
         print(f"  Label for {order_sn} not ready yet, attempt {attempt + 1}/3")
 
-    # STEP 3: Give up for this run. The next scheduled run will try again.
+    # STEP 5: Give up for this run. The next scheduled run will try again.
     print(f"  Label for {order_sn} still not ready, will retry next run")
     return None
 
@@ -308,26 +326,82 @@ def _get_order_details(order_sns):
     return data.get("response", {}).get("order_list", [])
 
 
-def _create_shipping_document(order_sn):
+def _get_suggested_document_type(order_sn):
+    """
+    Asks Shopee which shipping_document_type to use for this order.
+
+    Shopee returns a list of selectable types and one suggested type.
+    We always use the suggested one, since that is what the order's
+    courier expects (THERMAL_AIR_WAYBILL for some, NORMAL_AIR_WAYBILL
+    for others).
+    """
+
+    path = "/api/v2/logistics/get_shipping_document_parameter"
+    url = _build_request_url(path)
+
+    body = {"order_list": [{"order_sn": order_sn}]}
+    response = requests.post(url, json=body, timeout=30)
+    response.raise_for_status()
+    data = response.json()
+
+    result_list = data.get("response", {}).get("result_list", [])
+    if not result_list:
+        # Fall back to the most common type if Shopee did not give us one.
+        return "THERMAL_AIR_WAYBILL"
+
+    return result_list[0].get("suggest_shipping_document_type", "THERMAL_AIR_WAYBILL")
+
+
+def _get_tracking_number(order_sn):
+    """
+    Fetches the tracking number Shopee assigned to this order.
+
+    create_shipping_document requires this to be passed explicitly,
+    otherwise Shopee returns "tracking_number_invalid". The tracking
+    number was assigned during ship_order or by the Shopee Seller App.
+    """
+
+    path = "/api/v2/logistics/get_tracking_number"
+    url = _build_request_url(path)
+
+    response = requests.get(url, params={"order_sn": order_sn}, timeout=30)
+    response.raise_for_status()
+    data = response.json()
+
+    return data.get("response", {}).get("tracking_number", "")
+
+
+def _create_shipping_document(order_sn, document_type, tracking_number):
     """
     Tells Shopee to start generating the shipping document for an order.
     This call returns quickly but the actual PDF takes a few seconds to generate.
+
+    Both document_type and tracking_number must be passed for Shopee to accept
+    the request. See get_shipping_label_pdf for why.
     """
 
     path = "/api/v2/logistics/create_shipping_document"
     url = _build_request_url(path)
 
     body = {
-        "order_list": [{"order_sn": order_sn}],
+        "order_list": [
+            {
+                "order_sn": order_sn,
+                "tracking_number": tracking_number,
+                "shipping_document_type": document_type,
+            }
+        ],
     }
 
     response = requests.post(url, json=body, timeout=30)
     response.raise_for_status()
 
 
-def _download_shipping_document(order_sn):
+def _download_shipping_document(order_sn, document_type):
     """
     Downloads the generated shipping document PDF.
+
+    The document_type must match the one used in create_shipping_document.
 
     Returns:
       bytes if the PDF is ready, or None if Shopee says it is still generating.
@@ -337,7 +411,12 @@ def _download_shipping_document(order_sn):
     url = _build_request_url(path)
 
     body = {
-        "order_list": [{"order_sn": order_sn}],
+        "order_list": [
+            {
+                "order_sn": order_sn,
+                "shipping_document_type": document_type,
+            }
+        ],
     }
 
     response = requests.post(url, json=body, timeout=30)
