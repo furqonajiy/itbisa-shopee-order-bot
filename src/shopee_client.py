@@ -10,8 +10,9 @@ Why this file exists:
   anything about HMAC, base URLs, or Shopee's quirks.
 
 Public functions (used by main.py):
-  - get_ready_to_ship_orders() -> list of order dicts
-  - get_shipping_label_pdf(order_id) -> bytes (or None if not ready yet)
+  - get_pending_orders() -> list of order dicts (READY_TO_SHIP + PROCESSED)
+  - ship_order_to_dropoff(order_sn) -> None (raises on error)
+  - get_shipping_label_pdf(order_sn) -> bytes (or None if not ready yet)
 
 Fake mode:
   When config.USE_FAKE_SHOPEE is True, the public functions below delegate
@@ -100,65 +101,114 @@ def _build_request_url(path):
 # Public functions (used by main.py)
 # ============================================================
 
-def get_ready_to_ship_orders():
+def get_pending_orders():
     """
-    Fetches the list of orders that are paid and waiting to be shipped.
+    Fetches orders that need a label printed.
+
+    This includes orders in two statuses:
+      - READY_TO_SHIP: paid, but seller has not yet arranged shipment.
+        These orders need ship_order_to_dropoff() called before the label
+        becomes available.
+      - PROCESSED: shipment arrangement done, label is being generated or
+        already available for download.
+
+    We fetch both statuses in one call because both need handling, and
+    main.py decides what to do based on each order's individual status.
 
     Returns:
-      A list of dicts. Each dict contains at least:
-        - order_sn: the Shopee order number (string)
-        - recipient_name, courier, items: used for the Telegram caption
+      A list of order dicts. Each dict includes order_status so the caller
+      can decide whether to ship_order or just fetch the label.
     """
 
     # STEP 0: In fake mode, delegate to the fake client and return early.
     if config.USE_FAKE_SHOPEE:
         from src import shopee_client_fake
-        return shopee_client_fake.get_ready_to_ship_orders()
+        return shopee_client_fake.get_pending_orders()
 
-    # STEP 1: Build the URL for the "get order list" endpoint.
-    path = "/api/v2/order/get_order_list"
-    url = _build_request_url(path)
+    # STEP 1: Shopee's get_order_list only accepts one status per call,
+    # so we make two calls and combine the results.
+    ready_to_ship = _get_order_summaries_by_status("READY_TO_SHIP")
+    processed = _get_order_summaries_by_status("PROCESSED")
+    all_summaries = ready_to_ship + processed
 
-    # STEP 2: Set up the time window. We look back 7 days to catch orders we
-    # might have missed, but the state file makes sure we never re-process them.
-    seven_days_ago = int(time.time()) - (7 * 24 * 60 * 60)
-    now = int(time.time())
-
-    params = {
-        "time_range_field": "create_time",
-        "time_from": seven_days_ago,
-        "time_to": now,
-        "page_size": 100,
-        "order_status": "READY_TO_SHIP",
-    }
-
-    # STEP 3: Make the HTTP call.
-    response = requests.get(url, params=params, timeout=30)
-    response.raise_for_status()
-    data = response.json()
-
-    # STEP 4: Extract the order numbers from the response.
-    order_summaries = data.get("response", {}).get("order_list", [])
-    if not order_summaries:
+    if not all_summaries:
         return []
 
-    order_sns = [o["order_sn"] for o in order_summaries]
+    # STEP 2: Get full details for all orders in one batched call.
+    # We keep track of which order had which status so we can attach it to
+    # the detail dict (Shopee's get_order_detail does not always return it).
+    status_by_sn = {s["order_sn"]: s.get("order_status") for s in all_summaries}
+    order_sns = list(status_by_sn.keys())
 
-    # STEP 5: Fetch full details for those orders (recipient name, items, etc).
-    return _get_order_details(order_sns)
+    details = _get_order_details(order_sns)
+
+    # STEP 3: Attach the status from the summary to each detail dict so
+    # main.py can decide what to do per order.
+    for d in details:
+        if not d.get("order_status"):
+            d["order_status"] = status_by_sn.get(d["order_sn"], "UNKNOWN")
+
+    return details
+
+
+def ship_order_to_dropoff(order_sn):
+    """
+    Tells Shopee that the seller will drop off the package at the courier
+    counter. This is the API equivalent of clicking
+    "Atur Pengiriman" -> "Antar ke Counter" in the Shopee Seller app.
+
+    After this call succeeds, the order moves from READY_TO_SHIP to
+    PROCESSED, and Shopee starts generating the shipping label.
+
+    Args:
+      order_sn: the Shopee order number string.
+
+    Raises:
+      requests.HTTPError if Shopee rejects the request.
+    """
+
+    # STEP 0: In fake mode, delegate to the fake client.
+    if config.USE_FAKE_SHOPEE:
+        from src import shopee_client_fake
+        return shopee_client_fake.ship_order_to_dropoff(order_sn)
+
+    # STEP 1: Build the URL for the ship_order endpoint.
+    path = "/api/v2/logistics/ship_order"
+    url = _build_request_url(path)
+
+    # STEP 2: Build the request body. We always use dropoff because that
+    # matches how the warehouse operates (employee carries packages to the
+    # courier counter at the end of the day).
+    body = {
+        "order_sn": order_sn,
+        "dropoff": {},  # Empty dict means "use the default dropoff option"
+    }
+
+    # STEP 3: Make the call. Any error (4xx or 5xx) will raise an exception
+    # and bubble up to main.py, which decides whether to retry or skip.
+    response = requests.post(url, json=body, timeout=30)
+    response.raise_for_status()
 
 
 def get_shipping_label_pdf(order_sn):
     """
     Fetches the shipping label PDF for a single order.
 
-    Shopee's flow has two steps:
-      1. Tell Shopee to generate the label (create_shipping_document).
-      2. Wait a few seconds, then download the generated PDF.
+    The Shopee flow has four steps that must happen in order:
+      1. Get the suggested document type (THERMAL_AIR_WAYBILL or NORMAL).
+      2. Get the tracking number Shopee assigned for this order.
+      3. Tell Shopee to generate the document, passing both the type and
+         the tracking number explicitly.
+      4. Wait briefly, then download the generated PDF.
 
-    Sometimes the label is not ready right away, so we retry up to 3 times
-    within this single function call. If it is still not ready after that,
-    we return None and let the next scheduled run try again.
+    Steps 1 and 2 are required because Shopee rejects create_shipping_document
+    if the tracking number is missing or if the document type does not match
+    what the order needs. Calling them in this order matches what the Shopee
+    Seller App does internally when you tap "Print Label."
+
+    Sometimes the label is not ready right away in step 4, so we retry up to
+    3 times within this single function call. If it is still not ready after
+    that, we return None and let the next scheduled run try again.
 
     Args:
       order_sn: the Shopee order number string.
@@ -172,21 +222,31 @@ def get_shipping_label_pdf(order_sn):
         from src import shopee_client_fake
         return shopee_client_fake.get_shipping_label_pdf(order_sn)
 
-    # STEP 1: Ask Shopee to create the shipping document.
-    _create_shipping_document(order_sn)
+    # STEP 1: Get the suggested document type for this order. Different
+    # orders need different types (THERMAL_AIR_WAYBILL vs NORMAL_AIR_WAYBILL)
+    # depending on the courier and order configuration.
+    document_type = _get_suggested_document_type(order_sn)
 
-    # STEP 2: Try to download the PDF, with short retries for "not ready yet".
+    # STEP 2: Get the tracking number Shopee assigned to this order.
+    # create_shipping_document requires this to be passed explicitly,
+    # otherwise Shopee returns "tracking_number_invalid".
+    tracking_number = _get_tracking_number(order_sn)
+
+    # STEP 3: Ask Shopee to generate the shipping document.
+    _create_shipping_document(order_sn, document_type, tracking_number)
+
+    # STEP 4: Try to download the PDF, with short retries for "not ready yet".
     for attempt in range(3):
         # Wait a bit before each attempt. Shopee usually takes a few seconds.
         time.sleep(5)
 
-        pdf_bytes = _download_shipping_document(order_sn)
+        pdf_bytes = _download_shipping_document(order_sn, document_type)
         if pdf_bytes is not None:
             return pdf_bytes
 
         print(f"  Label for {order_sn} not ready yet, attempt {attempt + 1}/3")
 
-    # STEP 3: Give up for this run. The next scheduled run will try again.
+    # STEP 5: Give up for this run. The next scheduled run will try again.
     print(f"  Label for {order_sn} still not ready, will retry next run")
     return None
 
@@ -194,6 +254,50 @@ def get_shipping_label_pdf(order_sn):
 # ============================================================
 # More internal helpers (used only by the public functions above)
 # ============================================================
+
+def _get_order_summaries_by_status(order_status):
+    """
+    Fetches a single page of order summaries (order_sn + status only) for
+    the given status. The full details come from a separate call.
+
+    Args:
+      order_status: one of READY_TO_SHIP, PROCESSED, etc.
+
+    Returns:
+      A list of {"order_sn": ..., "order_status": ...} dicts. Empty list
+      if there are none.
+    """
+
+    # STEP 1: Build the URL for the "get order list" endpoint.
+    path = "/api/v2/order/get_order_list"
+    url = _build_request_url(path)
+
+    # STEP 2: Look back 7 days to catch any orders we might have missed.
+    # The state file ensures we never re-process them.
+    seven_days_ago = int(time.time()) - (7 * 24 * 60 * 60)
+    now = int(time.time())
+
+    params = {
+        "time_range_field": "create_time",
+        "time_from": seven_days_ago,
+        "time_to": now,
+        "page_size": 100,
+        "order_status": order_status,
+    }
+
+    # STEP 3: Make the call.
+    response = requests.get(url, params=params, timeout=30)
+    response.raise_for_status()
+    data = response.json()
+
+    # STEP 4: Tag each summary with the status we asked for, since
+    # Shopee does not always echo it back in the response.
+    summaries = data.get("response", {}).get("order_list", [])
+    for s in summaries:
+        s["order_status"] = order_status
+
+    return summaries
+
 
 def _get_order_details(order_sns):
     """
@@ -207,10 +311,15 @@ def _get_order_details(order_sns):
     path = "/api/v2/order/get_order_detail"
     url = _build_request_url(path)
 
-    # STEP 2: Ask for the specific fields we need for the Telegram caption.
+    # STEP 2: Ask for the specific fields we need for the Telegram caption,
+    # plus order_status so main.py can decide what to do with each order.
+    # We do NOT request recipient_address because Shopee masks it anyway,
+    # and the unmasked details are visible on the printed label.
     params = {
         "order_sn_list": ",".join(order_sns),
-        "response_optional_fields": "recipient_address,item_list,buyer_username",
+        "response_optional_fields": (
+            "item_list,order_status,shipping_carrier"
+        ),
     }
 
     # STEP 3: Make the call and return the order list.
@@ -221,26 +330,82 @@ def _get_order_details(order_sns):
     return data.get("response", {}).get("order_list", [])
 
 
-def _create_shipping_document(order_sn):
+def _get_suggested_document_type(order_sn):
+    """
+    Asks Shopee which shipping_document_type to use for this order.
+
+    Shopee returns a list of selectable types and one suggested type.
+    We always use the suggested one, since that is what the order's
+    courier expects (THERMAL_AIR_WAYBILL for some, NORMAL_AIR_WAYBILL
+    for others).
+    """
+
+    path = "/api/v2/logistics/get_shipping_document_parameter"
+    url = _build_request_url(path)
+
+    body = {"order_list": [{"order_sn": order_sn}]}
+    response = requests.post(url, json=body, timeout=30)
+    response.raise_for_status()
+    data = response.json()
+
+    result_list = data.get("response", {}).get("result_list", [])
+    if not result_list:
+        # Fall back to the most common type if Shopee did not give us one.
+        return "THERMAL_AIR_WAYBILL"
+
+    return result_list[0].get("suggest_shipping_document_type", "THERMAL_AIR_WAYBILL")
+
+
+def _get_tracking_number(order_sn):
+    """
+    Fetches the tracking number Shopee assigned to this order.
+
+    create_shipping_document requires this to be passed explicitly,
+    otherwise Shopee returns "tracking_number_invalid". The tracking
+    number was assigned during ship_order or by the Shopee Seller App.
+    """
+
+    path = "/api/v2/logistics/get_tracking_number"
+    url = _build_request_url(path)
+
+    response = requests.get(url, params={"order_sn": order_sn}, timeout=30)
+    response.raise_for_status()
+    data = response.json()
+
+    return data.get("response", {}).get("tracking_number", "")
+
+
+def _create_shipping_document(order_sn, document_type, tracking_number):
     """
     Tells Shopee to start generating the shipping document for an order.
     This call returns quickly but the actual PDF takes a few seconds to generate.
+
+    Both document_type and tracking_number must be passed for Shopee to accept
+    the request. See get_shipping_label_pdf for why.
     """
 
     path = "/api/v2/logistics/create_shipping_document"
     url = _build_request_url(path)
 
     body = {
-        "order_list": [{"order_sn": order_sn}],
+        "order_list": [
+            {
+                "order_sn": order_sn,
+                "tracking_number": tracking_number,
+                "shipping_document_type": document_type,
+            }
+        ],
     }
 
     response = requests.post(url, json=body, timeout=30)
     response.raise_for_status()
 
 
-def _download_shipping_document(order_sn):
+def _download_shipping_document(order_sn, document_type):
     """
     Downloads the generated shipping document PDF.
+
+    The document_type must match the one used in create_shipping_document.
 
     Returns:
       bytes if the PDF is ready, or None if Shopee says it is still generating.
@@ -250,7 +415,12 @@ def _download_shipping_document(order_sn):
     url = _build_request_url(path)
 
     body = {
-        "order_list": [{"order_sn": order_sn}],
+        "order_list": [
+            {
+                "order_sn": order_sn,
+                "shipping_document_type": document_type,
+            }
+        ],
     }
 
     response = requests.post(url, json=body, timeout=30)

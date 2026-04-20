@@ -126,6 +126,10 @@ def build_caption(order):
     Elektronika"), but warehouse shelves are organized by SKU. SKU is
     short, precise, and matches how items are physically labeled.
 
+    We do not show recipient name or address because Shopee masks them
+    in their API responses. The full unmasked details are visible on the
+    printed label itself, so the employee can see them when packing.
+
     Args:
       order: the order dict returned by shopee_client.
 
@@ -133,10 +137,9 @@ def build_caption(order):
       A formatted string ready to use as a Telegram caption.
     """
 
-    # STEP 1: Pull out the fields we want to show.
+    # STEP 1: Pull out the basic fields.
     order_sn = order.get("order_sn", "?")
-    recipient = order.get("recipient_address", {}).get("name", "?")
-    courier = order.get("shipping_carrier", "?")
+    courier = order.get("shipping_carrier") or "?"
 
     # STEP 2: Build a short summary of items using SKUs.
     items = order.get("item_list", [])
@@ -150,7 +153,6 @@ def build_caption(order):
     # STEP 3: Assemble the caption in Bahasa Indonesia.
     caption = (
         f"📦 No. Pesanan: {order_sn}\n"
-        f"👤 Penerima: {recipient}\n"
         f"🚚 Kurir: {courier}\n"
         f"\n"
         f"Barang:\n"
