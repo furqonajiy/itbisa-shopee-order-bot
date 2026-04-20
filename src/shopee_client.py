@@ -10,8 +10,9 @@ Why this file exists:
   anything about HMAC, base URLs, or Shopee's quirks.
 
 Public functions (used by main.py):
-  - get_ready_to_ship_orders() -> list of order dicts
-  - get_shipping_label_pdf(order_id) -> bytes (or None if not ready yet)
+  - get_pending_orders() -> list of order dicts (READY_TO_SHIP + PROCESSED)
+  - ship_order_to_dropoff(order_sn) -> None (raises on error)
+  - get_shipping_label_pdf(order_sn) -> bytes (or None if not ready yet)
 
 Fake mode:
   When config.USE_FAKE_SHOPEE is True, the public functions below delegate
@@ -100,52 +101,93 @@ def _build_request_url(path):
 # Public functions (used by main.py)
 # ============================================================
 
-def get_ready_to_ship_orders():
+def get_pending_orders():
     """
-    Fetches the list of orders that are paid and waiting to be shipped.
+    Fetches orders that need a label printed.
+
+    This includes orders in two statuses:
+      - READY_TO_SHIP: paid, but seller has not yet arranged shipment.
+        These orders need ship_order_to_dropoff() called before the label
+        becomes available.
+      - PROCESSED: shipment arrangement done, label is being generated or
+        already available for download.
+
+    We fetch both statuses in one call because both need handling, and
+    main.py decides what to do based on each order's individual status.
 
     Returns:
-      A list of dicts. Each dict contains at least:
-        - order_sn: the Shopee order number (string)
-        - recipient_name, courier, items: used for the Telegram caption
+      A list of order dicts. Each dict includes order_status so the caller
+      can decide whether to ship_order or just fetch the label.
     """
 
     # STEP 0: In fake mode, delegate to the fake client and return early.
     if config.USE_FAKE_SHOPEE:
         from src import shopee_client_fake
-        return shopee_client_fake.get_ready_to_ship_orders()
+        return shopee_client_fake.get_pending_orders()
 
-    # STEP 1: Build the URL for the "get order list" endpoint.
-    path = "/api/v2/order/get_order_list"
-    url = _build_request_url(path)
+    # STEP 1: Shopee's get_order_list only accepts one status per call,
+    # so we make two calls and combine the results.
+    ready_to_ship = _get_order_summaries_by_status("READY_TO_SHIP")
+    processed = _get_order_summaries_by_status("PROCESSED")
+    all_summaries = ready_to_ship + processed
 
-    # STEP 2: Set up the time window. We look back 7 days to catch orders we
-    # might have missed, but the state file makes sure we never re-process them.
-    seven_days_ago = int(time.time()) - (7 * 24 * 60 * 60)
-    now = int(time.time())
-
-    params = {
-        "time_range_field": "create_time",
-        "time_from": seven_days_ago,
-        "time_to": now,
-        "page_size": 100,
-        "order_status": "READY_TO_SHIP",
-    }
-
-    # STEP 3: Make the HTTP call.
-    response = requests.get(url, params=params, timeout=30)
-    response.raise_for_status()
-    data = response.json()
-
-    # STEP 4: Extract the order numbers from the response.
-    order_summaries = data.get("response", {}).get("order_list", [])
-    if not order_summaries:
+    if not all_summaries:
         return []
 
-    order_sns = [o["order_sn"] for o in order_summaries]
+    # STEP 2: Get full details for all orders in one batched call.
+    # We keep track of which order had which status so we can attach it to
+    # the detail dict (Shopee's get_order_detail does not always return it).
+    status_by_sn = {s["order_sn"]: s.get("order_status") for s in all_summaries}
+    order_sns = list(status_by_sn.keys())
 
-    # STEP 5: Fetch full details for those orders (recipient name, items, etc).
-    return _get_order_details(order_sns)
+    details = _get_order_details(order_sns)
+
+    # STEP 3: Attach the status from the summary to each detail dict so
+    # main.py can decide what to do per order.
+    for d in details:
+        if not d.get("order_status"):
+            d["order_status"] = status_by_sn.get(d["order_sn"], "UNKNOWN")
+
+    return details
+
+
+def ship_order_to_dropoff(order_sn):
+    """
+    Tells Shopee that the seller will drop off the package at the courier
+    counter. This is the API equivalent of clicking
+    "Atur Pengiriman" -> "Antar ke Counter" in the Shopee Seller app.
+
+    After this call succeeds, the order moves from READY_TO_SHIP to
+    PROCESSED, and Shopee starts generating the shipping label.
+
+    Args:
+      order_sn: the Shopee order number string.
+
+    Raises:
+      requests.HTTPError if Shopee rejects the request.
+    """
+
+    # STEP 0: In fake mode, delegate to the fake client.
+    if config.USE_FAKE_SHOPEE:
+        from src import shopee_client_fake
+        return shopee_client_fake.ship_order_to_dropoff(order_sn)
+
+    # STEP 1: Build the URL for the ship_order endpoint.
+    path = "/api/v2/logistics/ship_order"
+    url = _build_request_url(path)
+
+    # STEP 2: Build the request body. We always use dropoff because that
+    # matches how the warehouse operates (employee carries packages to the
+    # courier counter at the end of the day).
+    body = {
+        "order_sn": order_sn,
+        "dropoff": {},  # Empty dict means "use the default dropoff option"
+    }
+
+    # STEP 3: Make the call. Any error (4xx or 5xx) will raise an exception
+    # and bubble up to main.py, which decides whether to retry or skip.
+    response = requests.post(url, json=body, timeout=30)
+    response.raise_for_status()
 
 
 def get_shipping_label_pdf(order_sn):
@@ -195,6 +237,50 @@ def get_shipping_label_pdf(order_sn):
 # More internal helpers (used only by the public functions above)
 # ============================================================
 
+def _get_order_summaries_by_status(order_status):
+    """
+    Fetches a single page of order summaries (order_sn + status only) for
+    the given status. The full details come from a separate call.
+
+    Args:
+      order_status: one of READY_TO_SHIP, PROCESSED, etc.
+
+    Returns:
+      A list of {"order_sn": ..., "order_status": ...} dicts. Empty list
+      if there are none.
+    """
+
+    # STEP 1: Build the URL for the "get order list" endpoint.
+    path = "/api/v2/order/get_order_list"
+    url = _build_request_url(path)
+
+    # STEP 2: Look back 7 days to catch any orders we might have missed.
+    # The state file ensures we never re-process them.
+    seven_days_ago = int(time.time()) - (7 * 24 * 60 * 60)
+    now = int(time.time())
+
+    params = {
+        "time_range_field": "create_time",
+        "time_from": seven_days_ago,
+        "time_to": now,
+        "page_size": 100,
+        "order_status": order_status,
+    }
+
+    # STEP 3: Make the call.
+    response = requests.get(url, params=params, timeout=30)
+    response.raise_for_status()
+    data = response.json()
+
+    # STEP 4: Tag each summary with the status we asked for, since
+    # Shopee does not always echo it back in the response.
+    summaries = data.get("response", {}).get("order_list", [])
+    for s in summaries:
+        s["order_status"] = order_status
+
+    return summaries
+
+
 def _get_order_details(order_sns):
     """
     Fetches full details for a list of order numbers.
@@ -207,10 +293,11 @@ def _get_order_details(order_sns):
     path = "/api/v2/order/get_order_detail"
     url = _build_request_url(path)
 
-    # STEP 2: Ask for the specific fields we need for the Telegram caption.
+    # STEP 2: Ask for the specific fields we need for the Telegram caption,
+    # plus order_status so main.py can decide what to do with each order.
     params = {
         "order_sn_list": ",".join(order_sns),
-        "response_optional_fields": "recipient_address,item_list,buyer_username",
+        "response_optional_fields": "recipient_address,item_list,buyer_username,order_status",
     }
 
     # STEP 3: Make the call and return the order list.

@@ -9,11 +9,16 @@ from their phone without any manual downloading.
 Every hour from 09:00 to 17:00 Jakarta time, GitHub Actions runs a Python
 script that:
 
-1. Asks Shopee for orders that are ready to ship.
+1. Asks Shopee for orders in `READY_TO_SHIP` or `PROCESSED` status.
 2. Skips any orders already processed in a previous run.
-3. For each new order: downloads the shipping label PDF, converts it to a
-   PNG image, and sends it to a Telegram chat with a caption describing
-   the order in Bahasa Indonesia.
+3. For each new order:
+   - If still `READY_TO_SHIP`, calls Shopee's `ship_order` API with
+     dropoff method (equivalent to clicking "Atur Pengiriman" → "Antar ke
+     Counter" in the Shopee Seller app). This moves the order to
+     `PROCESSED` and triggers label generation.
+   - Downloads the shipping label PDF, converts it to a PNG image, and
+     sends it to a Telegram chat with a caption describing the order in
+     Bahasa Indonesia.
 4. Sends a heartbeat summary at the end of every run so the employee knows
    the bot is alive, even when no new orders came in.
 5. Remembers what was processed by committing small JSON files back to the
