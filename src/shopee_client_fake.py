@@ -35,6 +35,7 @@ from reportlab.pdfgen import canvas
 _FAKE_ORDERS = [
     {
         "order_sn": "2604186D4MY0Y0",
+        "order_status": "PROCESSED",  # Already shipped, label is ready
         "shipping_carrier": "SPX Hemat",
         "recipient_address": {
             "name": "d*****j",
@@ -58,6 +59,7 @@ _FAKE_ORDERS = [
     },
     {
         "order_sn": "2604186D4MY0Y1",
+        "order_status": "READY_TO_SHIP",  # Needs ship_order_to_dropoff first
         "shipping_carrier": "JNE REG",
         "recipient_address": {
             "name": "b*****o",
@@ -87,6 +89,7 @@ _FAKE_ORDERS = [
     },
     {
         "order_sn": "2604186D4MY0Y2",
+        "order_status": "READY_TO_SHIP",  # Needs ship_order_to_dropoff first
         "shipping_carrier": "J&T Express",
         "recipient_address": {
             "name": "s****a",
@@ -107,40 +110,72 @@ _FAKE_ORDERS = [
 ]
 
 
+# Tracks which fake orders have been "shipped" during this run.
+# Used so that ship_order_to_dropoff and get_shipping_label_pdf behave
+# realistically: an order must be shipped before its label is available.
+_shipped_in_this_run = set()
+
+
 # ============================================================
 # Public functions (same signatures as shopee_client.py)
 # ============================================================
 
-def get_ready_to_ship_orders():
-    """Returns the canned list of fake orders."""
+def get_pending_orders():
+    """Returns the canned list of fake orders (both READY_TO_SHIP and PROCESSED)."""
 
     # STEP 1: Print a clear marker so we never confuse fake runs with real ones.
-    print("  [FAKE MODE] Returning 3 canned fake orders")
+    print(f"  [FAKE MODE] Returning {len(_FAKE_ORDERS)} canned fake orders")
 
     # STEP 2: Return a copy of the list so callers cannot accidentally mutate it.
     return [dict(order) for order in _FAKE_ORDERS]
+
+
+def ship_order_to_dropoff(order_sn):
+    """
+    Simulates calling Shopee's ship_order endpoint with dropoff method.
+
+    In real Shopee, this would move the order from READY_TO_SHIP to PROCESSED
+    and trigger label generation. In our fake, we just record that this order
+    has been "shipped" so that get_shipping_label_pdf below can succeed.
+    """
+
+    # STEP 1: Verify the order exists in our fake data.
+    order = next((o for o in _FAKE_ORDERS if o["order_sn"] == order_sn), None)
+    if order is None:
+        raise ValueError(f"[FAKE MODE] Unknown order_sn: {order_sn}")
+
+    # STEP 2: Mark it as shipped in our in-memory state.
+    _shipped_in_this_run.add(order_sn)
+    print(f"  [FAKE MODE] Shipped {order_sn} to dropoff (status now PROCESSED)")
 
 
 def get_shipping_label_pdf(order_sn):
     """
     Generates a dummy PDF that looks roughly like a shipping label.
 
-    The PDF is created in memory using reportlab. It contains the order
-    number, recipient info, and items, formatted to fit on an A6 page
-    (which is the standard label size in Indonesia).
+    For READY_TO_SHIP orders, the label is only available AFTER
+    ship_order_to_dropoff has been called. For PROCESSED orders, the label
+    is available immediately. This simulates the real Shopee behavior.
 
     Args:
       order_sn: the fake order number to look up.
 
     Returns:
-      PDF file contents as bytes, or None if the order_sn is not in our
-      fake data (which would indicate a bug in the test setup).
+      PDF file contents as bytes, or None if the order is in READY_TO_SHIP
+      and ship_order_to_dropoff has not been called yet.
     """
 
     # STEP 1: Look up the order in our canned data.
     order = next((o for o in _FAKE_ORDERS if o["order_sn"] == order_sn), None)
     if order is None:
         print(f"  [FAKE MODE] Unknown order_sn: {order_sn}")
+        return None
+
+    # STEP 2: Check if the label is actually available.
+    # PROCESSED orders always have labels. READY_TO_SHIP orders need ship_order
+    # to have been called first.
+    if order["order_status"] == "READY_TO_SHIP" and order_sn not in _shipped_in_this_run:
+        print(f"  [FAKE MODE] {order_sn} not shipped yet, label unavailable")
         return None
 
     print(f"  [FAKE MODE] Generating dummy PDF for {order_sn}")
