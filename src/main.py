@@ -5,11 +5,16 @@ The entry point. Run this file to do one full processing cycle.
 
 What this script does, in order:
   1. Load the list of order IDs we already processed.
-  2. Ask Shopee for orders that are ready to ship.
+  2. Ask Shopee for orders in READY_TO_SHIP or PROCESSED status.
   3. Filter out the ones we already handled.
   4. Stop if there are too many (safety check).
-  5. For each new order: fetch the label, convert it, send to Telegram,
-     and only mark it as processed AFTER Telegram confirms delivery.
+  5. For each new order:
+     a. If READY_TO_SHIP, call ship_order_to_dropoff to arrange shipment
+        (equivalent to clicking "Atur Pengiriman" -> "Antar ke Counter"
+        in the Shopee Seller app). This moves the order to PROCESSED.
+     b. Fetch the shipping label PDF (with retries while Shopee generates it).
+     c. Convert PDF to PNG, send to Telegram, mark as processed only AFTER
+        Telegram confirms delivery.
   6. Save the updated state file so future runs remember.
   7. Send a heartbeat summary to Telegram so the employee knows the bot
      is alive, even if there were no orders this run.
@@ -73,11 +78,13 @@ def _do_run():
     processed = state_manager.load()
     print(f"Loaded state: {len(processed)} previously processed orders remembered")
 
-    # STEP 2: Fetch the current list of ready-to-ship orders from Shopee.
-    # The shopee_client will automatically refresh tokens if needed.
-    print("Fetching orders from Shopee...")
-    orders = shopee_client.get_ready_to_ship_orders()
-    print(f"Shopee returned {len(orders)} ready-to-ship orders")
+    # STEP 2: Fetch all orders that need a label printed. This includes both
+    # READY_TO_SHIP (need shipment arrangement first) and PROCESSED (label
+    # is being generated or ready). The token will be refreshed automatically
+    # by shopee_client if needed.
+    print("Fetching pending orders from Shopee...")
+    orders = shopee_client.get_pending_orders()
+    print(f"Shopee returned {len(orders)} pending orders")
 
     # STEP 3: Filter out orders we already processed in a previous run.
     new_orders = [o for o in orders if o["order_sn"] not in processed]
@@ -107,23 +114,42 @@ def _do_run():
     skipped_count = 0
     for order in new_orders:
         order_sn = order["order_sn"]
-        print(f"\nProcessing order {order_sn}...")
+        order_status = order.get("order_status", "UNKNOWN")
+        print(f"\nProcessing order {order_sn} (status: {order_status})...")
 
-        # STEP 6a: Get the shipping label PDF from Shopee.
+        # STEP 6a: If the order is still in READY_TO_SHIP, we need to tell
+        # Shopee to arrange shipment first. We always use dropoff because
+        # the warehouse drops packages at the courier counter at end of day.
+        # After this call, the order moves to PROCESSED and Shopee starts
+        # generating the shipping label.
+        if order_status == "READY_TO_SHIP":
+            try:
+                print(f"  Arranging dropoff shipment for {order_sn}...")
+                shopee_client.ship_order_to_dropoff(order_sn)
+                print(f"  Shipment arranged. Label generation will start.")
+            except Exception as e:
+                print(f"  ✗ Failed to arrange shipment for {order_sn}: {e}")
+                print(f"    Will retry next run.")
+                skipped_count += 1
+                continue
+
+        # STEP 6b: Get the shipping label PDF from Shopee. The retry logic
+        # inside get_shipping_label_pdf handles the case where Shopee is
+        # still generating the label when we ask for it.
         pdf_bytes = shopee_client.get_shipping_label_pdf(order_sn)
         if pdf_bytes is None:
             print(f"  Skipping {order_sn} (label not ready). Will retry next run.")
             skipped_count += 1
             continue
 
-        # STEP 6b: Convert the PDF to a PNG image.
+        # STEP 6c: Convert the PDF to a PNG image.
         png_bytes = label_processor.pdf_to_png(pdf_bytes)
 
-        # STEP 6c: Build the caption and send to Telegram.
+        # STEP 6d: Build the caption and send to Telegram.
         caption = telegram_sender.build_caption(order)
         delivered = telegram_sender.send_label(png_bytes, caption)
 
-        # STEP 6d: Only mark as processed if Telegram confirmed delivery.
+        # STEP 6e: Only mark as processed if Telegram confirmed delivery.
         # This is the safety rule: if Telegram fails, we want the next run
         # to retry this order, not silently skip it forever.
         if delivered:
