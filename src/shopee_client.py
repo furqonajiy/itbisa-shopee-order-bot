@@ -313,9 +313,13 @@ def _get_order_details(order_sns):
 
     # STEP 2: Ask for the specific fields we need for the Telegram caption,
     # plus order_status so main.py can decide what to do with each order.
+    # We do NOT request recipient_address because Shopee masks it anyway,
+    # and the unmasked details are visible on the printed label.
     params = {
         "order_sn_list": ",".join(order_sns),
-        "response_optional_fields": "recipient_address,item_list,buyer_username,order_status",
+        "response_optional_fields": (
+            "item_list,order_status,shipping_carrier"
+        ),
     }
 
     # STEP 3: Make the call and return the order list.
