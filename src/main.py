@@ -86,8 +86,13 @@ def _do_run():
     orders = shopee_client.get_pending_orders()
     print(f"Shopee returned {len(orders)} pending orders")
 
-    # STEP 3: Filter out orders we already processed in a previous run.
-    new_orders = [o for o in orders if o["order_sn"] not in processed]
+    # STEP 3: Filter out orders we already processed in a previous run,
+    # then sort them by order_sn ascending so Telegram receives labels in a
+    # stable oldest-to-newest order.
+    new_orders = sorted(
+        (o for o in orders if o["order_sn"] not in processed),
+        key=lambda o: str(o["order_sn"]),
+    )
     print(f"Of those, {len(new_orders)} are new and need processing")
 
     # STEP 4: If there are no new orders, send a heartbeat and exit.
