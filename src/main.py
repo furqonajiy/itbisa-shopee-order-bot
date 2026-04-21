@@ -142,12 +142,13 @@ def _do_run():
             skipped_count += 1
             continue
 
-        # STEP 6c: Convert the PDF to a PNG image.
-        png_bytes = label_processor.pdf_to_png(pdf_bytes)
+            # STEP 6c: Convert the PDF to one or more PNG images.
+        png_pages = label_processor.pdf_to_pngs(pdf_bytes)
+        print(f"  Rendered {len(png_pages)} label page(s) from PDF")
 
-        # STEP 6d: Build the caption and send to Telegram.
+        # STEP 6d: Build the caption and send all pages to Telegram.
         caption = telegram_sender.build_caption(order)
-        delivered = telegram_sender.send_label(png_bytes, caption)
+        delivered = telegram_sender.send_label(png_pages, caption)
 
         # STEP 6e: Only mark as processed if Telegram confirmed delivery.
         # This is the safety rule: if Telegram fails, we want the next run

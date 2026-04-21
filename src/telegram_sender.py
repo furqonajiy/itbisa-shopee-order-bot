@@ -21,16 +21,18 @@ from src import config
 _TELEGRAM_API_URL = f"https://api.telegram.org/bot{config.TELEGRAM_BOT_TOKEN}"
 
 
-def send_label(png_bytes, caption):
+def send_label(png_bytes_or_pages, caption):
     """
-    Sends a single label image to the Telegram chat.
+    Sends one or more label images to the Telegram chat.
 
     Args:
-      png_bytes: the image contents as bytes.
-      caption: a string shown below the image (order info for the employee).
+      png_bytes_or_pages: either a single image as bytes, or a list of image
+        bytes when the original PDF had multiple pages.
+      caption: a string shown below the first image (order info for the employee).
 
     Returns:
-      True if Telegram confirmed delivery, False if anything went wrong.
+      True if Telegram confirmed delivery for all pages, False if anything
+      went wrong on any page.
 
     Why we return a bool instead of raising an exception:
       main.py uses this return value to decide whether to mark the order
@@ -38,38 +40,56 @@ def send_label(png_bytes, caption):
       every call in try/except, which is noisier than just checking a bool.
     """
 
-    # STEP 1: Build the URL for the sendPhoto endpoint.
+    # STEP 1: Normalize the input so we always iterate over a list of pages.
+    if isinstance(png_bytes_or_pages, (bytes, bytearray)):
+        png_pages = [bytes(png_bytes_or_pages)]
+    else:
+        png_pages = list(png_bytes_or_pages)
+
+    total_pages = len(png_pages)
+    if total_pages == 0:
+        print("  Telegram send skipped: no label pages to send")
+        return False
+
+    # STEP 2: Send each page in order using Telegram's sendPhoto endpoint.
     url = f"{_TELEGRAM_API_URL}/sendPhoto"
+    for page_index, png_bytes in enumerate(png_pages, start=1):
+        files = {
+            "photo": (f"label_{page_index}.png", png_bytes, "image/png"),
+        }
 
-    # STEP 2: Prepare the multipart form data.
-    # Telegram accepts the image as a file upload via the "photo" field.
-    files = {
-        "photo": ("label.png", png_bytes, "image/png"),
-    }
-    data = {
-        "chat_id": config.TELEGRAM_CHAT_ID,
-        "caption": caption,
-    }
+        page_caption = caption
+        if total_pages > 1:
+            page_label = f"🧾 Halaman {page_index}/{total_pages}"
+            page_caption = f"{caption}\n\n{page_label}" if page_index == 1 else page_label
 
-    # STEP 3: Send the request. We catch errors here so we can return False
-    # instead of letting an exception bubble up to main.py.
-    try:
-        response = requests.post(url, files=files, data=data, timeout=30)
-    except requests.RequestException as e:
-        print(f"  Telegram request failed: {e}")
-        return False
+        data = {
+            "chat_id": config.TELEGRAM_CHAT_ID,
+            "caption": page_caption,
+        }
 
-    # STEP 4: Check the response. Telegram returns {"ok": true, ...} on success.
-    if response.status_code != 200:
-        print(f"  Telegram returned status {response.status_code}: {response.text}")
-        return False
+        # STEP 3: Send the request. We catch errors here so we can return False
+        # instead of letting an exception bubble up to main.py.
+        try:
+            response = requests.post(url, files=files, data=data, timeout=30)
+        except requests.RequestException as e:
+            print(f"  Telegram request failed on page {page_index}: {e}")
+            return False
 
-    response_json = response.json()
-    if not response_json.get("ok"):
-        print(f"  Telegram rejected the message: {response_json}")
-        return False
+        # STEP 4: Check the response. Telegram returns {"ok": true, ...} on success.
+        if response.status_code != 200:
+            print(
+                f"  Telegram returned status {response.status_code} "
+                f"on page {page_index}: {response.text}"
+            )
+            return False
 
-    # STEP 5: Delivery confirmed.
+        response_json = response.json()
+        if not response_json.get("ok"):
+            print(f"  Telegram rejected page {page_index}: {response_json}")
+            return False
+
+    # STEP 5: Delivery confirmed for every page.
     return True
 
 
