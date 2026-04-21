@@ -86,8 +86,13 @@ def _do_run():
     orders = shopee_client.get_pending_orders()
     print(f"Shopee returned {len(orders)} pending orders")
 
-    # STEP 3: Filter out orders we already processed in a previous run.
-    new_orders = [o for o in orders if o["order_sn"] not in processed]
+    # STEP 3: Filter out orders we already processed in a previous run,
+    # then sort them by order_sn ascending so Telegram receives labels in a
+    # stable oldest-to-newest order.
+    new_orders = sorted(
+        (o for o in orders if o["order_sn"] not in processed),
+        key=lambda o: str(o["order_sn"]),
+    )
     print(f"Of those, {len(new_orders)} are new and need processing")
 
     # STEP 4: If there are no new orders, send a heartbeat and exit.
@@ -142,12 +147,13 @@ def _do_run():
             skipped_count += 1
             continue
 
-        # STEP 6c: Convert the PDF to a PNG image.
-        png_bytes = label_processor.pdf_to_png(pdf_bytes)
+            # STEP 6c: Convert the PDF to one or more PNG images.
+        png_pages = label_processor.pdf_to_pngs(pdf_bytes)
+        print(f"  Rendered {len(png_pages)} label page(s) from PDF")
 
-        # STEP 6d: Build the caption and send to Telegram.
+        # STEP 6d: Build the caption and send all pages to Telegram.
         caption = telegram_sender.build_caption(order)
-        delivered = telegram_sender.send_label(png_bytes, caption)
+        delivered = telegram_sender.send_label(png_pages, caption)
 
         # STEP 6e: Only mark as processed if Telegram confirmed delivery.
         # This is the safety rule: if Telegram fails, we want the next run

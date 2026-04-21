@@ -1,7 +1,7 @@
 """
 label_processor.py
 ------------------
-Converts a shipping label PDF into a PNG image.
+Converts a shipping label PDF into PNG image bytes.
 
 Why this file exists:
   The employee prefers images over PDFs because they can swipe through them
@@ -19,32 +19,44 @@ from pdf2image import convert_from_bytes
 from src import config
 
 
+def _image_to_png_bytes(image):
+    """Converts one PIL Image page into raw PNG bytes."""
+    buffer = io.BytesIO()
+    image.save(buffer, format="PNG")
+    return buffer.getvalue()
+
+
 def pdf_to_png(pdf_bytes):
     """
     Converts the first page of a PDF into a PNG image.
 
-    Shopee shipping labels are always one page, so we only render the first
-    page. If a label ever has multiple pages, we will revisit this.
+    Kept for backward compatibility with older scripts that still expect a
+    single image result.
 
     Args:
       pdf_bytes: the PDF file contents as bytes.
 
     Returns:
-      PNG image contents as bytes, ready to send to Telegram.
+      PNG image contents as bytes for the first page.
+    """
+
+    return pdf_to_pngs(pdf_bytes)[0]
+
+
+def pdf_to_pngs(pdf_bytes):
+    """
+    Converts all pages of a PDF into PNG images.
+
+    Args:
+      pdf_bytes: the PDF file contents as bytes.
+
+    Returns:
+      A list of PNG image contents as bytes, one entry per PDF page, in order.
     """
 
     # STEP 1: Render the PDF into PIL Image objects (one per page).
     # We pass the DPI from config so it is easy to tweak later.
     images = convert_from_bytes(pdf_bytes, dpi=config.LABEL_IMAGE_DPI)
 
-    # STEP 2: Take only the first page. Shopee labels are single-page.
-    first_page = images[0]
-
-    # STEP 3: Save the image into an in-memory bytes buffer as PNG.
-    # We use a buffer instead of a real file because we just need to send
-    # the bytes to Telegram, not save anything to disk.
-    buffer = io.BytesIO()
-    first_page.save(buffer, format="PNG")
-
-    # STEP 4: Return the raw bytes from the buffer.
-    return buffer.getvalue()
+    # STEP 2: Convert every rendered page into raw PNG bytes.
+    return [_image_to_png_bytes(image) for image in images]
