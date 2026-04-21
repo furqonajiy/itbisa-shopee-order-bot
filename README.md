@@ -91,9 +91,8 @@ TELEGRAM_CHAT_ID=-100123456789
 USE_FAKE_SHOPEE=false
 ```
 
-Note that `SHOPEE_ACCESS_TOKEN` is NOT used from the `.env` file. Access tokens
-are managed in `data/shopee_tokens.json` because they must be refreshed
-every 4 hours. See the authentication section below.
+Shopee tokens are managed in `data/shopee_tokens.json` because they must be
+refreshed automatically. See the authentication section below.
 
 ### 3. Point config.py at the right environment
 
@@ -165,8 +164,7 @@ it contains your shop configuration and the committed tokens file.
 ### 2. Add secrets in repository settings
 
 Go to **Settings → Secrets and variables → Actions** and add these five
-secrets. Do NOT add `SHOPEE_ACCESS_TOKEN`, since it lives in the tokens
-file, and do NOT add `USE_FAKE_SHOPEE`, since it should default to false
+secrets. Do NOT add `USE_FAKE_SHOPEE`, since it should default to false
 in production.
 
 - `SHOPEE_PARTNER_ID`

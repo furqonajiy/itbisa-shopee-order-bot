@@ -44,10 +44,6 @@ USE_FAKE_SHOPEE = os.environ.get("USE_FAKE_SHOPEE", "false").lower() == "true"
 # STEP 3: Read Shopee API credentials.
 # You get these from the Shopee Open Platform when you register your app.
 # In fake mode these are optional, so we use .get() with empty string defaults.
-#
-# Note: the ACCESS_TOKEN is NOT read from the environment because it expires
-# every 4 hours and must be refreshed dynamically. See shopee_auth.py for
-# how tokens are stored in a JSON file and refreshed automatically.
 if USE_FAKE_SHOPEE:
     SHOPEE_PARTNER_ID = int(os.environ.get("SHOPEE_PARTNER_ID", "0"))
     SHOPEE_PARTNER_KEY = os.environ.get("SHOPEE_PARTNER_KEY", "")
