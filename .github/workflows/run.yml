@@ -38,7 +38,7 @@ jobs:
     steps:
       # STEP 4: Check out the main branch to get the latest code.
       - name: Check out code from main
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
 
@@ -59,7 +59,7 @@ jobs:
 
       # STEP 6: Install Python.
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
