@@ -1,18 +1,13 @@
 # GitHub Actions workflow for the ITBisa Shopee Order Bot.
 #
-# This workflow runs the Python script on a schedule, 9 times per day,
-# during business hours in Jakarta (WIB = UTC+7).
+# This workflow runs the Python script every day on a schedule
+# based on Jakarta time (WIB = UTC+7).
 #
 # Schedule (Jakarta time -> UTC):
-#   09:00 WIB = 02:00 UTC  (overnight sweep)
-#   10:00 WIB = 03:00 UTC  (shop opens)
-#   11:00 WIB = 04:00 UTC
-#   12:00 WIB = 05:00 UTC
-#   13:00 WIB = 06:00 UTC
+#   05:00 WIB = 22:00 UTC (previous UTC day)
+#   10:00 WIB = 03:00 UTC
 #   14:00 WIB = 07:00 UTC
-#   15:00 WIB = 08:00 UTC
-#   16:00 WIB = 09:00 UTC  (orders close)
-#   17:00 WIB = 10:00 UTC  (final sweep before courier pickup)
+#   17:00 WIB = 10:00 UTC
 #
 # State file management:
 #   This workflow uses TWO branches:
@@ -26,7 +21,7 @@ name: Run Shopee Order Bot
 on:
   # STEP 1: Run on a cron schedule. GitHub Actions cron uses UTC.
   schedule:
-    - cron: "0 2-10 * * *"
+    - cron: "0 22,3,7,10 * * *"
 
   # STEP 2: Also allow manual triggering from the Actions tab. Useful for
   # testing or for catching up after a missed run.
@@ -52,12 +47,15 @@ jobs:
       # bot-state, while everything else (code, scripts, workflow) stays from main.
       - name: Pull state files from bot-state branch
         run: |
-          git fetch origin bot-state
-          # Copy the data/ folder from bot-state into our working directory.
-          # If bot-state does not have the file (first run), git checkout fails
-          # silently and we continue with whatever is already in main's data/.
-          git checkout origin/bot-state -- data/processed_orders.json || echo "  No processed_orders.json on bot-state yet, will create on first commit"
-          git checkout origin/bot-state -- data/shopee_tokens.json || echo "  No shopee_tokens.json on bot-state yet, will create on first commit"
+          git fetch origin bot-state || true
+
+          if git rev-parse --verify origin/bot-state >/dev/null 2>&1; then
+            # Copy the data/ files from bot-state into our working directory.
+            git checkout origin/bot-state -- data/processed_orders.json || echo "  No processed_orders.json on bot-state yet, will create on first commit"
+            git checkout origin/bot-state -- data/shopee_tokens.json || echo "  No shopee_tokens.json on bot-state yet, will create on first commit"
+          else
+            echo "  bot-state branch does not exist yet; using data/ files from main for bootstrap"
+          fi
 
       # STEP 6: Install Python.
       - name: Set up Python
