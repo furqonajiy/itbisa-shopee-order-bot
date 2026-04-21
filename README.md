@@ -284,9 +284,8 @@ In cron syntax (GitHub Actions uses UTC), this is `0 2-10 * * *`.
 For each new order, a label image arrives with a caption like:
 
 ```
-📦 No. Pesanan: 240418ABC123
-👤 Penerima: Budi Santoso
-🚚 Kurir: SPX Express
+📦 240418ABC123
+🚚 SPX Express
 
 Barang:
   • 20 x ITBISA-LED-5MM-RED

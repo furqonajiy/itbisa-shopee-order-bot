@@ -172,8 +172,8 @@ def build_caption(order):
 
     # STEP 3: Assemble the caption in Bahasa Indonesia.
     caption = (
-        f"📦 No. Pesanan: {order_sn}\n"
-        f"🚚 Kurir: {courier}\n"
+        f"📦 {order_sn}\n"
+        f"🚚 {courier}\n"
         f"\n"
         f"Barang:\n"
         f"{items_text}"
