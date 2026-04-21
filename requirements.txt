@@ -6,3 +6,4 @@ pdf2image==1.17.0       # Convert shipping label PDF -> PNG image
 Pillow==10.4.0          # Image library that pdf2image uses internally
 python-dotenv==1.0.1    # Loads .env file for local development (ignored in production)
 reportlab==4.2.5        # Generate dummy PDFs for fake-mode local testing
+openpyxl==3.1.5         # Read Excel files for inventory update tool
