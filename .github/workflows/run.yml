@@ -72,8 +72,6 @@ jobs:
         run: pip install -r requirements.txt
 
       # STEP 9: Run the bot. Secrets come from GitHub Actions Secrets.
-      # Note: SHOPEE_ACCESS_TOKEN is NOT here because it lives in
-      # data/shopee_tokens.json and is refreshed dynamically.
       - name: Run order processor
         env:
           SHOPEE_PARTNER_ID: ${{ secrets.SHOPEE_PARTNER_ID }}
