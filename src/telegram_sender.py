@@ -237,7 +237,7 @@ def build_summary(time_hhmm, success_count, skipped_count):
 
     # STEP 1: No new orders this run.
     if success_count == 0 and skipped_count == 0:
-        return f"✅ {time_hhmm} - Tidak ada pesanan baru"
+        return f"✅ Shopee - {time_hhmm} - Tidak ada pesanan baru"
 
     # STEP 2: Everything was processed successfully.
     if skipped_count == 0:

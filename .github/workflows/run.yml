@@ -21,7 +21,7 @@ name: Run Shopee Order Bot
 on:
   # STEP 1: Run on a cron schedule. GitHub Actions cron uses UTC.
   schedule:
-    - cron: "0 22,3,7,10 * * *"
+    - cron: "0 3,5,7,9,11 * * *"
 
   # STEP 2: Also allow manual triggering from the Actions tab. Useful for
   # testing or for catching up after a missed run.
