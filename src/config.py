@@ -68,5 +68,5 @@ STATE_FILE_PATH = str(PROJECT_ROOT / "data" / "processed_orders.json")
 TOKENS_FILE_PATH = str(PROJECT_ROOT / "data" / "shopee_tokens.json")
 MAX_ORDERS_PER_RUN = 30  # Safety cap. If we see more than this, something is wrong.
 LABEL_IMAGE_DPI = 200    # Resolution for PDF -> PNG conversion.
-STATE_RETENTION_DAYS = 30  # How long to remember processed orders before pruning.
+STATE_RETENTION_DAYS = 2  # How long to remember processed orders before pruning.
 TOKEN_REFRESH_BUFFER_MINUTES = 10  # Refresh the access token N minutes before it expires.
