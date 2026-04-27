@@ -19,7 +19,7 @@ Excel format expected:
     ITBISA-LED-SUPERBRIGHT-5MM-RED   | 100
 
 Usage:
-  python scripts/update_inventory.py path/to/inventory.xlsx
+  python scripts/update_inventory.py path/to/shopee_inventory.xlsx
 
 Important notes:
   - If a SKU in your Excel is not found on Shopee, it is skipped with a
@@ -54,7 +54,7 @@ def main():
     """Entry point: read Excel, fetch mappings, update each SKU."""
 
     if len(sys.argv) < 2:
-        print("Usage: python scripts/update_inventory.py path/to/inventory.xlsx")
+        print("Usage: python scripts/update_inventory.py path/to/shopee_inventory.xlsx")
         sys.exit(1)
 
     excel_path = Path(sys.argv[1])
