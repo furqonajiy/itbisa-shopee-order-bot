@@ -283,6 +283,7 @@ In cron syntax (GitHub Actions uses UTC), this is:
 
 ```text
 0 3,5,7,9,11 * * *
+```
 
 ## What your employee sees in Telegram
 
