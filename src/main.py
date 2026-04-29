@@ -147,7 +147,7 @@ def _do_run():
             skipped_count += 1
             continue
 
-            # STEP 6c: Convert the PDF to one or more PNG images.
+        # STEP 6c: Convert the PDF to one or more PNG images.
         png_pages = label_processor.pdf_to_pngs(pdf_bytes)
         print(f"  Rendered {len(png_pages)} label page(s) from PDF")
 

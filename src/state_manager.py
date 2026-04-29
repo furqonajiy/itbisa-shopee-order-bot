@@ -6,13 +6,13 @@ Loads and saves the JSON file that remembers which orders we already processed.
 Why this file exists:
   Every GitHub Actions run starts on a fresh machine with no memory of previous
   runs. To avoid sending the same shipping label twice, we save a small JSON
-  file that maps each processed order_id to the timestamp when we processed it.
+  file that maps each processed order_sn to the timestamp when we processed it.
   This file is committed back to the repo at the end of each successful run.
 
 The file format looks like this:
   {
-    "ORDER_ABC123": "2026-04-18T10:00:00+00:00",
-    "ORDER_XYZ789": "2026-04-18T11:00:00+00:00"
+    "2604186D4MY0Y0": "2026-04-18T10:00:00+00:00",
+    "2604186D4MY0Y1": "2026-04-18T11:00:00+00:00"
   }
 """
 
@@ -27,12 +27,11 @@ def load():
     """
     Loads the processed orders dictionary from disk.
 
-    Also prunes any entries older than STATE_RETENTION_DAYS, because Shopee
-    will not let us ship orders that old anyway, so there is no point
-    remembering them forever.
+    Also prunes any entries older than STATE_RETENTION_DAYS, because airway
+    bills are no longer useful after that window.
 
     Returns:
-      dict mapping order_id (str) -> processed_at_iso_timestamp (str)
+      dict mapping order_sn (str) -> processed_at_iso_timestamp (str)
     """
 
     # STEP 1: If the file does not exist yet (first ever run), return empty dict.
@@ -63,7 +62,7 @@ def save(state):
     happens later in the GitHub Actions workflow, not here.
 
     Args:
-      state: dict mapping order_id -> processed_at_iso_timestamp
+      state: dict mapping order_sn -> processed_at_iso_timestamp
     """
 
     # STEP 1: Make sure the data folder exists.
