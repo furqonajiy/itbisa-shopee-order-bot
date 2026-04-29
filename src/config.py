@@ -35,32 +35,21 @@ load_dotenv()
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 
-# STEP 2: Check if we are running in fake mode.
-# When fake mode is on, the Shopee credentials are not required because
-# we never call the real API. This makes local testing easier.
-USE_FAKE_SHOPEE = os.environ.get("USE_FAKE_SHOPEE", "false").lower() == "true"
-
-
-# STEP 3: Read Shopee API credentials.
+# STEP 2: Read Shopee API credentials.
 # You get these from the Shopee Open Platform when you register your app.
-# In fake mode these are optional, so we use .get() with empty string defaults.
-if USE_FAKE_SHOPEE:
-    SHOPEE_PARTNER_ID = int(os.environ.get("SHOPEE_PARTNER_ID", "0"))
-    SHOPEE_PARTNER_KEY = os.environ.get("SHOPEE_PARTNER_KEY", "")
-    SHOPEE_SHOP_ID = int(os.environ.get("SHOPEE_SHOP_ID", "0"))
-else:
-    SHOPEE_PARTNER_ID = int(os.environ["SHOPEE_PARTNER_ID"])
-    SHOPEE_PARTNER_KEY = os.environ["SHOPEE_PARTNER_KEY"]
-    SHOPEE_SHOP_ID = int(os.environ["SHOPEE_SHOP_ID"])
+# These are always required because this bot now only calls the real Shopee API.
+SHOPEE_PARTNER_ID = int(os.environ["SHOPEE_PARTNER_ID"])
+SHOPEE_PARTNER_KEY = os.environ["SHOPEE_PARTNER_KEY"]
+SHOPEE_SHOP_ID = int(os.environ["SHOPEE_SHOP_ID"])
 
 
-# STEP 4: Read Telegram bot credentials.
-# Always required, even in fake mode, because we still send real Telegram messages.
+# STEP 3: Read Telegram bot credentials.
+# Required because every run sends labels and/or heartbeat summaries to Telegram.
 TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 TELEGRAM_CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
 
 
-# STEP 5: Define constants that control behavior.
+# STEP 4: Define constants that control behavior.
 # File paths are anchored to PROJECT_ROOT so they always resolve to the same
 # place regardless of where Python was launched from.
 SHOPEE_API_BASE_URL = "https://partner.shopeemobile.com"
