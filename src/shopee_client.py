@@ -244,7 +244,8 @@ def ship_order_to_dropoff(order_sn):
     # STEP 3: Make the call. Any error will raise an exception and bubble up
     # to main.py, which decides whether to retry or skip.
     response = requests.post(url, json=body, timeout=30)
-    _check_shopee_json_ok(response, context=f"ship_order {order_sn}")
+    data = _check_shopee_json_ok(response, context=f"ship_order {order_sn}")
+    _raise_result_list_errors(data, context=f"ship_order {order_sn}")
 
 
 def get_shipping_label_pdf(order_sn):
