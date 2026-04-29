@@ -326,9 +326,12 @@ def _get_order_summaries_by_status(order_status):
     path = "/api/v2/order/get_order_list"
     url = _build_request_url(path)
 
-    # STEP 2: Look back 7 days to catch any orders we might have missed.
-    # The state file ensures we never re-process them.
-    seven_days_ago = int(time.time()) - (7 * 24 * 60 * 60)
+    # STEP 2: Look back only within the airway-bill validity window.
+    # STATE_RETENTION_DAYS intentionally stays at 2 because labels are no
+    # longer useful after that window. Keeping the API lookback aligned with
+    # state retention avoids retrying old PROCESSED orders after state pruning.
+    lookback_seconds = config.STATE_RETENTION_DAYS * 24 * 60 * 60
+    time_from = int(time.time()) - lookback_seconds
     now = int(time.time())
 
     all_summaries = []
@@ -337,7 +340,7 @@ def _get_order_summaries_by_status(order_status):
     while True:
         params = {
             "time_range_field": "create_time",
-            "time_from": seven_days_ago,
+            "time_from": time_from,
             "time_to": now,
             "page_size": 100,
             "order_status": order_status,
