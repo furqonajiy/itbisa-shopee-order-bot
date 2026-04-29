@@ -185,10 +185,16 @@ def get_pending_orders():
     if not all_summaries:
         return []
 
-    # STEP 2: Get full details for all orders in one batched call.
-    # We keep track of which order had which status so we can attach it to
-    # the detail dict (Shopee's get_order_detail does not always return it).
-    status_by_sn = {s["order_sn"]: s.get("order_status") for s in all_summaries}
+    # STEP 2: De-duplicate by order_sn while preserving READY_TO_SHIP priority.
+    # If Shopee returns the same order during a status transition, we keep the
+    # first status we saw. READY_TO_SHIP is fetched first because it still needs
+    # ship_order_to_dropoff() before the label can be generated.
+    status_by_sn = {}
+    for summary in all_summaries:
+        order_sn = summary["order_sn"]
+        if order_sn not in status_by_sn:
+            status_by_sn[order_sn] = summary.get("order_status")
+
     order_sns = list(status_by_sn.keys())
 
     details = _get_order_details(order_sns)
@@ -238,7 +244,8 @@ def ship_order_to_dropoff(order_sn):
     # STEP 3: Make the call. Any error will raise an exception and bubble up
     # to main.py, which decides whether to retry or skip.
     response = requests.post(url, json=body, timeout=30)
-    _check_shopee_json_ok(response, context=f"ship_order {order_sn}")
+    data = _check_shopee_json_ok(response, context=f"ship_order {order_sn}")
+    _raise_result_list_errors(data, context=f"ship_order {order_sn}")
 
 
 def get_shipping_label_pdf(order_sn):
@@ -326,9 +333,12 @@ def _get_order_summaries_by_status(order_status):
     path = "/api/v2/order/get_order_list"
     url = _build_request_url(path)
 
-    # STEP 2: Look back 7 days to catch any orders we might have missed.
-    # The state file ensures we never re-process them.
-    seven_days_ago = int(time.time()) - (7 * 24 * 60 * 60)
+    # STEP 2: Look back only within the airway-bill validity window.
+    # STATE_RETENTION_DAYS intentionally stays at 2 because labels are no
+    # longer useful after that window. Keeping the API lookback aligned with
+    # state retention avoids retrying old PROCESSED orders after state pruning.
+    lookback_seconds = config.STATE_RETENTION_DAYS * 24 * 60 * 60
+    time_from = int(time.time()) - lookback_seconds
     now = int(time.time())
 
     all_summaries = []
@@ -337,7 +347,7 @@ def _get_order_summaries_by_status(order_status):
     while True:
         params = {
             "time_range_field": "create_time",
-            "time_from": seven_days_ago,
+            "time_from": time_from,
             "time_to": now,
             "page_size": 100,
             "order_status": order_status,
