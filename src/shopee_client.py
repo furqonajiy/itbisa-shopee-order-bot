@@ -13,13 +13,6 @@ Public functions (used by main.py):
   - get_pending_orders() -> list of order dicts (READY_TO_SHIP + PROCESSED)
   - ship_order_to_dropoff(order_sn) -> None (raises on error)
   - get_shipping_label_pdf(order_sn) -> bytes (or None if not ready yet)
-
-Fake mode:
-  When config.USE_FAKE_SHOPEE is True, the public functions below delegate
-  to shopee_client_fake instead of calling the real Shopee API. This is
-  used during local development when sandbox access is not available.
-  To remove fake mode entirely, delete shopee_client_fake.py and remove
-  the if-blocks at the top of each public function below.
 """
 
 import hashlib
@@ -171,11 +164,6 @@ def get_pending_orders():
       can decide whether to ship_order or just fetch the label.
     """
 
-    # STEP 0: In fake mode, delegate to the fake client and return early.
-    if config.USE_FAKE_SHOPEE:
-        from src import shopee_client_fake
-        return shopee_client_fake.get_pending_orders()
-
     # STEP 1: Shopee's get_order_list only accepts one status per call,
     # so we make two calls and combine the results.
     ready_to_ship = _get_order_summaries_by_status("READY_TO_SHIP")
@@ -224,11 +212,6 @@ def ship_order_to_dropoff(order_sn):
       RuntimeError if Shopee rejects the request.
     """
 
-    # STEP 0: In fake mode, delegate to the fake client.
-    if config.USE_FAKE_SHOPEE:
-        from src import shopee_client_fake
-        return shopee_client_fake.ship_order_to_dropoff(order_sn)
-
     # STEP 1: Build the URL for the ship_order endpoint.
     path = "/api/v2/logistics/ship_order"
     url = _build_request_url(path)
@@ -274,11 +257,6 @@ def get_shipping_label_pdf(order_sn):
     Returns:
       PDF file contents as bytes, OR None if the label is not ready yet.
     """
-
-    # STEP 0: In fake mode, delegate to the fake client and return early.
-    if config.USE_FAKE_SHOPEE:
-        from src import shopee_client_fake
-        return shopee_client_fake.get_shipping_label_pdf(order_sn)
 
     # STEP 1: Get the suggested document type for this order. Different
     # orders need different types (THERMAL_AIR_WAYBILL vs NORMAL_AIR_WAYBILL)
@@ -334,9 +312,9 @@ def _get_order_summaries_by_status(order_status):
     url = _build_request_url(path)
 
     # STEP 2: Look back only within the airway-bill validity window.
-    # STATE_RETENTION_DAYS intentionally stays aligned with the airway-bill
-    # expiry window. Keeping the API lookback aligned with state retention
-    # avoids retrying old PROCESSED orders after state pruning.
+    # STATE_RETENTION_DAYS intentionally stays at 3 because labels are no
+    # longer useful after that window. Keeping the API lookback aligned with
+    # state retention avoids retrying old PROCESSED orders after state pruning.
     lookback_seconds = config.STATE_RETENTION_DAYS * 24 * 60 * 60
     time_from = int(time.time()) - lookback_seconds
     now = int(time.time())
