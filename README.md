@@ -270,13 +270,19 @@ asking you to re-run the bootstrap script.
 
 ## Daily schedule
 
-The cron currently runs 9 times per day during Jakarta business hours:
+The GitHub Actions workflow currently runs **5 times per day** based on
+Jakarta time (WIB = UTC+7):
 
-- **09:00 WIB** — overnight sweep (catches orders placed while asleep)
-- **10:00–16:00 WIB** — 7 hourly runs during active selling window
-- **17:00 WIB** — final sweep before courier pickup
+- **10:00 WIB**
+- **12:00 WIB**
+- **14:00 WIB**
+- **16:00 WIB**
+- **18:00 WIB**
 
-In cron syntax (GitHub Actions uses UTC), this is `0 2-10 * * *`.
+In cron syntax (GitHub Actions uses UTC), this is:
+
+```text
+0 3,5,7,9,11 * * *
 
 ## What your employee sees in Telegram
 
@@ -378,7 +384,7 @@ These steps always go together. Forgetting any one of them causes a
 Free forever.
 
 - GitHub Actions: 2000 free minutes per month on private repos. The bot
-  uses roughly 9 runs/day × ~1 minute = 270 minutes/month.
+  uses roughly 5 runs/day × ~1 minute = about 150 minutes/month.
 - Telegram Bot API: free, no limits.
 - Shopee Open API: free, generous rate limits.
 
