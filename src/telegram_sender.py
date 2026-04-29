@@ -241,11 +241,11 @@ def build_summary(time_hhmm, success_count, skipped_count):
 
     # STEP 2: Everything was processed successfully.
     if skipped_count == 0:
-        return f"✅ {time_hhmm} - {success_count} label terkirim"
+        return f"✅ Shopee - {time_hhmm} - {success_count} label terkirim"
 
     # STEP 3: Some orders failed. Use a warning emoji so the employee notices.
     return (
-        f"⚠️ {time_hhmm} - {success_count} terkirim, "
+        f"⚠️ Shopee - {time_hhmm} - {success_count} terkirim, "
         f"{skipped_count} gagal (akan dicoba lagi)"
     )
 
