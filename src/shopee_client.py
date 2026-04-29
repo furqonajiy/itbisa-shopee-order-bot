@@ -185,10 +185,16 @@ def get_pending_orders():
     if not all_summaries:
         return []
 
-    # STEP 2: Get full details for all orders in one batched call.
-    # We keep track of which order had which status so we can attach it to
-    # the detail dict (Shopee's get_order_detail does not always return it).
-    status_by_sn = {s["order_sn"]: s.get("order_status") for s in all_summaries}
+    # STEP 2: De-duplicate by order_sn while preserving READY_TO_SHIP priority.
+    # If Shopee returns the same order during a status transition, we keep the
+    # first status we saw. READY_TO_SHIP is fetched first because it still needs
+    # ship_order_to_dropoff() before the label can be generated.
+    status_by_sn = {}
+    for summary in all_summaries:
+        order_sn = summary["order_sn"]
+        if order_sn not in status_by_sn:
+            status_by_sn[order_sn] = summary.get("order_status")
+
     order_sns = list(status_by_sn.keys())
 
     details = _get_order_details(order_sns)
