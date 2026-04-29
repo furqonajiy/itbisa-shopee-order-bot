@@ -155,13 +155,17 @@ def _do_run():
         caption = telegram_sender.build_caption(order)
         delivered = telegram_sender.send_label(png_pages, caption)
 
-        # STEP 6e: Only mark as processed if Telegram confirmed delivery.
+        # STEP 6e: Only mark and save as processed if Telegram confirmed delivery.
         # This is the safety rule: if Telegram fails, we want the next run
         # to retry this order, not silently skip it forever.
+        #
+        # Save immediately after each successful label so partial progress
+        # survives even if a later order crashes before the final save.
         if delivered:
             processed[order_sn] = state_manager.now_iso()
+            state_manager.save(processed)
             success_count += 1
-            print(f"  ✓ Sent to Telegram and marked as processed")
+            print(f"  ✓ Sent to Telegram, saved state, and marked as processed")
         else:
             print(f"  ✗ Telegram delivery failed. Will retry next run.")
             skipped_count += 1
