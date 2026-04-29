@@ -311,8 +311,8 @@ def get_shipping_label_pdf(order_sn):
 
 def _get_order_summaries_by_status(order_status):
     """
-    Fetches a single page of order summaries (order_sn + status only) for
-    the given status. The full details come from a separate call.
+    Fetches all order summaries (order_sn + status only) for the given status.
+    The full details come from a separate call.
 
     Args:
       order_status: one of READY_TO_SHIP, PROCESSED, etc.
@@ -331,25 +331,44 @@ def _get_order_summaries_by_status(order_status):
     seven_days_ago = int(time.time()) - (7 * 24 * 60 * 60)
     now = int(time.time())
 
-    params = {
-        "time_range_field": "create_time",
-        "time_from": seven_days_ago,
-        "time_to": now,
-        "page_size": 100,
-        "order_status": order_status,
-    }
+    all_summaries = []
+    cursor = ""
 
-    # STEP 3: Make the call.
-    response = requests.get(url, params=params, timeout=30)
-    data = _check_shopee_json_ok(response, context=f"get_order_list {order_status}")
+    while True:
+        params = {
+            "time_range_field": "create_time",
+            "time_from": seven_days_ago,
+            "time_to": now,
+            "page_size": 100,
+            "order_status": order_status,
+        }
 
-    # STEP 4: Tag each summary with the status we asked for, since
-    # Shopee does not always echo it back in the response.
-    summaries = data.get("response", {}).get("order_list", [])
-    for s in summaries:
-        s["order_status"] = order_status
+        if cursor:
+            params["cursor"] = cursor
 
-    return summaries
+        # STEP 3: Make the call.
+        response = requests.get(url, params=params, timeout=30)
+        data = _check_shopee_json_ok(response, context=f"get_order_list {order_status}")
+
+        response_data = data.get("response", {})
+        summaries = response_data.get("order_list", [])
+
+        # STEP 4: Tag each summary with the status we asked for, since
+        # Shopee does not always echo it back in the response.
+        for s in summaries:
+            s["order_status"] = order_status
+
+        all_summaries.extend(summaries)
+
+        has_next = response_data.get("more", False)
+        cursor = response_data.get("next_cursor", "")
+
+        if not has_next or not cursor:
+            break
+
+        time.sleep(0.3)
+
+    return all_summaries
 
 
 def _get_order_details(order_sns):
@@ -360,26 +379,36 @@ def _get_order_details(order_sns):
     to get the actual recipient name, items, and courier.
     """
 
-    # STEP 1: Build URL for the "get order detail" endpoint.
-    path = "/api/v2/order/get_order_detail"
-    url = _build_request_url(path)
+    all_details = []
 
-    # STEP 2: Ask for the specific fields we need for the Telegram caption,
-    # plus order_status so main.py can decide what to do with each order.
-    # We do NOT request recipient_address because Shopee masks it anyway,
-    # and the unmasked details are visible on the printed label.
-    params = {
-        "order_sn_list": ",".join(order_sns),
-        "response_optional_fields": (
-            "item_list,order_status,shipping_carrier"
-        ),
-    }
+    for batch_start in range(0, len(order_sns), 50):
+        batch = order_sns[batch_start:batch_start + 50]
 
-    # STEP 3: Make the call and return the order list.
-    response = requests.get(url, params=params, timeout=30)
-    data = _check_shopee_json_ok(response, context="get_order_detail")
+        # STEP 1: Build URL for the "get order detail" endpoint.
+        path = "/api/v2/order/get_order_detail"
+        url = _build_request_url(path)
 
-    return data.get("response", {}).get("order_list", [])
+        # STEP 2: Ask for the specific fields we need for the Telegram caption,
+        # plus order_status so main.py can decide what to do with each order.
+        # We do NOT request recipient_address because Shopee masks it anyway,
+        # and the unmasked details are visible on the printed label.
+        params = {
+            "order_sn_list": ",".join(batch),
+            "response_optional_fields": (
+                "item_list,order_status,shipping_carrier"
+            ),
+        }
+
+        # STEP 3: Make the call and return the order list.
+        response = requests.get(url, params=params, timeout=30)
+        data = _check_shopee_json_ok(response, context="get_order_detail")
+
+        all_details.extend(data.get("response", {}).get("order_list", []))
+
+        if batch_start + 50 < len(order_sns):
+            time.sleep(0.3)
+
+    return all_details
 
 
 def _get_suggested_document_type(order_sn):
