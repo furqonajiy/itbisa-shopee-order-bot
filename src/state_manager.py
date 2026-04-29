@@ -71,8 +71,7 @@ def save(state):
 
     # STEP 2: Write the JSON file with nice indentation so it is easy to read
     # in the git history when we look at commit diffs.
-    with open(config.STATE_FILE_PATH, "w") as f:
-        json.dump(state, f, indent=2, sort_keys=True)
+    _atomic_write_json(config.STATE_FILE_PATH, state)
 
 
 def now_iso():
@@ -83,3 +82,10 @@ def now_iso():
     about timestamps for processed orders.
     """
     return datetime.now(timezone.utc).isoformat()
+
+
+def _atomic_write_json(path, data):
+    tmp_path = f"{path}.tmp"
+    with open(tmp_path, "w") as f:
+        json.dump(data, f, indent=2, sort_keys=True)
+    os.replace(tmp_path, path)
