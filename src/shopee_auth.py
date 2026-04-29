@@ -138,8 +138,7 @@ def _save_tokens(tokens):
     os.makedirs(os.path.dirname(config.TOKENS_FILE_PATH), exist_ok=True)
 
     # STEP 2: Write the JSON file with indentation so git diffs are readable.
-    with open(config.TOKENS_FILE_PATH, "w") as f:
-        json.dump(tokens, f, indent=2, sort_keys=True)
+    _atomic_write_json(config.TOKENS_FILE_PATH, tokens)
 
 
 # ============================================================
@@ -251,3 +250,10 @@ def _refresh_tokens(refresh_token):
         "refresh_token": new_refresh_token,
         "access_token_expires_at": expires_at.isoformat(),
     }
+
+
+def _atomic_write_json(path, data):
+    tmp_path = f"{path}.tmp"
+    with open(tmp_path, "w") as f:
+        json.dump(data, f, indent=2, sort_keys=True)
+    os.replace(tmp_path, path)
