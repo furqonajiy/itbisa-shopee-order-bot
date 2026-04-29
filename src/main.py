@@ -51,10 +51,10 @@ def run():
     print("ITBisa Shopee Order Bot - starting run")
     print("=" * 60)
 
-    # STEP 0: Wrap the whole run in a try block so we can catch the one
-    # error that requires a human response: an expired refresh_token.
-    # Any other error is allowed to bubble up and fail the GitHub Actions
-    # run, which is the right behavior for unexpected problems.
+    # STEP 0: Wrap the whole run so operational failures are visible in Telegram.
+    # Refresh-token expiry gets a specific message because it needs manual
+    # re-authorization. Other errors are also reported so the operator does
+    # not need to discover failures only from the GitHub Actions tab.
     try:
         _do_run()
     except shopee_auth.RefreshTokenExpiredError as e:
@@ -68,6 +68,11 @@ def run():
         telegram_sender.send_summary(alert)
         print(f"\n{alert}")
         print(f"Details: {e}")
+        sys.exit(1)
+    except Exception as e:
+        alert = f"❌ {_now_jakarta_hhmm()} - Error bot Shopee: {e}"
+        telegram_sender.send_summary(alert)
+        print(f"\n{alert}")
         sys.exit(1)
 
 
@@ -155,13 +160,17 @@ def _do_run():
         caption = telegram_sender.build_caption(order)
         delivered = telegram_sender.send_label(png_pages, caption)
 
-        # STEP 6e: Only mark as processed if Telegram confirmed delivery.
+        # STEP 6e: Only mark and save as processed if Telegram confirmed delivery.
         # This is the safety rule: if Telegram fails, we want the next run
         # to retry this order, not silently skip it forever.
+        #
+        # Save immediately after each successful label so partial progress
+        # survives even if a later order crashes before the final save.
         if delivered:
             processed[order_sn] = state_manager.now_iso()
+            state_manager.save(processed)
             success_count += 1
-            print(f"  ✓ Sent to Telegram and marked as processed")
+            print(f"  ✓ Sent to Telegram, saved state, and marked as processed")
         else:
             print(f"  ✗ Telegram delivery failed. Will retry next run.")
             skipped_count += 1
