@@ -97,6 +97,57 @@ def _build_request_url(path):
     return url
 
 
+def _check_shopee_json_ok(response, context):
+    """Raises RuntimeError if Shopee returns an API-level error inside HTTP 200."""
+    response.raise_for_status()
+
+    try:
+        data = response.json()
+    except ValueError:
+        raise RuntimeError(f"{context}: Shopee returned non-JSON response")
+
+    error = data.get("error")
+    if error:
+        message = data.get("message", "")
+        raise RuntimeError(f"{context}: {error} - {message}")
+
+    return data
+
+
+def _raise_result_list_errors(data, context):
+    """Raises if Shopee reports per-order failure inside response.result_list."""
+    result_list = data.get("response", {}).get("result_list", [])
+    for result in result_list:
+        fail_error = result.get("fail_error")
+        if fail_error:
+            fail_message = result.get("fail_message", "")
+            raise RuntimeError(f"{context}: {fail_error} - {fail_message}")
+
+
+def _looks_like_label_not_ready(data):
+    """Best-effort check for Shopee JSON responses that mean the PDF is not ready yet."""
+    text = " ".join(
+        str(value).lower()
+        for value in (
+            data.get("error", ""),
+            data.get("message", ""),
+            data.get("debug_message", ""),
+        )
+    )
+
+    not_ready_markers = (
+        "not ready",
+        "not generated",
+        "generating",
+        "processing",
+        "document not exist",
+        "document does not exist",
+        "shipping document not exist",
+        "shipping_document_not_exist",
+    )
+    return any(marker in text for marker in not_ready_markers)
+
+
 # ============================================================
 # Public functions (used by main.py)
 # ============================================================
@@ -164,7 +215,7 @@ def ship_order_to_dropoff(order_sn):
       order_sn: the Shopee order number string.
 
     Raises:
-      requests.HTTPError if Shopee rejects the request.
+      RuntimeError if Shopee rejects the request.
     """
 
     # STEP 0: In fake mode, delegate to the fake client.
@@ -178,16 +229,16 @@ def ship_order_to_dropoff(order_sn):
 
     # STEP 2: Build the request body. We always use dropoff because that
     # matches how the warehouse operates (employee carries packages to the
-    # courier counter at the end of the day).
+    # courier counter at the end of day).
     body = {
         "order_sn": order_sn,
         "dropoff": {},  # Empty dict means "use the default dropoff option"
     }
 
-    # STEP 3: Make the call. Any error (4xx or 5xx) will raise an exception
-    # and bubble up to main.py, which decides whether to retry or skip.
+    # STEP 3: Make the call. Any error will raise an exception and bubble up
+    # to main.py, which decides whether to retry or skip.
     response = requests.post(url, json=body, timeout=30)
-    response.raise_for_status()
+    _check_shopee_json_ok(response, context=f"ship_order {order_sn}")
 
 
 def get_shipping_label_pdf(order_sn):
@@ -231,6 +282,9 @@ def get_shipping_label_pdf(order_sn):
     # create_shipping_document requires this to be passed explicitly,
     # otherwise Shopee returns "tracking_number_invalid".
     tracking_number = _get_tracking_number(order_sn)
+    if not tracking_number:
+        print(f"  Tracking number for {order_sn} is not ready yet, will retry next run")
+        return None
 
     # STEP 3: Ask Shopee to generate the shipping document.
     _create_shipping_document(order_sn, document_type, tracking_number)
@@ -257,8 +311,8 @@ def get_shipping_label_pdf(order_sn):
 
 def _get_order_summaries_by_status(order_status):
     """
-    Fetches a single page of order summaries (order_sn + status only) for
-    the given status. The full details come from a separate call.
+    Fetches all order summaries (order_sn + status only) for the given status.
+    The full details come from a separate call.
 
     Args:
       order_status: one of READY_TO_SHIP, PROCESSED, etc.
@@ -277,26 +331,44 @@ def _get_order_summaries_by_status(order_status):
     seven_days_ago = int(time.time()) - (7 * 24 * 60 * 60)
     now = int(time.time())
 
-    params = {
-        "time_range_field": "create_time",
-        "time_from": seven_days_ago,
-        "time_to": now,
-        "page_size": 100,
-        "order_status": order_status,
-    }
+    all_summaries = []
+    cursor = ""
 
-    # STEP 3: Make the call.
-    response = requests.get(url, params=params, timeout=30)
-    response.raise_for_status()
-    data = response.json()
+    while True:
+        params = {
+            "time_range_field": "create_time",
+            "time_from": seven_days_ago,
+            "time_to": now,
+            "page_size": 100,
+            "order_status": order_status,
+        }
 
-    # STEP 4: Tag each summary with the status we asked for, since
-    # Shopee does not always echo it back in the response.
-    summaries = data.get("response", {}).get("order_list", [])
-    for s in summaries:
-        s["order_status"] = order_status
+        if cursor:
+            params["cursor"] = cursor
 
-    return summaries
+        # STEP 3: Make the call.
+        response = requests.get(url, params=params, timeout=30)
+        data = _check_shopee_json_ok(response, context=f"get_order_list {order_status}")
+
+        response_data = data.get("response", {})
+        summaries = response_data.get("order_list", [])
+
+        # STEP 4: Tag each summary with the status we asked for, since
+        # Shopee does not always echo it back in the response.
+        for s in summaries:
+            s["order_status"] = order_status
+
+        all_summaries.extend(summaries)
+
+        has_next = response_data.get("more", False)
+        cursor = response_data.get("next_cursor", "")
+
+        if not has_next or not cursor:
+            break
+
+        time.sleep(0.3)
+
+    return all_summaries
 
 
 def _get_order_details(order_sns):
@@ -307,27 +379,36 @@ def _get_order_details(order_sns):
     to get the actual recipient name, items, and courier.
     """
 
-    # STEP 1: Build URL for the "get order detail" endpoint.
-    path = "/api/v2/order/get_order_detail"
-    url = _build_request_url(path)
+    all_details = []
 
-    # STEP 2: Ask for the specific fields we need for the Telegram caption,
-    # plus order_status so main.py can decide what to do with each order.
-    # We do NOT request recipient_address because Shopee masks it anyway,
-    # and the unmasked details are visible on the printed label.
-    params = {
-        "order_sn_list": ",".join(order_sns),
-        "response_optional_fields": (
-            "item_list,order_status,shipping_carrier"
-        ),
-    }
+    for batch_start in range(0, len(order_sns), 50):
+        batch = order_sns[batch_start:batch_start + 50]
 
-    # STEP 3: Make the call and return the order list.
-    response = requests.get(url, params=params, timeout=30)
-    response.raise_for_status()
-    data = response.json()
+        # STEP 1: Build URL for the "get order detail" endpoint.
+        path = "/api/v2/order/get_order_detail"
+        url = _build_request_url(path)
 
-    return data.get("response", {}).get("order_list", [])
+        # STEP 2: Ask for the specific fields we need for the Telegram caption,
+        # plus order_status so main.py can decide what to do with each order.
+        # We do NOT request recipient_address because Shopee masks it anyway,
+        # and the unmasked details are visible on the printed label.
+        params = {
+            "order_sn_list": ",".join(batch),
+            "response_optional_fields": (
+                "item_list,order_status,shipping_carrier"
+            ),
+        }
+
+        # STEP 3: Make the call and return the order list.
+        response = requests.get(url, params=params, timeout=30)
+        data = _check_shopee_json_ok(response, context="get_order_detail")
+
+        all_details.extend(data.get("response", {}).get("order_list", []))
+
+        if batch_start + 50 < len(order_sns):
+            time.sleep(0.3)
+
+    return all_details
 
 
 def _get_suggested_document_type(order_sn):
@@ -345,8 +426,14 @@ def _get_suggested_document_type(order_sn):
 
     body = {"order_list": [{"order_sn": order_sn}]}
     response = requests.post(url, json=body, timeout=30)
-    response.raise_for_status()
-    data = response.json()
+    data = _check_shopee_json_ok(
+        response,
+        context=f"get_shipping_document_parameter {order_sn}",
+    )
+    _raise_result_list_errors(
+        data,
+        context=f"get_shipping_document_parameter {order_sn}",
+    )
 
     result_list = data.get("response", {}).get("result_list", [])
     if not result_list:
@@ -369,8 +456,7 @@ def _get_tracking_number(order_sn):
     url = _build_request_url(path)
 
     response = requests.get(url, params={"order_sn": order_sn}, timeout=30)
-    response.raise_for_status()
-    data = response.json()
+    data = _check_shopee_json_ok(response, context=f"get_tracking_number {order_sn}")
 
     return data.get("response", {}).get("tracking_number", "")
 
@@ -398,7 +484,8 @@ def _create_shipping_document(order_sn, document_type, tracking_number):
     }
 
     response = requests.post(url, json=body, timeout=30)
-    response.raise_for_status()
+    data = _check_shopee_json_ok(response, context=f"create_shipping_document {order_sn}")
+    _raise_result_list_errors(data, context=f"create_shipping_document {order_sn}")
 
 
 def _download_shipping_document(order_sn, document_type):
@@ -424,12 +511,26 @@ def _download_shipping_document(order_sn, document_type):
     }
 
     response = requests.post(url, json=body, timeout=30)
+    response.raise_for_status()
 
     # Shopee returns the PDF directly as the response body if it is ready.
     # If not ready, it returns a JSON error response instead.
     content_type = response.headers.get("content-type", "")
-    if "application/pdf" in content_type:
+    if "application/pdf" in content_type or response.content.startswith(b"%PDF"):
         return response.content
 
-    # Not ready yet.
+    try:
+        data = response.json()
+    except ValueError:
+        return None
+
+    if data.get("error"):
+        if _looks_like_label_not_ready(data):
+            return None
+
+        raise RuntimeError(
+            f"download_shipping_document {order_sn}: "
+            f"{data.get('error')} - {data.get('message', '')}"
+        )
+
     return None

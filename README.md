@@ -6,7 +6,7 @@ from their phone without any manual downloading.
 
 ## What it does
 
-Every day on a fixed Jakarta-time schedule, GitHub Actions runs a Python
+Every hour from 09:00 to 17:00 Jakarta time, GitHub Actions runs a Python
 script that:
 
 1. Asks Shopee for orders in `READY_TO_SHIP` or `PROCESSED` status.
@@ -16,9 +16,8 @@ script that:
      dropoff method (equivalent to clicking "Atur Pengiriman" → "Antar ke
      Counter" in the Shopee Seller app). This moves the order to
      `PROCESSED` and triggers label generation.
-   - Downloads the shipping label PDF, converts it to one or more PNG
-     images, trims trailing blank white space at the bottom, and sends the
-     result to a Telegram chat with a caption describing the order in
+   - Downloads the shipping label PDF, converts it to a PNG image, and
+     sends it to a Telegram chat with a caption describing the order in
      Bahasa Indonesia.
 4. Sends a heartbeat summary at the end of every run so the employee knows
    the bot is alive, even when no new orders came in.
@@ -31,10 +30,10 @@ cloud VM, and no database.
 ## Project structure
 
 ```text
-itbisa-shopee-order-bot/
+itbisa-shopee-bot/
 ├── .github/workflows/
-│   └── run.yml                      # GitHub Actions schedule + bot-state sync
-├── data/                            # Runtime state used for bootstrap and bot-state sync
+│   └── run.yml                      # GitHub Actions cron schedule
+├── data/                            # Runtime state, lives on bot-state branch (not main)
 │   ├── processed_orders.json        # Which orders we already sent to Telegram
 │   └── shopee_tokens.json           # Current access + refresh tokens (created by bootstrap)
 ├── scripts/
@@ -48,12 +47,11 @@ itbisa-shopee-order-bot/
 │   ├── shopee_auth.py               # Token lifecycle (refresh every 4h)
 │   ├── shopee_client.py             # Shopee API calls + HMAC signing
 │   ├── shopee_client_fake.py        # Canned fake data for local testing
-│   ├── label_processor.py           # PDF → PNG conversion + bottom whitespace crop
+│   ├── label_processor.py           # PDF → PNG conversion
 │   ├── telegram_sender.py           # Sends images + messages in Bahasa
 │   └── state_manager.py             # Loads/saves processed_orders.json
 ├── requirements.txt
 ├── .env.example
-├── .gitignore
 └── README.md
 ```
 
@@ -74,7 +72,7 @@ Open Anaconda Prompt and run:
 conda create -n itbisa_order_bot python=3.11
 conda activate itbisa_order_bot
 conda install -c conda-forge poppler
-cd C:\path\to\itbisa-shopee-order-bot
+cd C:\path\to\itbisa-shopee-bot
 python -m pip install -r requirements.txt
 ```
 
@@ -96,7 +94,7 @@ USE_FAKE_SHOPEE=false
 Shopee tokens are managed in `data/shopee_tokens.json` because they must be
 refreshed automatically. See the authentication section below.
 
-### 3. Point `config.py` at the right environment
+### 3. Point config.py at the right environment
 
 Open `src/config.py` and make sure `SHOPEE_API_BASE_URL` matches the
 environment you are targeting:
@@ -104,10 +102,9 @@ environment you are targeting:
 - Sandbox: `https://openplatform.sandbox.test-stable.shopee.sg`
 - Live: `https://partner.shopeemobile.com`
 
-The current code defaults to the **live** URL. Tokens are environment-specific.
-A sandbox token does not work against live, and vice versa. If you change this
-URL, you must also re-run the bootstrap script to get fresh tokens for the new
-environment.
+Tokens are environment-specific. A sandbox token does not work against
+live, and vice versa. If you change this URL, you must also re-run the
+bootstrap script to get fresh tokens for the new environment.
 
 ### 4. Bootstrap the Shopee tokens (one-time)
 
@@ -176,10 +173,10 @@ in production.
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_CHAT_ID`
 
-### 3. Push the initial state files
+### 3. Push the initial tokens file
 
-The first workflow run still expects the initial state files to be
-available from `main`. Push them once:
+The tokens file you bootstrapped locally needs to be on the repo so the
+first workflow run can read it. Push it to main:
 
 ```bash
 git add data/shopee_tokens.json data/processed_orders.json
@@ -188,8 +185,9 @@ git push
 ```
 
 After the first successful workflow run, ongoing state updates are pushed
-to the `bot-state` branch. The `bot-state` branch should be treated as the
-source of truth for runtime state.
+to the `bot-state` branch. You may keep the initial files on `main` for
+bootstrap, but the `bot-state` branch should be treated as the source of
+truth for runtime state.
 
 ### 4. Verify the workflow runs
 
@@ -198,23 +196,28 @@ then click **Run workflow** to trigger a manual test run. Watch the logs
 to confirm everything works. You should see a heartbeat message arrive
 in your Telegram chat within a minute.
 
-After the first successful manual run, the schedule takes over and runs the
-bot automatically.
+After the first successful manual run, the cron takes over and runs the
+bot automatically on schedule.
 
-## State management (the `bot-state` branch)
+## State management (the bot-state branch)
 
 This repo uses two branches:
 
-- **main** holds the source code.
+- **main** holds the source code. It is protected by branch rules so all
+  changes go through pull requests.
 - **bot-state** holds the runtime state files (`processed_orders.json` and
-  `shopee_tokens.json`).
+  `shopee_tokens.json`). It is updated automatically by the bot on every
+  successful run, with no PR required.
 
-The workflow checks out `main`, overlays the latest `data/` files from
-`bot-state` if that branch exists, runs the bot, then commits updated
-state back to `bot-state`.
+This separation matters because the bot needs to write state files
+constantly (every time it processes an order or refreshes a token), but
+those writes are not "code changes" that warrant code review. Putting them
+on a separate branch keeps `main` clean and lets your branch protection
+rules work as intended.
 
-For the very first run, the workflow falls back to the `data/` files
-already present on `main`, then creates or updates `bot-state`.
+The bot-state branch is created automatically the first time the workflow
+runs successfully. For the very first run, the workflow still expects the
+initial state files to be available from `main`.
 
 ### Bootstrapping for the first time
 
@@ -222,16 +225,17 @@ When you initially set up the bot:
 
 1. Run `python scripts/bootstrap_tokens.py` locally to create
    `data/shopee_tokens.json`.
-2. Push your code to `main` (with `data/processed_orders.json` as `{}` and
-   `data/shopee_tokens.json` from the bootstrap).
+2. Push your code to `main` (with `data/processed_orders.json` as `{}`
+   and `data/shopee_tokens.json` from the bootstrap).
 3. Trigger the workflow manually from the Actions tab.
-4. The first run will create or update the `bot-state` branch and push the
-   state files there. From then on, runtime updates go to `bot-state`.
+4. The first run will create or update the `bot-state` branch and push the state
+   files there. From then on, runtime updates go to `bot-state`.
 
 ### What you should NOT do
 
 - Do not delete the `bot-state` branch unless you want to lose the bot's
-  memory of which orders were already processed and which token is current.
+  memory of which orders were already processed (it will resend recent
+  labels) and which token is current (you will need to re-bootstrap).
 - Do not enable branch protection on `bot-state`. It is supposed to be
   bot-writable.
 - Do not manually edit files on `bot-state` unless you are recovering
@@ -251,12 +255,13 @@ Shopee uses an OAuth-style flow with three credentials working together:
   refresh, which resets the 30-day clock.
 
 As long as the bot runs at least once every 30 days, the refresh token
-chain continues indefinitely. The current schedule runs 4 times per day,
-so the 30-day limit is never hit in normal operation.
+chain continues indefinitely. The bot running 9 times per day means
+refreshes happen multiple times per day, so the 30-day limit is
+never hit in normal operation.
 
-When the access token expires between scheduled runs, the next run simply
-sees the stale token, calls the refresh endpoint, and gets a fresh one
-before doing any real work.
+When the access token expires overnight (while the bot is asleep), nothing
+bad happens. The next run simply sees the stale token, calls the
+refresh endpoint, and gets a fresh one before doing any real work.
 
 The only time a human must intervene is if the refresh token itself
 expires, which would only happen if the bot stopped running completely
@@ -265,18 +270,19 @@ asking you to re-run the bootstrap script.
 
 ## Daily schedule
 
-The GitHub Actions workflow currently runs **4 times per day** based on
+The GitHub Actions workflow currently runs **5 times per day** based on
 Jakarta time (WIB = UTC+7):
 
-- **05:00 WIB**
 - **10:00 WIB**
+- **12:00 WIB**
 - **14:00 WIB**
-- **17:00 WIB**
+- **16:00 WIB**
+- **18:00 WIB**
 
 In cron syntax (GitHub Actions uses UTC), this is:
 
 ```text
-0 22,3,7,10 * * *
+0 3,5,7,9,11 * * *
 ```
 
 ## What your employee sees in Telegram
@@ -293,9 +299,10 @@ Barang:
 ```
 
 The caption uses SKU instead of the product name because product names
-on Shopee are very long, while SKUs are short and match how the warehouse
-is organized. When a product has variants, the variant SKU is shown.
-When a product has no variants, the main product SKU is shown.
+on Shopee are very long (often 100+ characters), while SKUs are short
+and match how the warehouse is organized. When a product has variants
+(like different colors), the variant SKU is shown. When a product has
+no variants, the main product SKU is shown.
 
 At the end of every run, a short heartbeat message appears:
 
@@ -311,27 +318,6 @@ di Shopee Open Platform Console, lalu update file data/shopee_tokens.json
 dengan token baru.
 ```
 
-## Utility scripts
-
-### `scripts/update_inventory.py`
-
-This script updates Shopee inventory from an Excel file.
-
-Usage:
-
-```bash
-python scripts/update_inventory.py path/to/inventory.xlsx
-```
-
-Expected Excel columns:
-
-- `SKU`
-- `Stock`
-
-It fetches your product catalog, maps SKUs to Shopee item/model IDs, then
-updates stock one SKU at a time with a small delay to stay polite to
-Shopee's rate limits.
-
 ## Troubleshooting
 
 ### 403 Forbidden from Shopee
@@ -345,7 +331,7 @@ To fix: make sure `SHOPEE_API_BASE_URL` in `src/config.py` matches the
 environment you want, and re-run `python scripts/bootstrap_tokens.py`
 to get tokens for that environment.
 
-### `invalid_code` during bootstrap
+### invalid_code during bootstrap
 
 The authorization code you pasted has expired, was already used, or was
 from the wrong environment. Each code is valid for only ~10 minutes and
@@ -377,7 +363,7 @@ label, delete that order's entry and the next run will reprocess it.
 
 Delete `data/processed_orders.json` entirely. The next run will create
 a fresh one. Worst case, the employee receives duplicate labels for
-recent orders, which is annoying but not catastrophic.
+orders from the last 7 days, which is annoying but not catastrophic.
 
 ## Switching from sandbox to live
 
@@ -399,10 +385,9 @@ These steps always go together. Forgetting any one of them causes a
 Free forever.
 
 - GitHub Actions: 2000 free minutes per month on private repos. The bot
-  uses roughly 4 runs/day × ~1 minute = about 120 minutes/month.
-- Telegram Bot API: free.
-- Shopee Open API: free.
-- No always-on server costs.
+  uses roughly 5 runs/day × ~1 minute = about 150 minutes/month.
+- Telegram Bot API: free, no limits.
+- Shopee Open API: free, generous rate limits.
 
 ## A note on premature optimization
 

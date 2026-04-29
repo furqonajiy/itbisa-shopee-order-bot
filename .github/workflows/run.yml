@@ -4,10 +4,11 @@
 # based on Jakarta time (WIB = UTC+7).
 #
 # Schedule (Jakarta time -> UTC):
-#   05:00 WIB = 22:00 UTC (previous UTC day)
 #   10:00 WIB = 03:00 UTC
+#   12:00 WIB = 05:00 UTC
 #   14:00 WIB = 07:00 UTC
-#   17:00 WIB = 10:00 UTC
+#   16:00 WIB = 09:00 UTC
+#   18:00 WIB = 11:00 UTC
 #
 # State file management:
 #   This workflow uses TWO branches:
@@ -30,6 +31,10 @@ on:
 jobs:
   process-orders:
     runs-on: ubuntu-latest
+
+    concurrency:
+      group: bot-state-${{ github.repository }}
+      cancel-in-progress: false
 
     # STEP 3: Allow this job to push commits to the bot-state branch.
     permissions:
@@ -86,6 +91,7 @@ jobs:
       # restore the files, and push. This keeps bot-state minimal (only
       # data/ files, no code) and works whether bot-state exists or not.
       - name: Commit updated state to bot-state
+        if: always()
         run: |
           git config user.name "itbisa-bot"
           git config user.email "bot@itbisa.local"
