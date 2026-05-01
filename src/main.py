@@ -13,7 +13,8 @@ What this script does, in order:
         (equivalent to clicking "Atur Pengiriman" -> "Antar ke Counter"
         in the Shopee Seller app). This moves the order to PROCESSED.
      b. Fetch the shipping label PDF (with retries while Shopee generates it).
-     c. Convert PDF to PNG, send to Telegram, mark as processed only AFTER
+     c. Convert PDF pages to Telegram-ready PNG images, merged two pages per
+        image, then send to Telegram and mark as processed only AFTER
         Telegram confirms delivery.
   6. Save the updated state file so future runs remember.
   7. Send a heartbeat summary to Telegram so the employee knows the bot
@@ -152,11 +153,13 @@ def _do_run():
             skipped_count += 1
             continue
 
-        # STEP 6c: Convert the PDF to one or more PNG images.
+        # STEP 6c: Convert the PDF into Telegram-ready PNG images.
+        # Multiple PDF pages are merged two pages per image to reduce
+        # Telegram messages while keeping the label order unchanged.
         png_pages = label_processor.pdf_to_pngs(pdf_bytes)
-        print(f"  Rendered {len(png_pages)} label page(s) from PDF")
+        print(f"  Rendered {len(png_pages)} Telegram label image(s) from PDF")
 
-        # STEP 6d: Build the caption and send all pages to Telegram.
+        # STEP 6d: Build the caption and send all label images to Telegram.
         caption = telegram_sender.build_caption(order)
         delivered = telegram_sender.send_label(png_pages, caption)
 
