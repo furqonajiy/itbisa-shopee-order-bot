@@ -26,13 +26,14 @@ def send_label(png_bytes_or_pages, caption):
     Sends one or more label images to the Telegram chat.
 
     Args:
-      png_bytes_or_pages: either a single image as bytes, or a list of image
-        bytes when the original PDF had multiple pages.
+      png_bytes_or_pages: either a single image as bytes, or a list of
+        Telegram-ready image bytes. Multi-page PDFs are already merged by
+        label_processor into two PDF pages per Telegram image.
       caption: a string shown below the first image (order info for the employee).
 
     Returns:
-      True if Telegram confirmed delivery for all pages, False if anything
-      went wrong on any page.
+      True if Telegram confirmed delivery for all images, False if anything
+      went wrong on any image.
 
     Why we return a bool instead of raising an exception:
       main.py uses this return value to decide whether to mark the order
@@ -40,7 +41,7 @@ def send_label(png_bytes_or_pages, caption):
       every call in try/except, which is noisier than just checking a bool.
     """
 
-    # STEP 1: Normalize the input so we always iterate over a list of pages.
+    # STEP 1: Normalize the input so we always iterate over a list of images.
     if isinstance(png_bytes_or_pages, (bytes, bytearray)):
         png_pages = [bytes(png_bytes_or_pages)]
     else:
@@ -51,7 +52,7 @@ def send_label(png_bytes_or_pages, caption):
         print("  Telegram send skipped: no label pages to send")
         return False
 
-    # STEP 2: Send each page in order using Telegram's sendPhoto endpoint.
+    # STEP 2: Send each image in order using Telegram's sendPhoto endpoint.
     url = f"{_TELEGRAM_API_URL}/sendPhoto"
     for page_index, png_bytes in enumerate(png_pages, start=1):
         files = {
@@ -60,7 +61,7 @@ def send_label(png_bytes_or_pages, caption):
 
         page_caption = caption
         if total_pages > 1:
-            page_label = f"🧾 Halaman {page_index}/{total_pages}"
+            page_label = f"🧾 Bagian {page_index}/{total_pages}"
             page_caption = f"{caption}\n\n{page_label}" if page_index == 1 else page_label
 
         data = {
@@ -73,23 +74,23 @@ def send_label(png_bytes_or_pages, caption):
         try:
             response = requests.post(url, files=files, data=data, timeout=30)
         except requests.RequestException as e:
-            print(f"  Telegram request failed on page {page_index}: {e}")
+            print(f"  Telegram request failed on image {page_index}: {e}")
             return False
 
         # STEP 4: Check the response. Telegram returns {"ok": true, ...} on success.
         if response.status_code != 200:
             print(
                 f"  Telegram returned status {response.status_code} "
-                f"on page {page_index}: {response.text}"
+                f"on image {page_index}: {response.text}"
             )
             return False
 
         response_json = response.json()
         if not response_json.get("ok"):
-            print(f"  Telegram rejected page {page_index}: {response_json}")
+            print(f"  Telegram rejected image {page_index}: {response_json}")
             return False
 
-    # STEP 5: Delivery confirmed for every page.
+    # STEP 5: Delivery confirmed for every image.
     return True
 
 
