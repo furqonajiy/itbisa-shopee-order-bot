@@ -20,7 +20,8 @@ What this script does, in order:
   7. Send a heartbeat summary to Telegram so the employee knows the bot
      is alive, even if there were no orders this run.
 
-The GitHub Actions workflow runs this script on a schedule.
+The GitHub Actions workflow runs this script on cron, manual dispatch, or
+Telegram Worker dispatch.
 """
 
 import sys
@@ -94,7 +95,7 @@ def _do_run():
 
     # STEP 3: Filter out orders we already processed in a previous run,
     # then sort them by order_sn ascending so Telegram receives labels in a
-    # stable oldest-to-newest order.
+    # stable deterministic order.
     new_orders = sorted(
         (o for o in orders if o["order_sn"] not in processed),
         key=lambda o: str(o["order_sn"]),
@@ -178,7 +179,9 @@ def _do_run():
             print(f"  ✗ Telegram delivery failed. Will retry next run.")
             skipped_count += 1
 
-    # STEP 7: Save the updated state file so the next run remembers what we did.
+    # STEP 7: Save once more at the end. Successful orders are already saved
+    # immediately after Telegram delivery; this final save keeps the file in
+    # sync with the in-memory state before the workflow commits bot-state.
     state_manager.save(processed)
     print(f"\nState saved.")
 
