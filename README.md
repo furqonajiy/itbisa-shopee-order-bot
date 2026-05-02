@@ -1,30 +1,36 @@
 # ITBisa Shopee Order Bot
 
-Automatically fetches new Shopee orders, converts shipping labels to images,
+Automatically fetches new Shopee orders, converts shipping labels to Telegram-ready images,
 and sends them to a Telegram bot so the warehouse employee can print them
 from their phone without any manual downloading.
 
 ## What it does
 
 GitHub Actions currently runs the bot 5 times per day based on the schedule in
-`.github/workflows/run.yml`.
+`.github/workflows/run.yml`. The workflow can also be triggered manually from
+the Actions tab or by the Telegram Worker via `workflow_dispatch`.
 
 Each run:
 
-1. Asks Shopee for orders in `READY_TO_SHIP` or `PROCESSED` status.
-2. Skips any orders already processed in a previous run.
-3. For each new order:
+1. Checks out `main`, then overlays runtime files from the `bot-state` branch.
+2. Asks Shopee for orders in `READY_TO_SHIP` or `PROCESSED` status.
+3. Skips any orders already processed in a previous run.
+4. For each new order:
    - If still `READY_TO_SHIP`, calls Shopee's `ship_order` API with
      dropoff method (equivalent to clicking "Atur Pengiriman" → "Antar ke
      Counter" in the Shopee Seller app). This moves the order to
      `PROCESSED` and triggers label generation.
-   - Downloads the shipping label PDF, converts it to a PNG image, and
-     sends it to a Telegram chat with a caption describing the order in
-     Bahasa Indonesia.
-4. Sends a heartbeat summary at the end of every run so the employee knows
+   - Gets Shopee's suggested shipping document type.
+   - Gets the tracking number.
+   - Calls `create_shipping_document` with the document type and tracking number.
+   - Downloads the shipping label PDF, converts all pages to PNG images, merges
+     every 2 PDF pages into 1 Telegram image, and sends the image(s) to a
+     Telegram chat with a caption in Bahasa Indonesia.
+   - Marks the `order_sn` as processed only after Telegram confirms delivery.
+5. Sends a heartbeat summary at the end of every run so the employee knows
    the bot is alive, even when no new orders came in.
-5. Remembers what was processed by committing small JSON files back to the
-   `bot-state` branch.
+6. Writes refreshed tokens and processed-order state locally during the run,
+   then the workflow commits the `data/` files back to `bot-state`.
 
 Everything runs on the GitHub Actions free tier. There is no server, no
 cloud VM, and no database.
@@ -34,21 +40,21 @@ cloud VM, and no database.
 ```text
 itbisa-shopee-order-bot/
 ├── .github/workflows/
-│   └── run.yml                      # GitHub Actions cron schedule
-├── data/                            # Runtime state, lives on bot-state branch
-│   ├── processed_orders.json        # Which orders we already sent to Telegram
+│   └── run.yml                      # GitHub Actions cron + manual trigger
+├── data/                            # Runtime state, source of truth is bot-state
+│   ├── processed_orders.json        # order_sn values already sent to Telegram
 │   └── shopee_tokens.json           # Current access + refresh tokens
 ├── scripts/
 │   ├── bootstrap_tokens.py          # One-time script to seed shopee_tokens.json
 │   └── test_*.py                    # Helper / diagnostic scripts for API testing
 ├── src/
 │   ├── __init__.py
-│   ├── main.py                      # Entry point, orchestrates the flow
+│   ├── main.py                      # Entry point, orchestrates one run
 │   ├── config.py                    # Reads secrets + settings from env
-│   ├── shopee_auth.py               # Token lifecycle
+│   ├── shopee_auth.py               # Shopee token lifecycle + rotation save
 │   ├── shopee_client.py             # Shopee API calls + HMAC signing
-│   ├── label_processor.py           # PDF → PNG conversion
-│   ├── telegram_sender.py           # Sends images + messages in Bahasa
+│   ├── label_processor.py           # PDF → Telegram PNGs, 2 pages per image
+│   ├── telegram_sender.py           # Sends images + summaries in Bahasa
 │   └── state_manager.py             # Loads/saves processed_orders.json
 ├── requirements.txt
 ├── .env.example
@@ -162,8 +168,8 @@ secrets:
 
 ### 3. Push the initial tokens file
 
-The tokens file you bootstrapped locally needs to be on the repo so the first
-workflow run can read it. Push it to `main`:
+The tokens file you bootstrapped locally needs to be available for the first
+workflow run. Push it to `main` together with an empty processed-orders file:
 
 ```bash
 git add data/shopee_tokens.json data/processed_orders.json
@@ -171,10 +177,10 @@ git commit -m "Bootstrap initial state files"
 git push
 ```
 
-After the first successful workflow run, ongoing state updates are pushed to
-the `bot-state` branch. You may keep the initial files on `main` for bootstrap,
-but the `bot-state` branch should be treated as the source of truth for runtime
-state.
+After the first workflow run reaches the state-commit step, ongoing runtime
+updates are pushed to the `bot-state` branch. You may keep the initial files on
+`main` for bootstrap, but the `bot-state` branch should be treated as the source
+of truth for runtime state.
 
 ### 4. Verify the workflow runs
 
@@ -193,17 +199,24 @@ This repo uses two branches:
 - **main** holds the source code. It can be protected by branch rules so code
   changes go through pull requests.
 - **bot-state** holds the runtime state files (`processed_orders.json` and
-  `shopee_tokens.json`). It is updated automatically by the bot on every
-  successful run, with no PR required.
+  `shopee_tokens.json`). It is updated automatically by the bot workflow, with
+  no PR required.
 
 This separation matters because the bot needs to write state files constantly
 (every time it processes an order or refreshes a token), but those writes are
 not code changes that warrant code review. Putting them on a separate branch
 keeps `main` clean and lets branch protection rules work as intended.
 
+The workflow always starts from source code on `main`, then overlays only the
+`data/` files from `bot-state` before running the bot. After the bot finishes,
+the workflow commits `data/processed_orders.json` and `data/shopee_tokens.json`
+back to `bot-state`. The commit step runs with `if: always()` so a token refresh
+or partial processed-order progress can still be preserved even if a later order
+fails.
+
 The `bot-state` branch is created automatically the first time the workflow
-runs successfully. For the very first run, the workflow still expects the
-initial state files to be available from `main`.
+reaches the state-commit step. For the very first run, the workflow still
+expects the initial state files to be available from `main`.
 
 ### Bootstrapping for the first time
 
@@ -239,9 +252,21 @@ Shopee uses an OAuth-style flow with three credentials working together:
   Shopee may rotate it during refresh, so the bot saves rotated tokens
   immediately.
 
-When the access token expires overnight while the bot is not running, nothing
-bad happens. The next run sees the stale token, calls the refresh endpoint, and
-gets a fresh one before doing any real work.
+The Shopee token file intentionally stores only:
+
+```json
+{
+  "access_token": "...",
+  "refresh_token": "...",
+  "access_token_expires_at": "2026-04-19T14:00:00+00:00"
+}
+```
+
+Do not add `refresh_token_expires_at`; this Shopee bot does not use it.
+
+When the access token expires while the bot is not running, nothing bad
+happens. The next run sees the stale token, calls the refresh endpoint, saves
+the rotated tokens immediately, and then continues with the order flow.
 
 The only time a human must intervene is if the refresh token itself expires or
 is revoked. When this happens, the bot sends a Telegram alert asking you to
@@ -269,7 +294,7 @@ changes later.
 
 ## What your employee sees in Telegram
 
-For each new order, a label image arrives with a caption like:
+For each new order, one or more label images arrive with a caption like:
 
 ```text
 📦 240418ABC123
@@ -280,6 +305,17 @@ Barang:
   • 15 x ITBISA-LED-5MM-GREEN
 ```
 
+Multi-page labels are grouped before sending:
+
+- 1 PDF page → 1 Telegram image
+- 2 PDF pages → 1 merged Telegram image
+- 3 PDF pages → 2 Telegram images: pages 1-2 merged, page 3 alone
+- 4 PDF pages → 2 merged Telegram images
+
+If an order produces more than one Telegram image, the first image contains the
+full order caption plus `Bagian 1/N`. The following images only show their
+`Bagian X/N` label so the chat stays readable.
+
 The caption uses SKU instead of the product name because product names on
 Shopee are very long, while SKUs are short and match how the warehouse is
 organized. When a product has variants, the variant SKU is shown. When a
@@ -287,9 +323,9 @@ product has no variants, the main product SKU is shown.
 
 At the end of every run, a short heartbeat message appears:
 
-- `✅ 11:00 - Tidak ada pesanan baru`
-- `✅ 12:00 - 3 label terkirim`
-- `⚠️ 13:00 - 2 terkirim, 1 gagal (akan dicoba lagi)`
+- `✅ Shopee - 11:00 - Tidak ada pesanan baru`
+- `✅ Shopee - 12:00 - 3 label terkirim`
+- `⚠️ Shopee - 13:00 - 2 terkirim, 1 gagal (akan dicoba lagi)`
 
 If the refresh token expires, a rare manual-intervention alert appears:
 
@@ -329,21 +365,23 @@ prefix.
 ### Workflow disabled after long inactivity
 
 GitHub Actions disables scheduled workflows on repos with no activity for a
-long time. Since the bot commits state on every run, this should not happen in
-normal operation. If it does, go to the Actions tab and click **Enable
-workflow** to re-activate it.
+long time. Since the bot refreshes tokens and commits state regularly, this
+should not happen in normal operation. If it does, go to the Actions tab and
+click **Enable workflow** to re-activate it.
 
 ### Duplicate labels appearing
 
-Open `data/processed_orders.json`. The file maps each processed order ID to the
-timestamp when it was sent. If you want to re-send a specific label, delete that
-order's entry and the next run will reprocess it.
+Open `data/processed_orders.json` on the `bot-state` branch. The file maps each
+processed `order_sn` to the timestamp when it was sent. If you want to re-send a
+specific recent label, delete that order's entry and the next run will reprocess
+it if the order is still inside the 3-day Shopee lookup window.
 
 ### State file corrupted
 
-Delete `data/processed_orders.json` entirely. The next run will create a fresh
-one. Worst case, the employee receives duplicate labels for recent orders,
-which is annoying but not catastrophic.
+Recover `data/processed_orders.json` on the `bot-state` branch. If you delete it
+entirely, the next run will create a fresh one. Worst case, the employee receives
+duplicate labels for recent orders still inside the 3-day lookup window, which
+is annoying but not catastrophic.
 
 ## Switching from sandbox to live
 

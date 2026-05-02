@@ -1,7 +1,8 @@
 # GitHub Actions workflow for the ITBisa Shopee Order Bot.
 #
-# This workflow runs the Python script every day on a schedule
-# based on Jakarta time (WIB = UTC+7).
+# This workflow runs the Python script on a schedule based on Jakarta time
+# (WIB = UTC+7). It can also be triggered manually or by the Telegram Worker
+# through workflow_dispatch.
 #
 # Schedule (Jakarta time -> UTC):
 #   10:00 WIB = 03:00 UTC
@@ -24,8 +25,8 @@ on:
   schedule:
     - cron: "0 3,5,7,9,11 * * *"
 
-  # STEP 2: Also allow manual triggering from the Actions tab. Useful for
-  # testing or for catching up after a missed run.
+  # STEP 2: Also allow manual triggering from the Actions tab and dispatching
+  # from the Cloudflare Telegram Worker.
   workflow_dispatch:
 
 jobs:
@@ -90,6 +91,8 @@ jobs:
       # We save the updated state to a temp location, switch to bot-state,
       # restore the files, and push. This keeps bot-state minimal (only
       # data/ files, no code) and works whether bot-state exists or not.
+      # The step uses if: always() so token rotation or successful labels
+      # processed before a later failure can still be persisted.
       - name: Commit updated state to bot-state
         if: always()
         run: |
