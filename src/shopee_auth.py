@@ -8,13 +8,15 @@ Why this file exists:
     - access_token: valid for 4 hours
     - refresh_token: valid for 30 days
 
-  Since the bot runs every hour, the access_token will always need refreshing
-  on most runs. This module handles that transparently: callers just ask for
-  "a valid access token" and this module takes care of checking expiry,
-  refreshing if needed, and saving the updated tokens back to disk.
+  Since the bot runs several times per day, the access_token often needs
+  refreshing before an API call. This module handles that transparently:
+  callers just ask for "a valid access token" and this module takes care of
+  checking expiry, refreshing if needed, and saving the updated tokens back to
+  disk immediately.
 
-  Tokens are stored in data/shopee_tokens.json, which is committed back to
-  the repo at the end of each run (same pattern as processed_orders.json).
+  Tokens are stored in data/shopee_tokens.json. The GitHub Actions workflow
+  later commits that file back to the bot-state branch together with
+  processed_orders.json.
 
 Public functions (used by shopee_client.py):
   - get_valid_access_token() -> string (an access token known to be fresh)
@@ -84,6 +86,7 @@ def get_valid_access_token():
     new_tokens = _refresh_tokens(tokens["refresh_token"])
 
     # STEP 4: Save the new tokens to disk for future runs.
+    # The workflow commits this file back to bot-state after the run.
     _save_tokens(new_tokens)
     print(f"  New tokens saved to {config.TOKENS_FILE_PATH}")
 
