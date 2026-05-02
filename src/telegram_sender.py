@@ -1,15 +1,18 @@
 """
 telegram_sender.py
 ------------------
-Sends shipping label images to the Telegram bot.
+Sends shipping label images and run summaries to the Telegram bot.
 
 Why this file exists:
   The employee receives notifications via Telegram and prints the labels from
   there. This module is the only place that knows about the Telegram API.
 
 Public functions (used by main.py):
-  - send_label(png_bytes, caption) -> True if delivered, False otherwise
+  - send_label(png_bytes_or_pages, caption) -> True if every image is delivered
+  - send_summary(text) -> True if the summary message is delivered
   - build_caption(order) -> formatted string with order info
+  - build_summary(time_hhmm, success_count, skipped_count) -> heartbeat text
+  - build_safety_stop_message(time_hhmm, order_count, max_allowed) -> alert text
 """
 
 import requests
@@ -52,7 +55,9 @@ def send_label(png_bytes_or_pages, caption):
         print("  Telegram send skipped: no label pages to send")
         return False
 
-    # STEP 2: Send each image in order using Telegram's sendPhoto endpoint.
+    # STEP 2: Send each Telegram image in order using sendPhoto.
+    # If there are multiple images, only the first one gets the full order
+    # caption; later images only get their Bagian X/N label to keep chat clean.
     url = f"{_TELEGRAM_API_URL}/sendPhoto"
     for page_index, png_bytes in enumerate(png_pages, start=1):
         files = {
@@ -223,9 +228,9 @@ def build_summary(time_hhmm, success_count, skipped_count):
     Builds the heartbeat summary message in Bahasa Indonesia.
 
     Three patterns based on what happened during the run:
-      - 0 orders:   "✅ 11:00 - Tidak ada pesanan baru"
-      - All sent:   "✅ 12:00 - 3 label terkirim"
-      - Some failed: "⚠️ 13:00 - 2 terkirim, 1 gagal (akan dicoba lagi)"
+      - 0 orders:   "✅ Shopee - 11:00 - Tidak ada pesanan baru"
+      - All sent:   "✅ Shopee - 12:00 - 3 label terkirim"
+      - Some failed: "⚠️ Shopee - 13:00 - 2 terkirim, 1 gagal (akan dicoba lagi)"
 
     Args:
       time_hhmm: current Jakarta time as "HH:MM" string.

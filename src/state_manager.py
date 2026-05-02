@@ -5,9 +5,13 @@ Loads and saves the JSON file that remembers which orders we already processed.
 
 Why this file exists:
   Every GitHub Actions run starts on a fresh machine with no memory of previous
-  runs. To avoid sending the same shipping label twice, we save a small JSON
-  file that maps each processed order_sn to the timestamp when we processed it.
-  This file is committed back to the repo at the end of each successful run.
+  runs. Before the bot starts, the workflow overlays data/ files from the
+  bot-state branch into the working directory. To avoid sending the same
+  shipping label twice, we keep a small JSON file that maps each processed
+  order_sn to the timestamp when Telegram confirmed delivery.
+
+  This module only reads and writes the local JSON file. The GitHub Actions
+  workflow is responsible for committing that file back to the bot-state branch.
 
 The file format looks like this:
   {
@@ -27,8 +31,9 @@ def load():
     """
     Loads the processed orders dictionary from disk.
 
-    Also prunes any entries older than STATE_RETENTION_DAYS, because airway
-    bills are no longer useful after that window.
+    Also returns a pruned view without entries older than STATE_RETENTION_DAYS,
+    because airway bills are no longer useful after that window. The pruned
+    result is persisted when save() is called later in the run.
 
     Returns:
       dict mapping order_sn (str) -> processed_at_iso_timestamp (str)
