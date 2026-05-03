@@ -35,9 +35,9 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 # STEP 2: Read Shopee API credentials.
 # You get these from the Shopee Open Platform when you register your app.
 # These are always required because this bot now only calls the real Shopee API.
-SHOPEE_PARTNER_ID = int(os.environ["SHOPEE_PARTNER_ID"])
+SHOPEE_PARTNER_ID = os.environ["SHOPEE_PARTNER_ID"]
 SHOPEE_PARTNER_KEY = os.environ["SHOPEE_PARTNER_KEY"]
-SHOPEE_SHOP_ID = int(os.environ["SHOPEE_SHOP_ID"])
+SHOPEE_SHOP_ID = os.environ["SHOPEE_SHOP_ID"]
 
 # STEP 3: Read Telegram bot credentials.
 # Required because every run sends labels and/or heartbeat summaries to Telegram.
