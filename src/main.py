@@ -37,7 +37,6 @@ from src import (
     state_manager,
 )
 
-
 # Jakarta is UTC+7. We use this to format the time in summaries.
 JAKARTA_TZ = timezone(timedelta(hours=7))
 

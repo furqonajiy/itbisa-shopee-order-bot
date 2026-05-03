@@ -20,12 +20,10 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-
 # STEP 0: Load .env file if it exists (for local development only).
 # In production this is a no-op because the .env file is git-ignored
 # and never deployed to GitHub Actions.
 load_dotenv()
-
 
 # STEP 1: Compute the project root folder.
 # __file__ is the path to this config.py file, e.g. /path/to/repo/src/config.py
@@ -34,7 +32,6 @@ load_dotenv()
 # matter which directory Python was launched from.
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
-
 # STEP 2: Read Shopee API credentials.
 # You get these from the Shopee Open Platform when you register your app.
 # These are always required because this bot now only calls the real Shopee API.
@@ -42,12 +39,10 @@ SHOPEE_PARTNER_ID = int(os.environ["SHOPEE_PARTNER_ID"])
 SHOPEE_PARTNER_KEY = os.environ["SHOPEE_PARTNER_KEY"]
 SHOPEE_SHOP_ID = int(os.environ["SHOPEE_SHOP_ID"])
 
-
 # STEP 3: Read Telegram bot credentials.
 # Required because every run sends labels and/or heartbeat summaries to Telegram.
 TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 TELEGRAM_CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
-
 
 # STEP 4: Define constants that control behavior.
 # File paths are anchored to PROJECT_ROOT so they always resolve to the same
@@ -56,6 +51,6 @@ SHOPEE_API_BASE_URL = "https://partner.shopeemobile.com"
 STATE_FILE_PATH = str(PROJECT_ROOT / "data" / "processed_orders.json")
 TOKENS_FILE_PATH = str(PROJECT_ROOT / "data" / "shopee_tokens.json")
 MAX_ORDERS_PER_RUN = 30  # Safety cap. If we see more than this, something is wrong.
-LABEL_IMAGE_DPI = 200    # Resolution for PDF -> PNG conversion.
+LABEL_IMAGE_DPI = 200  # Resolution for PDF -> PNG conversion.
 STATE_RETENTION_DAYS = 3  # How long to remember processed orders before pruning.
 TOKEN_REFRESH_BUFFER_MINUTES = 10  # Refresh the access token N minutes before it expires.
