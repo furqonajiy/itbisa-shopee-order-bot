@@ -19,7 +19,6 @@ import requests
 
 from src import config
 
-
 # The Telegram Bot API base URL. We compose the full endpoint from this.
 _TELEGRAM_API_URL = f"https://api.telegram.org/bot{config.TELEGRAM_BOT_TOKEN}"
 

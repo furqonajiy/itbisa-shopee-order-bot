@@ -19,14 +19,12 @@ Usage:
   python scripts/test_telegram.py
 """
 
-import io
 import os
 import sys
 from pathlib import Path
 
 import requests
 from dotenv import load_dotenv
-
 
 # Load .env from project root for local testing.
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
