@@ -105,6 +105,9 @@ def _do_run():
     # STEP 4: If there are no new orders, send a heartbeat and exit.
     # We still send a message so the employee knows the bot is healthy.
     if not new_orders:
+        # Persist pruning from state_manager.load() even on heartbeat-only runs.
+        state_manager.save(processed)
+
         summary = telegram_sender.build_summary(_now_jakarta_hhmm(), 0, 0)
         telegram_sender.send_summary(summary)
         print(f"Sent heartbeat: {summary}")
