@@ -25,6 +25,7 @@ Telegram Worker dispatch.
 """
 
 import sys
+import traceback
 from datetime import datetime, timezone, timedelta
 
 from src import (
@@ -75,6 +76,7 @@ def run():
         alert = f"❌ {_now_jakarta_hhmm()} - Error bot Shopee: {e}"
         telegram_sender.send_summary(alert)
         print(f"\n{alert}")
+        traceback.print_exc()
         sys.exit(1)
 
 
