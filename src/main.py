@@ -25,6 +25,7 @@ Telegram Worker dispatch.
 """
 
 import sys
+import traceback
 from datetime import datetime, timezone, timedelta
 
 from src import (
@@ -35,7 +36,6 @@ from src import (
     telegram_sender,
     state_manager,
 )
-
 
 # Jakarta is UTC+7. We use this to format the time in summaries.
 JAKARTA_TZ = timezone(timedelta(hours=7))
@@ -75,6 +75,7 @@ def run():
         alert = f"❌ {_now_jakarta_hhmm()} - Error bot Shopee: {e}"
         telegram_sender.send_summary(alert)
         print(f"\n{alert}")
+        traceback.print_exc()
         sys.exit(1)
 
 
@@ -105,6 +106,9 @@ def _do_run():
     # STEP 4: If there are no new orders, send a heartbeat and exit.
     # We still send a message so the employee knows the bot is healthy.
     if not new_orders:
+        # Persist pruning from state_manager.load() even on heartbeat-only runs.
+        state_manager.save(processed)
+
         summary = telegram_sender.build_summary(_now_jakarta_hhmm(), 0, 0)
         telegram_sender.send_summary(summary)
         print(f"Sent heartbeat: {summary}")
