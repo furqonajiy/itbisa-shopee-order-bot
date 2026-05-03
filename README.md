@@ -16,17 +16,17 @@ Each run:
 2. Asks Shopee for orders in `READY_TO_SHIP` or `PROCESSED` status.
 3. Skips any orders already processed in a previous run.
 4. For each new order:
-   - If still `READY_TO_SHIP`, calls Shopee's `ship_order` API with
-     dropoff method (equivalent to clicking "Atur Pengiriman" → "Antar ke
-     Counter" in the Shopee Seller app). This moves the order to
-     `PROCESSED` and triggers label generation.
-   - Gets Shopee's suggested shipping document type.
-   - Gets the tracking number.
-   - Calls `create_shipping_document` with the document type and tracking number.
-   - Downloads the shipping label PDF, converts all pages to PNG images, merges
-     every 2 PDF pages into 1 Telegram image, and sends the image(s) to a
-     Telegram chat with a caption in Bahasa Indonesia.
-   - Marks the `order_sn` as processed only after Telegram confirms delivery.
+    - If still `READY_TO_SHIP`, calls Shopee's `ship_order` API with
+      dropoff method (equivalent to clicking "Atur Pengiriman" → "Antar ke
+      Counter" in the Shopee Seller app). This moves the order to
+      `PROCESSED` and triggers label generation.
+    - Gets Shopee's suggested shipping document type.
+    - Gets the tracking number.
+    - Calls `create_shipping_document` with the document type and tracking number.
+    - Downloads the shipping label PDF, converts all pages to PNG images, merges
+      every 2 PDF pages into 1 Telegram image, and sends the image(s) to a
+      Telegram chat with a caption in Bahasa Indonesia.
+    - Marks the `order_sn` as processed only after Telegram confirms delivery.
 5. Sends a heartbeat summary at the end of every run so the employee knows
    the bot is alive, even when no new orders came in.
 6. Writes refreshed tokens and processed-order state locally during the run,
