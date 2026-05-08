@@ -1,15 +1,7 @@
 # GitHub Actions workflow for the ITBisa Shopee Order Bot.
 #
-# This workflow runs the Python script on a schedule based on Jakarta time
-# (WIB = UTC+7). It can also be triggered manually or by the Telegram Worker
-# through workflow_dispatch.
-#
-# Schedule (Jakarta time -> UTC):
-#   10:00 WIB = 03:00 UTC
-#   12:00 WIB = 05:00 UTC
-#   14:00 WIB = 07:00 UTC
-#   16:00 WIB = 09:00 UTC
-#   18:00 WIB = 11:00 UTC
+# This workflow runs the Python script only when triggered manually or by the
+# Telegram Worker through workflow_dispatch.
 #
 # State file management:
 #   This workflow uses TWO branches:
@@ -21,11 +13,7 @@
 name: Run Shopee Order Bot
 
 on:
-  # STEP 1: Run on a cron schedule. GitHub Actions cron uses UTC.
-  schedule:
-    - cron: "0 3,5,7,9,11 * * *"
-
-  # STEP 2: Also allow manual triggering from the Actions tab and dispatching
+  # Allow manual triggering from the Actions tab and dispatching
   # from the Cloudflare Telegram Worker.
   workflow_dispatch:
 
@@ -37,18 +25,18 @@ jobs:
       group: bot-state-${{ github.repository }}
       cancel-in-progress: false
 
-    # STEP 3: Allow this job to push commits to the bot-state branch.
+    # STEP 1: Allow this job to push commits to the bot-state branch.
     permissions:
       contents: write
 
     steps:
-      # STEP 4: Check out the main branch to get the latest code.
+      # STEP 2: Check out the main branch to get the latest code.
       - name: Check out code from main
         uses: actions/checkout@v5
         with:
           ref: main
 
-      # STEP 5: Pull the latest state files from the bot-state branch.
+      # STEP 3: Pull the latest state files from the bot-state branch.
       # We do this after the main checkout so that data/ files come from
       # bot-state, while everything else (code, scripts, workflow) stays from main.
       - name: Pull state files from bot-state branch
@@ -63,21 +51,21 @@ jobs:
             echo "  bot-state branch does not exist yet; using data/ files from main for bootstrap"
           fi
 
-      # STEP 6: Install Python.
+      # STEP 4: Install Python.
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
-      # STEP 7: Install poppler, which pdf2image needs to render PDFs.
+      # STEP 5: Install poppler, which pdf2image needs to render PDFs.
       - name: Install poppler
         run: sudo apt-get update && sudo apt-get install -y poppler-utils
 
-      # STEP 8: Install the Python dependencies.
+      # STEP 6: Install the Python dependencies.
       - name: Install Python dependencies
         run: pip install -r requirements.txt
 
-      # STEP 9: Run the bot. Secrets come from GitHub Actions Secrets.
+      # STEP 7: Run the bot. Secrets come from GitHub Actions Secrets.
       - name: Run order processor
         env:
           SHOPEE_PARTNER_ID: ${{ secrets.SHOPEE_PARTNER_ID }}
@@ -87,7 +75,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python -m src.main
 
-      # STEP 10: Commit the updated state files to the bot-state branch.
+      # STEP 8: Commit the updated state files to the bot-state branch.
       # We save the updated state to a temp location, switch to bot-state,
       # restore the files, and push. This keeps bot-state minimal (only
       # data/ files, no code) and works whether bot-state exists or not.
