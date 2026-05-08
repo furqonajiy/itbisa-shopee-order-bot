@@ -82,8 +82,8 @@ def main():
 
     body = {
         "code": code,
-        "partner_id": config.SHOPEE_PARTNER_ID,
-        "shop_id": config.SHOPEE_SHOP_ID,
+        "partner_id": int(config.SHOPEE_PARTNER_ID),
+        "shop_id": int(config.SHOPEE_SHOP_ID),
     }
 
     # STEP 3: Call the endpoint.
