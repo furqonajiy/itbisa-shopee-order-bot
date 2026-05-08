@@ -216,9 +216,9 @@ def _refresh_tokens(refresh_token):
     )
 
     body = {
-        "partner_id": config.SHOPEE_PARTNER_ID,
+        "partner_id": int(config.SHOPEE_PARTNER_ID),
         "refresh_token": refresh_token,
-        "shop_id": config.SHOPEE_SHOP_ID,
+        "shop_id": int(config.SHOPEE_SHOP_ID),
     }
 
     # STEP 2: Call the refresh endpoint.
