@@ -172,8 +172,8 @@ def build_caption(order):
     for item in items:
         qty = item.get("model_quantity_purchased", 1)
         sku = _pick_sku(item)
-        item_lines.append(f"  • {qty} x {sku}")
-    items_text = "\n".join(item_lines) if item_lines else "  (tidak ada barang)"
+        item_lines.append(f"• {qty} x {sku}")
+    items_text = "\n".join(item_lines) if item_lines else "(tidak ada barang)"
 
     # STEP 3: Assemble the caption in Bahasa Indonesia.
     caption = (
