@@ -16,9 +16,13 @@ What this script does, in order:
      c. Convert PDF pages to Telegram-ready PNG images, merged two pages per
         image, then send to Telegram and mark as processed only AFTER
         Telegram confirms delivery.
+     d. Record each shipped item_sku into the balance dispatcher so the
+        affected base SKUs can be rebalanced after this run.
   6. Save the updated state file so future runs remember.
-  7. Send a heartbeat summary to Telegram so the employee knows the bot
-     is alive, even if there were no orders this run.
+  7. Dispatch /stock_balance for every base SKU touched this run. Best-effort,
+     never fails the order run.
+  8. Send a heartbeat summary to Telegram so the employee knows the bot is
+     alive, even if there were no orders this run.
 
 The GitHub Actions workflow runs this script on cron, manual dispatch, or
 Telegram Worker dispatch.
@@ -35,15 +39,34 @@ from src import (
     label_processor,
     telegram_sender,
     state_manager,
+    balance_dispatcher,
 )
 
-# Jakarta is UTC+7. We use this to format the time in summaries.
 JAKARTA_TZ = timezone(timedelta(hours=7))
 
 
 def _now_jakarta_hhmm():
     """Returns the current time in Jakarta as a HH:MM string."""
     return datetime.now(JAKARTA_TZ).strftime("%H:%M")
+
+
+def _format_balance_line(balance_result):
+    """Formats the balance-dispatch line appended to the heartbeat.
+
+    Returns an empty string when nothing was dispatched, so heartbeats on
+    zero-order runs are unchanged.
+    """
+    requested = balance_result["requested"]
+    if requested == 0:
+        return ""
+
+    dispatched = balance_result["dispatched"]
+    failed = balance_result["failed"]
+
+    line = f"\n⚖️ Stock Balance: {dispatched}/{requested} SKU dipicu"
+    if failed:
+        line += f"\n⚠️ Gagal dipicu: {', '.join(failed)}"
+    return line
 
 
 def run():
@@ -86,6 +109,10 @@ def _do_run():
     processed = state_manager.load()
     print(f"Loaded state: {len(processed)} previously processed orders remembered")
 
+    # Per-run collector for shipped base SKUs. Populated only when Telegram
+    # confirms label delivery. Dispatched after the order loop finishes.
+    balance = balance_dispatcher.BalanceDispatcher()
+
     # STEP 2: Fetch all orders that need a label printed. This includes both
     # READY_TO_SHIP (need shipment arrangement first) and PROCESSED (label
     # is being generated or ready). The token will be refreshed automatically
@@ -104,7 +131,7 @@ def _do_run():
     print(f"Of those, {len(new_orders)} are new and need processing")
 
     # STEP 4: If there are no new orders, send a heartbeat and exit.
-    # We still send a message so the employee knows the bot is healthy.
+    # No balance dispatch because nothing shipped.
     if not new_orders:
         # Persist pruning from state_manager.load() even on heartbeat-only runs.
         state_manager.save(processed)
@@ -179,6 +206,13 @@ def _do_run():
             state_manager.save(processed)
             success_count += 1
             print(f"  ✓ Sent to Telegram, saved state, and marked as processed")
+
+            # STEP 6f: Record each item_sku from this delivered order so the
+            # affected base SKU(s) get a balance dispatch after the loop.
+            # Recording happens only on successful delivery — failed Telegram
+            # sends are excluded and will be picked up on the next /resi_* run.
+            for item in order.get("item_list", []) or []:
+                balance.record(item.get("item_sku", ""))
         else:
             print(f"  ✗ Telegram delivery failed. Will retry next run.")
             skipped_count += 1
@@ -189,15 +223,27 @@ def _do_run():
     state_manager.save(processed)
     print(f"\nState saved.")
 
-    # STEP 8: Send a summary heartbeat so the employee knows what happened.
+    # STEP 8: Dispatch /stock_balance for every base SKU touched this run.
+    # Best-effort: dispatcher swallows individual failures and reports them
+    # so the order run never fails because of a balance hiccup. Labels are
+    # the critical path.
+    balance_result = balance.dispatch_all()
+
+    # STEP 9: Send a summary heartbeat so the employee knows what happened,
+    # including the balance dispatch outcome.
     summary = telegram_sender.build_summary(
         _now_jakarta_hhmm(), success_count, skipped_count
     )
+    summary += _format_balance_line(balance_result)
     telegram_sender.send_summary(summary)
 
-    # STEP 9: Print a summary so the GitHub Actions log is easy to scan.
+    # STEP 10: Print a summary so the GitHub Actions log is easy to scan.
     print("=" * 60)
     print(f"Run complete: {success_count} sent, {skipped_count} skipped")
+    print(
+        f"Balance: {balance_result['dispatched']}/{balance_result['requested']} "
+        f"SKU dispatched"
+    )
     print("=" * 60)
 
 
