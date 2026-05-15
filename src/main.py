@@ -16,7 +16,7 @@ What this script does, in order:
      c. Convert PDF pages to Telegram-ready PNG images, merged two pages per
         image, then send to Telegram and mark as processed only AFTER
         Telegram confirms delivery.
-     d. Record each shipped item_sku into the balance dispatcher so the
+     d. Record each shipped variant SKU into the balance dispatcher so the
         affected base SKUs can be rebalanced after this run.
   6. Save the updated state file so future runs remember.
   7. Dispatch /stock_balance for every base SKU touched this run. Best-effort,
@@ -67,6 +67,27 @@ def _format_balance_line(balance_result):
     if failed:
         line += f"\n⚠️ Gagal dipicu: {', '.join(failed)}"
     return line
+
+
+def _pick_balance_sku(item):
+    """
+    Returns the SKU to record into the balance dispatcher for one order item.
+
+    Mirrors telegram_sender._pick_sku for the first two tiers (variant SKU,
+    then parent SKU), so /stock_balance receives the exact same SKU the
+    operator sees in the Telegram label caption. The item_name fallback
+    used by the caption is deliberately omitted here — an item name is not
+    a valid stock-bot catalog key, so we'd rather skip the recording (and
+    miss a balance dispatch for that item) than feed garbage to the stock
+    bot and trigger a spurious "tidak ditemukan" alert.
+
+    Returns an empty string when both SKUs are missing; the caller should
+    skip recording in that case.
+    """
+    model_sku = (item.get("model_sku") or "").strip()
+    if model_sku:
+        return model_sku
+    return (item.get("item_sku") or "").strip()
 
 
 def run():
@@ -207,12 +228,18 @@ def _do_run():
             success_count += 1
             print(f"  ✓ Sent to Telegram, saved state, and marked as processed")
 
-            # STEP 6f: Record each item_sku from this delivered order so the
-            # affected base SKU(s) get a balance dispatch after the loop.
+            # STEP 6f: Record each shipped variant SKU from this delivered
+            # order so the affected base SKU(s) get a balance dispatch after
+            # the loop. _pick_balance_sku mirrors the caption's SKU choice
+            # (variant SKU first, parent SKU fallback) so /stock_balance
+            # receives the exact same SKU the operator sees in the label
+            # message — never the parent product SKU like "ITBISA-RESISTOR".
             # Recording happens only on successful delivery — failed Telegram
             # sends are excluded and will be picked up on the next /resi_* run.
             for item in order.get("item_list", []) or []:
-                balance.record(item.get("item_sku", ""))
+                sku = _pick_balance_sku(item)
+                if sku:
+                    balance.record(sku)
         else:
             print(f"  ✗ Telegram delivery failed. Will retry next run.")
             skipped_count += 1
