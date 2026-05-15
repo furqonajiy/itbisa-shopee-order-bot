@@ -66,6 +66,9 @@ jobs:
         run: pip install -r requirements.txt
 
       # STEP 7: Run the bot. Secrets come from GitHub Actions Secrets.
+      # STOCK_DISPATCH_TOKEN is a PAT with actions:write on
+      # itbisa-shop-stock-bot so the bot can fire /stock_balance for each
+      # base SKU shipped this run.
       - name: Run order processor
         env:
           SHOPEE_PARTNER_ID: ${{ secrets.SHOPEE_PARTNER_ID }}
@@ -73,6 +76,7 @@ jobs:
           SHOPEE_SHOP_ID: ${{ secrets.SHOPEE_SHOP_ID }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          STOCK_DISPATCH_TOKEN: ${{ secrets.STOCK_DISPATCH_TOKEN }}
         run: python -m src.main
 
       # STEP 8: Commit the updated state files to the bot-state branch.
