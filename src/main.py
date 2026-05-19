@@ -9,9 +9,13 @@ What this script does, in order:
   3. Filter out the ones we already handled.
   4. Stop if there are too many (safety check).
   5. For each new order:
-     a. If READY_TO_SHIP, call ship_order_to_dropoff to arrange shipment
-        (equivalent to clicking "Atur Pengiriman" -> "Antar ke Counter"
-        in the Shopee Seller app). This moves the order to PROCESSED.
+     a. If READY_TO_SHIP, pre-check the package with get_package_detail.
+        Only when fulfillment_status=LOGISTICS_READY and
+        is_shipment_arranged=false do we call ship_order_to_dropoff. This
+        avoids calling v2.logistics.ship_order on packages that are still
+        being allocated or already arranged, which keeps the API call
+        success rate above Shopee's 90% threshold (Shopee Open Platform
+        task "Improve API Call Success Rate for v2.logistics.ship_order").
      b. Fetch the shipping label PDF (with retries while Shopee generates it).
      c. Convert PDF pages to Telegram-ready PNG images, merged two pages per
         image, then send to Telegram and mark as processed only AFTER
@@ -88,6 +92,69 @@ def _pick_balance_sku(item):
     if model_sku:
         return model_sku
     return (item.get("item_sku") or "").strip()
+
+
+def _is_ready_to_ship(order):
+    """Pre-check before v2.logistics.ship_order per Shopee Open Platform.
+
+    Returns True only when the package's fulfillment_status is
+    LOGISTICS_READY and is_shipment_arranged is False. Any other
+    state — still allocating, already arranged, detail call error,
+    or missing package_number — returns False so the caller skips
+    this order and retries on the next scheduled run.
+
+    This protects the v2.logistics.ship_order daily success rate
+    (>90% required, monitored over 7 consecutive days) by skipping
+    the three failure modes Shopee documents:
+      1. Package not in LOGISTICS_READY status ("Package is not
+         ready to ship").
+      2. Package already arranged ("This parcel has already been
+         shipped").
+      3. Order still in logistics-channel allocation ("The order
+         is being allocated, please wait").
+
+    Args:
+      order: an order dict from shopee_client.get_pending_orders().
+        Must include "order_sn" and "package_list".
+
+    Returns:
+      True if safe to call ship_order_to_dropoff(order_sn), else False.
+    """
+    order_sn = order["order_sn"]
+
+    packages = order.get("package_list") or []
+    if not packages:
+        print(f"  ⏭️ {order_sn}: package_list kosong di order detail; "
+              f"skip, akan dicoba lagi next run.")
+        return False
+
+    package_number = (packages[0].get("package_number") or "").strip()
+    if not package_number:
+        print(f"  ⏭️ {order_sn}: package_number kosong; "
+              f"skip, akan dicoba lagi next run.")
+        return False
+
+    try:
+        resp = shopee_client.get_package_detail(order_sn, package_number)
+    except Exception as e:
+        print(f"  ⏭️ {order_sn}/{package_number}: "
+              f"get_package_detail gagal: {e}; skip.")
+        return False
+
+    body = (resp or {}).get("response") or {}
+    fulfillment_status = body.get("fulfillment_status")
+    is_shipment_arranged = bool(body.get("is_shipment_arranged", False))
+
+    if fulfillment_status != "LOGISTICS_READY" or is_shipment_arranged:
+        print(
+            f"  ⏭️ {order_sn}/{package_number} belum siap dikirim "
+            f"(fulfillment_status={fulfillment_status}, "
+            f"is_shipment_arranged={is_shipment_arranged}); "
+            f"skip, akan dicoba lagi next run."
+        )
+        return False
+
+    return True
 
 
 def run():
@@ -186,7 +253,16 @@ def _do_run():
         # the warehouse drops packages at the courier counter at end of day.
         # After this call, the order moves to PROCESSED and Shopee starts
         # generating the shipping label.
+        #
+        # Pre-check the package with get_package_detail before calling
+        # v2.logistics.ship_order. Skip silently when not ready so we
+        # don't burn the API call success rate on predictable failures
+        # (still allocating / already arranged / package missing).
         if order_status == "READY_TO_SHIP":
+            if not _is_ready_to_ship(order):
+                skipped_count += 1
+                continue
+
             try:
                 print(f"  Arranging dropoff shipment for {order_sn}...")
                 shopee_client.ship_order_to_dropoff(order_sn)
