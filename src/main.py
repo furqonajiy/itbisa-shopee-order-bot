@@ -142,8 +142,15 @@ def _is_ready_to_ship(order):
         return False
 
     body = (resp or {}).get("response") or {}
-    fulfillment_status = body.get("fulfillment_status")
-    is_shipment_arranged = bool(body.get("is_shipment_arranged", False))
+    returned_packages = body.get("package_list") or []
+    if not returned_packages:
+        print(f"  ⏭️ {order_sn}/{package_number}: "
+              f"response.package_list kosong; skip, akan dicoba lagi next run.")
+        return False
+
+    pkg = returned_packages[0]
+    fulfillment_status = pkg.get("fulfillment_status")
+    is_shipment_arranged = bool(pkg.get("is_shipment_arranged", False))
 
     if fulfillment_status != "LOGISTICS_READY" or is_shipment_arranged:
         print(
