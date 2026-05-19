@@ -11,6 +11,7 @@ Why this file exists:
 
 Public functions (used by main.py):
   - get_pending_orders() -> list of order dicts (READY_TO_SHIP + PROCESSED)
+  - get_package_detail(order_sn, package_number) -> dict (raw Shopee response)
   - ship_order_to_dropoff(order_sn) -> None (raises on error)
   - get_shipping_label_pdf(order_sn) -> bytes (or None if not ready yet)
 """
@@ -161,7 +162,9 @@ def get_pending_orders():
 
     Returns:
       A list of order dicts. Each dict includes order_status so the caller
-      can decide whether to ship_order or just fetch the label.
+      can decide whether to ship_order or just fetch the label. Each dict
+      also includes package_list so main.py can pick a package_number to
+      pass to get_package_detail() before calling ship_order_to_dropoff.
     """
 
     # STEP 1: Shopee's get_order_list only accepts one status per call,
@@ -196,6 +199,46 @@ def get_pending_orders():
     return details
 
 
+def get_package_detail(order_sn, package_number):
+    """
+    Fetches v2.order.get_package_detail for a single package.
+
+    Used as a pre-check before ship_order_to_dropoff so we only call
+    v2.logistics.ship_order when the package is actually in
+    fulfillment_status=LOGISTICS_READY and is_shipment_arranged=false.
+    This is the migration Shopee Open Platform recommends in their
+    "Improve API Call Success Rate for v2.logistics.ship_order" task:
+    the order-level status (READY_TO_SHIP) is too coarse, and calling
+    ship_order on a package that is still allocating or already
+    arranged counts as a failed API call against the >90% daily
+    success rate target.
+
+    Args:
+      order_sn: the Shopee order number string.
+      package_number: the package_number from order.package_list[].
+
+    Returns:
+      The raw Shopee JSON dict. response.fulfillment_status and
+      response.is_shipment_arranged are the fields the caller checks.
+
+    Raises:
+      RuntimeError if Shopee returns an API-level error. The caller
+      treats any exception here as "not ready" and retries next run.
+    """
+
+    path = "/api/v2/order/get_package_detail"
+    url = _build_request_url(path)
+
+    response = requests.get(
+        url,
+        params={"order_sn": order_sn, "package_number": package_number},
+        timeout=30,
+    )
+    return _check_shopee_json_ok(
+        response, context=f"get_package_detail {order_sn}/{package_number}"
+    )
+
+
 def ship_order_to_dropoff(order_sn):
     """
     Tells Shopee that the seller will drop off the package at the courier
@@ -204,6 +247,10 @@ def ship_order_to_dropoff(order_sn):
 
     After this call succeeds, the order moves from READY_TO_SHIP to
     PROCESSED, and Shopee starts generating the shipping label.
+
+    Callers must verify package readiness via get_package_detail() first
+    so this call only fires when fulfillment_status=LOGISTICS_READY and
+    is_shipment_arranged=false. See main._is_ready_to_ship.
 
     Args:
       order_sn: the Shopee order number string.
@@ -377,13 +424,15 @@ def _get_order_details(order_sns):
         url = _build_request_url(path)
 
         # STEP 2: Ask for the specific fields we need for the Telegram caption,
-        # plus order_status so main.py can decide what to do with each order.
+        # plus order_status so main.py can decide what to do with each order,
+        # plus package_list so main.py can pick a package_number to pre-check
+        # with get_package_detail before calling ship_order_to_dropoff.
         # We do NOT request recipient_address because Shopee masks it anyway,
         # and the unmasked details are visible on the printed label.
         params = {
             "order_sn_list": ",".join(batch),
             "response_optional_fields": (
-                "item_list,order_status,shipping_carrier"
+                "item_list,order_status,shipping_carrier,package_list"
             ),
         }
 
