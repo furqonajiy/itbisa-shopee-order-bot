@@ -231,7 +231,7 @@ def get_package_detail(order_sn, package_number):
 
     response = requests.get(
         url,
-        params={"order_sn": order_sn, "package_number": package_number},
+        params={"order_sn": order_sn, "package_number_list": package_number},
         timeout=30,
     )
     return _check_shopee_json_ok(
