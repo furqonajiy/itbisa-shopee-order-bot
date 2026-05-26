@@ -20,6 +20,7 @@ on:
 jobs:
   process-orders:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     concurrency:
       group: bot-state-${{ github.repository }}
