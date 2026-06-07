@@ -88,5 +88,11 @@ Shopee `partner_id`/`key`/`shop_id`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `
 - Platform label: heartbeats use the plain string `Shopee` (no glyph, no label constant in this repo). Single-space formatting; no multi-space alignment.
 - Runtime dispatch/checkout ref is `main`. `feature/improve` must be merged to `main` before production uses it.
 
+## Development workflow (process standard)
+- Branch from `main` using `feature/<short-description>` (e.g. `feature/document-dev-workflow`).
+- Always open a PR into `main` and **merge with a merge commit (`--no-ff`)** — never squash, never fast-forward — so the feature branch stays an ancestor of `main`.
+- Commits and PRs are authored as **`C - Furqon Aji Yudhistira <furqonajiy@gmail.com>`** (never "Claude").
+- Keep changes minimal and targeted; update `CLAUDE.md` / `README.md` in the same PR whenever behavior or process changes.
+
 ## Flag before changing
 State/token format, signing, `bot-state`, `workflow_dispatch`-only trigger, `_is_ready_to_ship` semantics + the `package_list` dependency in `response_optional_fields`, `get_package_detail` param name / response shape, `_pick_balance_sku` tiers, `balance_dispatcher` batching / best-effort model, label flow, workflow concurrency (`cancel-in-progress: false`), Telegram chat authorization, token rotation.
