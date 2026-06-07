@@ -6,9 +6,9 @@ from their phone without any manual downloading.
 
 ## What it does
 
-GitHub Actions currently runs the bot 5 times per day based on the schedule in
-`.github/workflows/run.yml`. The workflow can also be triggered manually from
-the Actions tab or by the Telegram Worker via `workflow_dispatch`.
+GitHub Actions runs the bot on demand via `workflow_dispatch` only (there is no
+cron schedule). It is triggered manually from the Actions tab or by the Telegram
+Worker.
 
 Each run:
 
@@ -27,9 +27,12 @@ Each run:
       every 2 PDF pages into 1 Telegram image, and sends the image(s) to a
       Telegram chat with a caption in Bahasa Indonesia.
     - Marks the `order_sn` as processed only after Telegram confirms delivery.
-5. Sends a heartbeat summary at the end of every run so the employee knows
-   the bot is alive, even when no new orders came in.
-6. Writes refreshed tokens and processed-order state locally during the run,
+5. After the order loop, dispatches the stock bot's `/stock_balance` once with
+   all touched base SKUs (single `workflow_dispatch`; best-effort, never fatal).
+6. Sends a heartbeat summary at the end of every run so the employee knows
+   the bot is alive, even when no new orders came in. The heartbeat appends
+   `⚖️ Stock Balance: X/Y SKU dipicu` when a balance was dispatched.
+7. Writes refreshed tokens and processed-order state locally during the run,
    then the workflow commits the `data/` files back to `bot-state`.
 
 Everything runs on the GitHub Actions free tier. There is no server, no
@@ -40,7 +43,7 @@ cloud VM, and no database.
 ```text
 itbisa-shopee-order-bot/
 ├── .github/workflows/
-│   └── run.yml                      # GitHub Actions cron + manual trigger
+│   └── run.yml                      # GitHub Actions workflow_dispatch (manual / Telegram Worker)
 ├── data/                            # Runtime state, source of truth is bot-state
 │   ├── processed_orders.json        # order_sn values already sent to Telegram
 │   └── shopee_tokens.json           # Current access + refresh tokens
@@ -55,7 +58,8 @@ itbisa-shopee-order-bot/
 │   ├── shopee_client.py             # Shopee API calls + HMAC signing
 │   ├── label_processor.py           # PDF → Telegram PNGs, 2 pages per image
 │   ├── telegram_sender.py           # Sends images + summaries in Bahasa
-│   └── state_manager.py             # Loads/saves processed_orders.json
+│   ├── state_manager.py             # Loads/saves processed_orders.json
+│   └── balance_dispatcher.py        # Dispatches /stock_balance once after the run
 ├── requirements.txt
 ├── .env.example
 └── README.md
@@ -157,7 +161,7 @@ contains shop configuration and runtime state files.
 
 ### 2. Add secrets in repository settings
 
-Go to **Settings → Secrets and variables → Actions** and add these five
+Go to **Settings → Secrets and variables → Actions** and add these six
 secrets:
 
 - `SHOPEE_PARTNER_ID`
@@ -165,6 +169,7 @@ secrets:
 - `SHOPEE_SHOP_ID`
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_CHAT_ID`
+- `STOCK_DISPATCH_TOKEN` (PAT used to dispatch the stock bot's `/stock_balance`)
 
 ### 3. Push the initial tokens file
 
@@ -189,8 +194,8 @@ then click **Run workflow** to trigger a manual test run. Watch the logs to
 confirm everything works. You should see a heartbeat message arrive in your
 Telegram chat within a minute.
 
-After the first successful manual run, the cron takes over and runs the bot
-automatically on schedule.
+The bot runs only when dispatched (manually or by the Telegram Worker); there is
+no automatic schedule.
 
 ## State management (the bot-state branch)
 
@@ -272,25 +277,11 @@ The only time a human must intervene is if the refresh token itself expires or
 is revoked. When this happens, the bot sends a Telegram alert asking you to
 re-run the bootstrap script.
 
-## Daily schedule
+## Triggering
 
-The GitHub Actions workflow currently runs **5 times per day** based on Jakarta
-time (WIB = UTC+7):
-
-- **10:00 WIB**
-- **12:00 WIB**
-- **14:00 WIB**
-- **16:00 WIB**
-- **18:00 WIB**
-
-In cron syntax (GitHub Actions uses UTC), this is:
-
-```text
-0 3,5,7,9,11 * * *
-```
-
-Treat `.github/workflows/run.yml` as the source of truth if this schedule
-changes later.
+The workflow is `workflow_dispatch`-only — there is **no cron schedule**. It runs
+when triggered manually from the Actions tab or dispatched by the Telegram Worker.
+Treat `.github/workflows/run.yml` as the source of truth.
 
 ## What your employee sees in Telegram
 
@@ -362,13 +353,6 @@ cannot send messages to users who have not initiated contact. For group chats,
 make sure the bot is added to the group and that the chat ID has the `-100`
 prefix.
 
-### Workflow disabled after long inactivity
-
-GitHub Actions disables scheduled workflows on repos with no activity for a
-long time. Since the bot refreshes tokens and commits state regularly, this
-should not happen in normal operation. If it does, go to the Actions tab and
-click **Enable workflow** to re-activate it.
-
 ### Duplicate labels appearing
 
 Open `data/processed_orders.json` on the `bot-state` branch. The file maps each
@@ -388,7 +372,7 @@ is annoying but not catastrophic.
 When your Shopee app is approved for Go Live:
 
 1. Update `SHOPEE_API_BASE_URL` in `src/config.py` to the live URL.
-2. Update the five GitHub Secrets with your live partner ID, partner key, and
+2. Update the GitHub Secrets with your live partner ID, partner key, and
    shop ID.
 3. Run `python scripts/bootstrap_tokens.py` against the live environment to get
    live tokens.
@@ -402,8 +386,8 @@ because the tokens file environment does not match the URL.
 
 Free forever.
 
-- GitHub Actions: 2000 free minutes per month on private repos. The bot uses
-  roughly 5 runs/day × ~1 minute = about 150 minutes/month.
+- GitHub Actions: 2000 free minutes per month on private repos. Each run is
+  ~1 minute; total depends on how often the bot is dispatched.
 - Telegram Bot API: free.
 - Shopee Open API: free, subject to Shopee's normal rate limits.
 
