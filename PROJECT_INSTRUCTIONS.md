@@ -61,9 +61,10 @@ Shopee `partner_id`/`key`/`shop_id`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `
 - GitHub Actions only. `main` = source; `bot-state` = runtime state/token files only (never protect it; never commit live tokens to `main`). Never hardcode secrets. Self-contained repo; `balance_dispatcher.py` duplicated on purpose. Telegram strings Bahasa Indonesia; never abbreviate "TikTok Shop"; use "stock" not "inventory". Runtime ref is `main`.
 
 ## Development workflow (process standard)
-- Branch from `main` using `feature/<short-description>`.
-- Always open a PR into `main` and **merge with a merge commit (`--no-ff`)** — never squash, never fast-forward.
-- Commits and PRs are authored as **`C - Furqon Aji Yudhistira <furqonajiy@gmail.com>`** (never "Claude").
+- Branch `feature/<short-description>` off `main`. Doc/marker updates (CLAUDE.md, this file, sync marker) ride in the **same feature branch/PR as the code** — never a separate branch.
+- PR into `main`, **merge commit (`--no-ff`)** — never squash/fast-forward. Merge title representative + ends with PR number, e.g. `Update Project Instructions to the Latest State (#47)`.
+- Commits/PRs authored **`C - Furqon Aji Yudhistira <furqonajiy@gmail.com>`** (never "Claude").
+- Sync marker `YYYY-MM-DD_HHMM.txt` (WIB) at repo root: rename to current WIB timestamp on every update. `PROJECT_INSTRUCTIONS.md` updated only when explicitly asked.
 
 ## Flag before changing
 State/token format, signing, `bot-state`, `workflow_dispatch`-only trigger, `_is_ready_to_ship` semantics + the `package_list` dependency, `get_package_detail` param name / response shape, `_pick_balance_sku` tiers, `balance_dispatcher` batching / best-effort model, label flow, workflow concurrency (`cancel-in-progress: false`), Telegram chat authorization, token rotation.
