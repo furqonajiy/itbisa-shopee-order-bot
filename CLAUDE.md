@@ -22,7 +22,7 @@ Python bot: fetch Shopee orders → ship to dropoff → generate/send waybill la
 - `get_order_detail` `response_optional_fields` **must include `package_list`** (required by `_is_ready_to_ship`).
 - No new orders → heartbeat, no balance dispatch.
 - New orders > `MAX_ORDERS_PER_RUN` → stop and alert via Telegram.
-- For `READY_TO_SHIP`: pre-check `_is_ready_to_ship(order)` BEFORE `v2.logistics.ship_order`. Skip silently (Actions log only, retry next cron) when not ready.
+- For `READY_TO_SHIP`: pre-check `_is_ready_to_ship(order)` BEFORE `v2.logistics.ship_order`. Skip silently (Actions log only, retry next run) when not ready.
 - Only when the pre-check passes: `ship_order_to_dropoff(order_sn)` with `dropoff: {}` (= "Atur Pengiriman" → "Antar ke Counter").
 - Label flow: `get_shipping_document_parameter` → `get_tracking_number` → `create_shipping_document(tracking_number)` → `download_shipping_document`. If tracking or PDF not ready: skip and retry next run.
 - Convert PDF → PNG, merge every 2 PDF pages into 1 vertical image, send via `sendPhoto`.
@@ -51,10 +51,10 @@ GET `/api/v2/order/get_package_detail`. Param name is **`package_number_list`** 
 - First image gets the full caption; later images get "Bagian X/N".
 - Caption item lines: `• {qty} x {sku}` — single space, no leading indent. SKU via `_pick_sku`, plus courier.
 - Do NOT show recipient name/address (Shopee masks it; the label already contains it).
-- Heartbeat uses `SHOPEE_LABEL` = "🟧Shopee":
-    - `✅ 🟧Shopee - 11:00 - Tidak ada pesanan baru`
-    - `✅ 🟧Shopee - 12:00 - 3 label terkirim`
-    - `⚠️ 🟧Shopee - 13:00 - 2 terkirim, 1 gagal (akan dicoba lagi)`
+- Heartbeat uses the plain label `Shopee` (hardcoded in `telegram_sender.build_summary`; no `SHOPEE_LABEL` constant in this repo):
+    - `✅ Shopee - 11:00 - Tidak ada pesanan baru`
+    - `✅ Shopee - 12:00 - 3 label terkirim`
+    - `⚠️ Shopee - 13:00 - 2 terkirim, 1 gagal (akan dicoba lagi)`
 - Append `⚖️ Stock Balance: X/Y SKU dipicu` when balance fired this run.
 
 ## balance_dispatcher.py — duplicated across both order bots intentionally
@@ -67,7 +67,7 @@ GET `/api/v2/order/get_package_detail`. Param name is **`package_number_list`** 
 - Shopee records via `_pick_balance_sku(item)`, never raw `item_sku`. `record()` is called only in the success branch (after Telegram confirms delivery and state is saved); `dispatch_all()` once after the loop + final save.
 
 ## Workflow (run.yml) — required config
-- Triggers: `schedule` cron `0 3,5,7,9,11 * * *` (10/12/14/16/18 WIB; GitHub cron is UTC) **and** `workflow_dispatch`.
+- Trigger: `workflow_dispatch` only (manual from the Actions tab, or dispatched by the Telegram Worker). No `schedule`/cron.
 - Checkout `main` as source; overlay `data/` from `bot-state`; run the bot once; commit updated state/token files to `bot-state` with `if: always()` (so token rotations / delivered labels persist even before a later failure).
 - Concurrency: group `bot-state-${{ github.repository }}`, `cancel-in-progress: false`.
 - Install `poppler-utils` (pdf2image needs it). Python 3.11.
@@ -82,11 +82,11 @@ Shopee `partner_id`/`key`/`shop_id`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `
 - GitHub Actions only. No VM, server, database, queue, or long-running process.
 - `main` = source code. `bot-state` = runtime state/token files only. Never protect `bot-state` (bots must push to it). Never commit live token files to `main`.
 - Never hardcode secrets.
-- Self-contained repo, no shared library — `balance_dispatcher.py` and the platform-label constants are duplicated across repos on purpose; do not factor them out.
+- Self-contained repo, no shared library — `balance_dispatcher.py` is duplicated across the order bots on purpose; do not factor it out.
 - Minimal, targeted changes only. No broad refactors; preserve existing behavior unless explicitly in scope.
 - Telegram user-facing strings: Bahasa Indonesia. Never abbreviate "TikTok Shop" to "TikTok". Use "stock", not "inventory" (except real endpoint names).
-- Platform labels live in `src/telegram_sender.py`: `SHOPEE_LABEL = "🟧Shopee"`, `TIKTOKSHOP_LABEL = "♪TikTok Shop"` (U+266A text glyph, renders in text colour — intentional). Single-space formatting; no multi-space alignment; omit bullets where the glyph already separates.
+- Platform label: heartbeats use the plain string `Shopee` (no glyph, no label constant in this repo). Single-space formatting; no multi-space alignment.
 - Runtime dispatch/checkout ref is `main`. `feature/improve` must be merged to `main` before production uses it.
 
 ## Flag before changing
-State/token format, signing, `bot-state`, cron/schedule, `_is_ready_to_ship` semantics + the `package_list` dependency in `response_optional_fields`, `get_package_detail` param name / response shape, `_pick_balance_sku` tiers, `balance_dispatcher` batching / best-effort model, label flow, workflow concurrency (`cancel-in-progress: false`), Telegram chat authorization, token rotation.
+State/token format, signing, `bot-state`, `workflow_dispatch`-only trigger, `_is_ready_to_ship` semantics + the `package_list` dependency in `response_optional_fields`, `get_package_detail` param name / response shape, `_pick_balance_sku` tiers, `balance_dispatcher` batching / best-effort model, label flow, workflow concurrency (`cancel-in-progress: false`), Telegram chat authorization, token rotation.
