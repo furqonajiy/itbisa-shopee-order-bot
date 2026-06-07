@@ -94,6 +94,7 @@ Shopee `partner_id`/`key`/`shop_id`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `
 - Commits and PRs are authored as **`C - Furqon Aji Yudhistira <furqonajiy@gmail.com>`** (never "Claude").
 - Keep changes minimal and targeted; update `CLAUDE.md` / `README.md` in the same PR whenever behavior or process changes.
 - `PROJECT_INSTRUCTIONS.md` is the synced source for the Claude & ChatGPT project instructions (≤ 8000 chars, ChatGPT limit). Update it **only when explicitly asked**, not on every change.
+- Sync marker: a file named `YYYY-MM-DD_HHMM.txt` (WIB) sits at the repo root. **On every update to this repo, rename it to the current WIB timestamp** — it signals whether the repo / Claude / ChatGPT instructions are in sync.
 
 ## Flag before changing
 State/token format, signing, `bot-state`, `workflow_dispatch`-only trigger, `_is_ready_to_ship` semantics + the `package_list` dependency in `response_optional_fields`, `get_package_detail` param name / response shape, `_pick_balance_sku` tiers, `balance_dispatcher` batching / best-effort model, label flow, workflow concurrency (`cancel-in-progress: false`), Telegram chat authorization, token rotation.
