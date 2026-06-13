@@ -1,5 +1,7 @@
 # CLAUDE.md — itbisa-shopee-order-bot
 
+> **Single source of truth for this repo.** Read automatically by Claude Code and pasted into the Claude Chat project. `AGENTS.md` (ChatGPT Codex) points here; `CHATGPT_CHAT.md` is the ≤ 8000-char condensed copy for ChatGPT Chat. Keep all three at the repo root.
+
 Python bot: fetch Shopee orders → ship to dropoff → generate/send waybill labels to Telegram → dispatch stock balance once. Runs once per invocation, then exits.
 
 ## Stack & files
@@ -92,11 +94,13 @@ Shopee `partner_id`/`key`/`shop_id`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `
 - Branch from `main` using `feature/<short-description>` (e.g. `feature/document-dev-workflow`).
 - Always open a PR into `main` and **merge with a merge commit (`--no-ff`)** — never squash, never fast-forward — so the feature branch stays an ancestor of `main`.
 - The merge commit title must be **representative and end with the PR number**, e.g. `Update Project Instructions to the Latest State (#47)` — never the default `Merge pull request …`.
-- Commits and PRs are authored as **`C - Furqon Aji Yudhistira <furqonajiy@gmail.com>`** (never "Claude").
+- Commits and PRs are authored as **`C - Furqon Aji Yudhistira <furqonajiy@gmail.com>`** — never an AI/assistant identity.
+- **No AI/assistant references anywhere** — not in branch names, commit messages, PR titles/bodies, code, or comments. No mention of any AI assistant by name, no `Co-Authored-By` trailer, no "Generated with/by" line, no model ids, no session links. History must read as human-authored. (If the PR tool auto-appends such a footer, edit the PR body to remove it and re-check.)
+- CLI commands handed to the maintainer are given in **PowerShell** syntax (Windows).
 - Keep changes minimal and targeted; update `CLAUDE.md` / `README.md` in the same PR whenever behavior or process changes.
-- `PROJECT_INSTRUCTIONS.md` (this repo) and `PROJECT_INSTRUCTIONS_ALL.md` (umbrella covering all 5 repos; identical copy committed in every repo) are the synced Claude & ChatGPT project-instruction sources (≤ 8000 chars each, ChatGPT limit). Update them **only when explicitly asked**, not on every change.
-- Sync marker: a file named `YYYY-MM-DD_HHMM.txt` (WIB) sits at the repo root. **On every update to this repo, rename it to the current WIB timestamp** — it signals whether the repo / Claude / ChatGPT instructions are in sync.
-- Doc/marker updates (this file, `PROJECT_INSTRUCTIONS.md`, the sync marker) ride in the **same feature branch and PR as the related code change** — never a separate doc-only branch (avoids noise).
+- **AI-instruction files (repo root, auto-discovered):** `CLAUDE.md` is the single source of truth — read by Claude Code and pasted into the Claude Chat project (no tight size cap). `AGENTS.md` is a thin pointer to `CLAUDE.md` for ChatGPT Codex, carrying the author-identity / no-AI-refs / feature→PR→merge / PowerShell rules inline. `CHATGPT_CHAT.md` is a ≤ 8000-char condensed copy of this file for ChatGPT Chat (its project-instruction limit). Update these **only when explicitly asked**, and keep `CHATGPT_CHAT.md` in step with `CLAUDE.md`.
+- Sync marker: a file named `YYYY-MM-DD_HHMM.txt` (WIB) sits at the repo root. **On every update to this repo, rename it to the current WIB timestamp** — it signals whether the repo and the AI-instruction files are in sync.
+- Doc/marker updates (`CLAUDE.md`, `AGENTS.md`, `CHATGPT_CHAT.md`, the sync marker) ride in the **same feature branch and PR as the related code change** — never a separate doc-only branch (avoids noise).
 
 ## Flag before changing
 State/token format, signing, `bot-state`, `workflow_dispatch`-only trigger, `_is_ready_to_ship` semantics + the `package_list` dependency in `response_optional_fields`, `get_package_detail` param name / response shape, `_pick_balance_sku` tiers, `balance_dispatcher` batching / best-effort model, label flow, workflow concurrency (`cancel-in-progress: false`), Telegram chat authorization, token rotation.
