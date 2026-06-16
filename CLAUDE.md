@@ -7,7 +7,8 @@ Python bot: fetch Shopee orders → ship to dropoff → generate/send waybill la
 ## Stack & files
 - Python 3.11.
 - `src/main.py` (orchestration), `src/shopee_client.py`, `src/shopee_auth.py`, `src/label_processor.py`, `src/telegram_sender.py`, `src/state_manager.py`, `src/balance_dispatcher.py`.
-- Workflow: `.github/workflows/run.yml`.
+- Workflow: `.github/workflows/run.yml` (execution, `workflow_dispatch`); `ci.yml` (quality gate — runs `pytest` on PRs/pushes; no secrets, never touches `bot-state`).
+- Tests: `tests/` (pytest). Pure logic only — `balance_dispatcher` (`to_base_sku`, dedup, best-effort no-token dispatch) and `telegram_sender` caption helpers (`_mono`, `_pick_sku`, `build_caption`). Dev deps in `requirements-dev.txt`; run `pytest -q`. Network/API and the label flow are not unit-tested.
 - **Track unit: `order_sn`.**
 
 ## Constants
