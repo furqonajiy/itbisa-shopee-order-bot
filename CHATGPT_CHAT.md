@@ -39,7 +39,7 @@ GET `/api/v2/order/get_package_detail`. Param name is **`package_number_list`** 
 
 ## Telegram output
 - Bahasa Indonesia. Labels sent as PNG photo(s), not PDFs. First image gets the full caption; later images get "Bagian X/N".
-- Caption item lines: `• {qty} x {sku}` — single space, no leading indent. SKU via `_pick_sku`, plus courier. Do NOT show recipient name/address (Shopee masks it; the label already contains it).
+- Caption item lines: `• {qty} x {sku}` — single space, no leading indent. SKU via `_pick_sku`, plus courier. Caption is sent with `parse_mode=Markdown`; order number, courier, and SKU are wrapped in backtick code spans (`_mono`, which strips backticks) so they are tap-to-copy. Do NOT show recipient name/address (Shopee masks it; the label already contains it).
 - Heartbeat uses the plain label `Shopee` (hardcoded in `telegram_sender.build_summary`; no `SHOPEE_LABEL` constant): e.g. `✅ Shopee - 12:00 - 3 label terkirim`, `⚠️ Shopee - 13:00 - 2 terkirim, 1 gagal (akan dicoba lagi)`. Append `⚖️ Stock Balance: X/Y SKU dipicu` when balance fired.
 - Use "stock" not "inventory"; never abbreviate "TikTok Shop".
 

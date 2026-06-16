@@ -51,7 +51,7 @@ GET `/api/v2/order/get_package_detail`. Param name is **`package_number_list`** 
 ## Telegram output
 - Bahasa Indonesia. Labels sent as PNG photo(s), not PDFs.
 - First image gets the full caption; later images get "Bagian X/N".
-- Caption item lines: `• {qty} x {sku}` — single space, no leading indent. SKU via `_pick_sku`, plus courier.
+- Caption item lines: `• {qty} x {sku}` — single space, no leading indent. SKU via `_pick_sku`, plus courier. The caption is sent with `parse_mode=Markdown`; order number, courier, and SKU are wrapped in backtick code spans (`_mono`) so they are tap-to-copy. `_mono` strips backticks from the value so a code span can never break and fail the label send.
 - Do NOT show recipient name/address (Shopee masks it; the label already contains it).
 - Heartbeat uses the plain label `Shopee` (hardcoded in `telegram_sender.build_summary`; no `SHOPEE_LABEL` constant in this repo):
     - `✅ Shopee - 11:00 - Tidak ada pesanan baru`

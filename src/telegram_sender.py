@@ -71,6 +71,7 @@ def send_label(png_bytes_or_pages, caption):
         data = {
             "chat_id": config.TELEGRAM_CHAT_ID,
             "caption": page_caption,
+            "parse_mode": "Markdown",
         }
 
         # STEP 3: Send the request. We catch errors here so we can return False
@@ -138,6 +139,15 @@ def send_summary(text):
     return True
 
 
+def _mono(value):
+    """Wrap a value in a Markdown code span so it renders monospace and is
+    tap-to-copy in Telegram. Strips any backtick from the value so the code
+    span can never break and trigger a Telegram parse error (which would fail
+    the label send). Requires the caption to be sent with parse_mode=Markdown.
+    """
+    return "`" + str(value).replace("`", "") + "`"
+
+
 def build_caption(order):
     """
     Builds a human-readable caption for a single order, in Bahasa Indonesia.
@@ -172,13 +182,14 @@ def build_caption(order):
     for item in items:
         qty = item.get("model_quantity_purchased", 1)
         sku = _pick_sku(item)
-        item_lines.append(f"• {qty} x {sku}")
+        item_lines.append(f"• {qty} x {_mono(sku)}")
     items_text = "\n".join(item_lines) if item_lines else "(tidak ada barang)"
 
-    # STEP 3: Assemble the caption in Bahasa Indonesia.
+    # STEP 3: Assemble the caption in Bahasa Indonesia. Order number, courier,
+    # and SKU are wrapped in code spans so they are tap-to-copy in Telegram.
     caption = (
-        f"📦 {order_sn}\n"
-        f"🚚 {courier}\n"
+        f"📦 {_mono(order_sn)}\n"
+        f"🚚 {_mono(courier)}\n"
         f"\n"
         f"Barang:\n"
         f"{items_text}"
