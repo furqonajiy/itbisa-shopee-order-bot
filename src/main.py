@@ -44,6 +44,7 @@ from src import (
     telegram_sender,
     state_manager,
     balance_dispatcher,
+    balance_throttle,
 )
 
 JAKARTA_TZ = timezone(timedelta(hours=7))
@@ -57,20 +58,70 @@ def _now_jakarta_hhmm():
 def _format_balance_line(balance_result):
     """Formats the balance-dispatch line appended to the heartbeat.
 
-    Returns an empty string when nothing was dispatched, so heartbeats on
+    Returns an empty string when there is nothing pending, so heartbeats on
     zero-order runs are unchanged.
     """
     requested = balance_result["requested"]
     if requested == 0:
         return ""
 
+    if balance_result.get("throttled"):
+        # Dispatch was deferred to stay under one balance run per window.
+        return (
+            f"\n⏳ Stock Balance: {requested} SKU menunggu "
+            f"(maks. 1× / {balance_throttle.MIN_INTERVAL_HOURS} jam)"
+        )
+
     dispatched = balance_result["dispatched"]
     failed = balance_result["failed"]
 
     line = f"\n⚖️ Stock Balance: {dispatched}/{requested} SKU dipicu"
     if failed:
-        line += f"\n⚠️ Gagal dipicu: {', '.join(failed)}"
+        line += f"\n⚠️ {failed} SKU gagal dipicu (akan dicoba lagi)"
     return line
+
+
+def _run_throttled_balance(balance):
+    """Dispatch /stock_balance at most once per balance_throttle.MIN_INTERVAL_HOURS.
+
+    Base SKUs touched while throttled are accumulated in the throttle state and
+    flushed together when the window reopens, so no SKU is dropped even though
+    orders are marked processed immediately. Best-effort: never raises.
+    """
+    touched = balance.collected()
+    state = balance_throttle.load()
+    pending = balance_throttle.merge_pending(state, touched)
+    last = state.get("last_dispatch_at")
+
+    if not pending:
+        balance_throttle.save({"last_dispatch_at": last, "pending_skus": []})
+        return {"requested": 0, "dispatched": 0, "failed": 0, "skus": [], "throttled": False}
+
+    if not balance_throttle.window_open(state):
+        balance_throttle.save({"last_dispatch_at": last, "pending_skus": pending})
+        return {
+            "requested": len(pending),
+            "dispatched": 0,
+            "failed": 0,
+            "skus": pending,
+            "throttled": True,
+        }
+
+    # Window is open: flush all pending SKUs in a single dispatch.
+    flush = balance_dispatcher.BalanceDispatcher()
+    for sku in pending:
+        flush.record(sku)
+    result = flush.dispatch_all()
+
+    if result["dispatched"] > 0:
+        # Success: reset the window and clear the pending queue.
+        balance_throttle.save({"last_dispatch_at": state_manager.now_iso(), "pending_skus": []})
+    else:
+        # Dispatch failed (e.g. missing token): keep pending, retry next window.
+        balance_throttle.save({"last_dispatch_at": last, "pending_skus": pending})
+    result["throttled"] = False
+    return result
+
 
 
 def _pick_balance_sku(item):
@@ -333,11 +384,12 @@ def _do_run():
     state_manager.save(processed)
     print(f"\nState saved.")
 
-    # STEP 8: Dispatch /stock_balance for every base SKU touched this run.
-    # Best-effort: dispatcher swallows individual failures and reports them
-    # so the order run never fails because of a balance hiccup. Labels are
-    # the critical path.
-    balance_result = balance.dispatch_all()
+    # STEP 8: Dispatch /stock_balance for the base SKUs touched this run,
+    # throttled to at most one dispatch per balance_throttle.MIN_INTERVAL_HOURS.
+    # SKUs touched while throttled are accumulated and flushed when the window
+    # reopens. Best-effort: never fails the order run. Labels are the critical
+    # path.
+    balance_result = _run_throttled_balance(balance)
 
     # STEP 9: Send a summary heartbeat so the employee knows what happened,
     # including the balance dispatch outcome.

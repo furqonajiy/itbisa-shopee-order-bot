@@ -48,6 +48,7 @@ jobs:
             # Copy the data/ files from bot-state into our working directory.
             git checkout origin/bot-state -- data/processed_orders.json || echo "  No processed_orders.json on bot-state yet, will create on first commit"
             git checkout origin/bot-state -- data/shopee_tokens.json || echo "  No shopee_tokens.json on bot-state yet, will create on first commit"
+            git checkout origin/bot-state -- data/balance_throttle.json || echo "  No balance_throttle.json on bot-state yet, will create on first commit"
           else
             echo "  bot-state branch does not exist yet; using data/ files from main for bootstrap"
           fi
@@ -57,6 +58,8 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements.txt
 
       # STEP 5: Install poppler, which pdf2image needs to render PDFs.
       - name: Install poppler
@@ -97,6 +100,7 @@ jobs:
           mkdir -p /tmp/bot-state-data
           cp data/processed_orders.json /tmp/bot-state-data/ 2>/dev/null || true
           cp data/shopee_tokens.json /tmp/bot-state-data/ 2>/dev/null || true
+          cp data/balance_throttle.json /tmp/bot-state-data/ 2>/dev/null || true
 
           # Switch to bot-state branch (create from scratch if it does not exist).
           git fetch origin bot-state || true
@@ -112,9 +116,11 @@ jobs:
           mkdir -p data
           cp /tmp/bot-state-data/processed_orders.json data/ 2>/dev/null || true
           cp /tmp/bot-state-data/shopee_tokens.json data/ 2>/dev/null || true
+          cp /tmp/bot-state-data/balance_throttle.json data/ 2>/dev/null || true
 
           # Stage and commit only if something changed.
           git add data/processed_orders.json data/shopee_tokens.json
+          git add data/balance_throttle.json 2>/dev/null || true
           git diff --staged --quiet || git commit -m "Update state [skip ci]"
 
           # Push bot-state. This branch is NOT protected by branch rules.
