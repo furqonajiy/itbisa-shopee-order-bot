@@ -45,6 +45,10 @@ class BalanceDispatcher:
         if base:
             self._skus.add(base)
 
+    def collected(self):
+        """Returns the sorted base SKUs recorded so far (read-only view)."""
+        return sorted(self._skus)
+
     def dispatch_all(self):
         skus = sorted(self._skus)
         result = {
