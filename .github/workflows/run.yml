@@ -61,19 +61,41 @@ jobs:
           cache: pip
           cache-dependency-path: requirements.txt
 
-      # STEP 5: Install poppler, which pdf2image needs to render PDFs.
-      - name: Install poppler
-        run: sudo apt-get update && sudo apt-get install -y poppler-utils
-
-      # STEP 6: Install the Python dependencies.
+      # STEP 5: Install the Python dependencies (needed by the precheck too).
       - name: Install Python dependencies
         run: pip install -r requirements.txt
 
-      # STEP 7: Run the bot. Secrets come from GitHub Actions Secrets.
+      # STEP 6: Cheap precheck — is there any new order to process? This needs
+      # no poppler. It emits has_work=false ONLY when it cleanly finds zero new
+      # orders (and sends the heartbeat itself); on work, error, or anything
+      # uncertain it emits true. The poppler install and the full run below are
+      # skipped only when has_work is explicitly 'false', so a missing/garbled
+      # output fails safe to running.
+      - name: Check for new orders (skip poppler when idle)
+        id: precheck
+        env:
+          SHOPEE_PARTNER_ID: ${{ secrets.SHOPEE_PARTNER_ID }}
+          SHOPEE_PARTNER_KEY: ${{ secrets.SHOPEE_PARTNER_KEY }}
+          SHOPEE_SHOP_ID: ${{ secrets.SHOPEE_SHOP_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -m src.main --precheck
+
+      # STEP 7: Install poppler (pdf2image needs it to render labels) — only
+      # when there is work. Try a plain install first and fall back to an
+      # apt-get update + install, so we skip the slow update on the common path
+      # without ever risking a failed install.
+      - name: Install poppler
+        if: steps.precheck.outputs.has_work != 'false'
+        run: sudo apt-get install -y poppler-utils || (sudo apt-get update && sudo apt-get install -y poppler-utils)
+
+      # STEP 8: Run the bot. Secrets come from GitHub Actions Secrets.
       # STOCK_DISPATCH_TOKEN is a PAT with actions:write on
       # itbisa-shop-stock-bot so the bot can fire /stock_balance for each
-      # base SKU shipped this run.
+      # base SKU shipped this run. Skipped only when the precheck found no work
+      # (it already sent the heartbeat).
       - name: Run order processor
+        if: steps.precheck.outputs.has_work != 'false'
         env:
           SHOPEE_PARTNER_ID: ${{ secrets.SHOPEE_PARTNER_ID }}
           SHOPEE_PARTNER_KEY: ${{ secrets.SHOPEE_PARTNER_KEY }}
