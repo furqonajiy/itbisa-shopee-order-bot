@@ -32,6 +32,7 @@ The GitHub Actions workflow runs this script on cron, manual dispatch, or
 Telegram Worker dispatch.
 """
 
+import os
 import sys
 import traceback
 from datetime import datetime, timezone, timedelta
@@ -215,7 +216,40 @@ def _is_ready_to_ship(order):
     return True
 
 
-def run():
+def _emit_has_work(value: bool) -> None:
+    """Write the precheck result to GITHUB_OUTPUT (and the log).
+
+    The workflow installs poppler and runs the full bot unless this is
+    explicitly `false`, so a missing/garbled output fails safe to "run".
+    """
+    text = "true" if value else "false"
+    print(f"[precheck] has_work={text}")
+    out_path = os.environ.get("GITHUB_OUTPUT")
+    if out_path:
+        try:
+            with open(out_path, "a", encoding="utf-8") as f:
+                f.write(f"has_work={text}\n")
+        except OSError as e:
+            print(f"[precheck] could not write GITHUB_OUTPUT: {e}")
+
+
+def run_precheck():
+    """Lightweight 'is there work?' probe that needs no poppler.
+
+    Reuses the exact order-detection of `_do_run`. On a clean zero-new-orders
+    result it sends the heartbeat + saves state (identical to an empty full
+    run) and emits `has_work=false` so the workflow can skip poppler and the
+    full run. On ANY work, error, or uncertainty it emits `has_work=true` so
+    the full run proceeds as today. Always exits 0 so it never fails the job.
+    """
+    try:
+        _do_run(precheck=True)
+    except Exception as e:  # fail safe: defer to the full run
+        print(f"[precheck] error; deferring to full run: {e}")
+        _emit_has_work(True)
+
+
+def run(precheck=False):
     """Runs one full cycle. Returns nothing. Prints progress to stdout."""
 
     print("=" * 60)
@@ -227,7 +261,7 @@ def run():
     # re-authorization. Other errors are also reported so the operator does
     # not need to discover failures only from the GitHub Actions tab.
     try:
-        _do_run()
+        _do_run(precheck=precheck)
     except shopee_auth.RefreshTokenExpiredError as e:
         # This happens roughly once every 30 days. The bot cannot recover
         # on its own, so we notify the shop owner via Telegram and exit.
@@ -248,8 +282,14 @@ def run():
         sys.exit(1)
 
 
-def _do_run():
-    """The actual run logic. Separated so run() can wrap it in error handling."""
+def _do_run(precheck=False):
+    """The actual run logic. Separated so run() can wrap it in error handling.
+
+    When `precheck=True`, stop after deciding whether there is work: on no new
+    orders, send the heartbeat + save state (as on an empty run) and emit
+    `has_work=false`; otherwise emit `has_work=true` and return without doing
+    the (poppler-dependent) label work — the full run handles that.
+    """
 
     # STEP 1: Load the dictionary of orders we already processed.
     processed = state_manager.load()
@@ -285,6 +325,14 @@ def _do_run():
         summary = telegram_sender.build_summary(_now_jakarta_hhmm(), 0, 0)
         telegram_sender.send_summary(summary)
         print(f"Sent heartbeat: {summary}")
+        if precheck:
+            _emit_has_work(False)
+        return
+
+    # In precheck mode there IS work: tell the workflow to install poppler and
+    # run the full processor (which re-fetches and does the actual work).
+    if precheck:
+        _emit_has_work(True)
         return
 
     # STEP 5: Safety check. If we suddenly see too many orders, something is
@@ -410,4 +458,7 @@ def _do_run():
 
 
 if __name__ == "__main__":
-    run()
+    if "--precheck" in sys.argv:
+        run_precheck()
+    else:
+        run()
