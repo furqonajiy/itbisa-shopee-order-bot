@@ -1,17 +1,19 @@
 """
 balance_throttle.py
 -------------------
-Caps how often this order bot fires `/stock_balance`. Without throttling, every
-order run that ships something dispatches a balance workflow, which burns GitHub
-Actions minutes (the account has a small monthly budget). This limits dispatch
-to at most once per `MIN_INTERVAL_HOURS`.
+Tracks this order bot's `/stock_balance` dispatches and guarantees no touched
+SKU is ever dropped. `MIN_INTERVAL_HOURS` is the minimum spacing between
+dispatches; with `MIN_INTERVAL_HOURS = 0` the bot dispatches on every run that
+ships something, so a platform that just sold down is rebalanced immediately
+instead of waiting for a window to reopen (no stock stranded on one platform).
 
-Because orders are marked processed as soon as their labels are delivered, a run
-that defers its balance dispatch would otherwise lose the SKUs it touched (the
-next run won't re-see those orders). To avoid that, the base SKUs touched while
-throttled are accumulated in `pending_skus` and flushed in a single dispatch
-once the window reopens. `/stock_balance` is idempotent (it re-reads current
-stock and re-splits), so deferring is safe.
+Because orders are marked processed as soon as their labels are delivered, any
+run that withholds its balance dispatch — a positive interval, or a failed
+dispatch — would otherwise lose the SKUs it touched (the next run won't re-see
+those orders). To avoid that, the base SKUs touched while a dispatch is withheld
+are accumulated in `pending_skus` and flushed in a single dispatch on the next
+run. `/stock_balance` is idempotent (it re-reads current stock and re-splits),
+so deferring is safe.
 
 State lives in `data/balance_throttle.json` on the `bot-state` branch:
   {"last_dispatch_at": "<iso-utc>" | null, "pending_skus": ["BASE-SKU", ...]}
@@ -25,8 +27,11 @@ import os
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-# Minimum spacing between balance dispatches. At most one dispatch per window.
-MIN_INTERVAL_HOURS = 6
+# Minimum spacing between balance dispatches, in hours. 0 = no spacing: dispatch
+# on every run that touches SKUs so a depleted platform is rebalanced right away.
+# Raise above 0 to throttle (and conserve GitHub Actions minutes) at the cost of
+# leaving stock stranded on one platform until the window reopens.
+MIN_INTERVAL_HOURS = 0
 
 _STATE_PATH = Path(__file__).resolve().parent.parent / "data" / "balance_throttle.json"
 
