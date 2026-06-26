@@ -1,4 +1,8 @@
 {
   "last_dispatch_at": "2026-06-26T09:33:45.246678+00:00",
-  "pending_skus": []
+  "pending_skus": [
+    "ITBISA-IC-74HC245N-DIP20",
+    "ITBISA-RELAY-12V-4PIN-BLUE",
+    "ITBISA-RELAY-12V-5PIN-BLUE"
+  ]
 }
