@@ -6,8 +6,9 @@ Python bot: fetch Shopee orders → ship to dropoff → generate/send waybill la
 
 ## Stack & files
 - Python 3.11.
-- `src/main.py` (orchestration), `src/shopee_client.py`, `src/shopee_auth.py`, `src/label_processor.py`, `src/telegram_sender.py`, `src/state_manager.py`, `src/balance_dispatcher.py`.
-- Workflow: `.github/workflows/run.yml` (execution, `workflow_dispatch`); `ci.yml` (quality gate — runs `pytest` on PRs that touch code/tests/deps, pip-cached, cancels superseded runs; no secrets, never touches `bot-state`).
+- `src/main.py` (orchestration), `src/shopee_client.py`, `src/shopee_auth.py`, `src/label_processor.py`, `src/telegram_sender.py`, `src/state_manager.py`, `src/balance_dispatcher.py`, `src/balance_throttle.py`.
+- Operator scripts: `scripts/bootstrap_tokens.py` (one-time: exchange an auth `code` for the initial `data/shopee_tokens.json`), `scripts/test_telegram.py` (diagnostic Telegram send), `scripts/cleanup_branches.py` (repo maintenance: deletes AI-named / AI-authored / merged branches on `origin`; never `main`/`bot-state`; dry-run by default, `--execute` to delete).
+- Workflow: `.github/workflows/run.yml` (execution, `workflow_dispatch`); `ci.yml` (quality gate — runs `pytest` on PRs touching `src/**`, `tests/**`, `requirements*.txt`, `pytest.ini`, `conftest.py`, or `ci.yml`; pip-cached, cancels superseded runs via `concurrency`; `timeout-minutes: 10`; no secrets, never touches `bot-state`).
 - Tests: `tests/` (pytest). Pure logic only — `balance_dispatcher` (`to_base_sku`, dedup, best-effort no-token dispatch), `balance_throttle` (`merge_pending`, `window_open`), and `telegram_sender` caption helpers (`_mono`, `_pick_sku`, `build_caption`). Dev deps in `requirements-dev.txt`; run `pytest -q`. Network/API and the label flow are not unit-tested.
 - **Track unit: `order_sn`.**
 

@@ -16,24 +16,41 @@ Each run:
 2. Asks Shopee for orders in `READY_TO_SHIP` or `PROCESSED` status.
 3. Skips any orders already processed in a previous run.
 4. For each new order:
-    - If still `READY_TO_SHIP`, calls Shopee's `ship_order` API with
-      dropoff method (equivalent to clicking "Atur Pengiriman" → "Antar ke
-      Counter" in the Shopee Seller app). This moves the order to
-      `PROCESSED` and triggers label generation.
+    - If still `READY_TO_SHIP`, pre-checks the package with `get_package_detail`
+      first. Only when `fulfillment_status` is `LOGISTICS_READY` and
+      `is_shipment_arranged` is `false` does it call Shopee's `ship_order` API
+      with dropoff method (equivalent to clicking "Atur Pengiriman" → "Antar ke
+      Counter" in the Shopee Seller app). This pre-check protects the
+      `v2.logistics.ship_order` API success rate by skipping packages that are
+      still allocating or already arranged. After `ship_order`, the order moves
+      to `PROCESSED` and label generation starts.
     - Gets Shopee's suggested shipping document type.
     - Gets the tracking number.
     - Calls `create_shipping_document` with the document type and tracking number.
     - Downloads the shipping label PDF, converts all pages to PNG images, merges
       every 2 PDF pages into 1 Telegram image, and sends the image(s) to a
       Telegram chat with a caption in Bahasa Indonesia.
-    - Marks the `order_sn` as processed only after Telegram confirms delivery.
+    - Marks the `order_sn` as processed only after Telegram confirms delivery,
+      then records each shipped variant SKU for the post-run balance dispatch.
 5. After the order loop, dispatches the stock bot's `/stock_balance` once with
    all touched base SKUs (single `workflow_dispatch`; best-effort, never fatal).
+   The dispatch is throttled to at most once per hour
+   (`balance_throttle.MIN_INTERVAL_HOURS`); SKUs touched while the window is
+   closed accumulate in `data/balance_throttle.json` and flush together when it
+   reopens, so no SKU is ever dropped (`/stock_balance` is idempotent).
 6. Sends a heartbeat summary at the end of every run so the employee knows
    the bot is alive, even when no new orders came in. The heartbeat appends
-   `⚖️ Stock Balance: X/Y SKU dipicu` when a balance was dispatched.
+   `⚖️ Stock Balance: X/Y SKU dipicu` when a balance was dispatched, or
+   `⏳ Stock Balance: N SKU menunggu` when the dispatch was deferred by the
+   throttle.
 7. Writes refreshed tokens and processed-order state locally during the run,
    then the workflow commits the `data/` files back to `bot-state`.
+
+To save GitHub Actions minutes, the workflow runs a cheap precheck first
+(`python -m src.main --precheck`, no poppler) that detects whether there are any
+new orders. When there are none it sends the heartbeat itself and the poppler
+install plus the full run are skipped; on work, error, or uncertainty it falls
+back to the full run.
 
 Everything runs on the GitHub Actions free tier. There is no server, no
 cloud VM, and no database.
@@ -43,13 +60,16 @@ cloud VM, and no database.
 ```text
 itbisa-shopee-order-bot/
 ├── .github/workflows/
-│   └── run.yml                      # GitHub Actions workflow_dispatch (manual / Telegram Worker)
+│   ├── run.yml                      # GitHub Actions workflow_dispatch (manual / Telegram Worker)
+│   └── ci.yml                       # PR quality gate: runs pytest, no secrets, never touches bot-state
 ├── data/                            # Runtime state, source of truth is bot-state
 │   ├── processed_orders.json        # order_sn values already sent to Telegram
-│   └── shopee_tokens.json           # Current access + refresh tokens
+│   ├── shopee_tokens.json           # Current access + refresh tokens
+│   └── balance_throttle.json        # Balance dispatch throttle: last dispatch time + pending SKUs
 ├── scripts/
 │   ├── bootstrap_tokens.py          # One-time script to seed shopee_tokens.json
-│   └── test_*.py                    # Helper / diagnostic scripts for API testing
+│   ├── cleanup_branches.py          # Repo maintenance: delete merged/AI-named branches (dry-run by default)
+│   └── test_telegram.py             # Diagnostic Telegram send
 ├── src/
 │   ├── __init__.py
 │   ├── main.py                      # Entry point, orchestrates one run
@@ -59,11 +79,30 @@ itbisa-shopee-order-bot/
 │   ├── label_processor.py           # PDF → Telegram PNGs, 2 pages per image
 │   ├── telegram_sender.py           # Sends images + summaries in Bahasa
 │   ├── state_manager.py             # Loads/saves processed_orders.json
-│   └── balance_dispatcher.py        # Dispatches /stock_balance once after the run
+│   ├── balance_dispatcher.py        # Dispatches /stock_balance once after the run
+│   └── balance_throttle.py          # Throttles balance dispatch + holds pending SKUs
+├── tests/                           # pytest unit tests (pure logic only)
 ├── requirements.txt
+├── requirements-dev.txt             # Adds pytest for CI / local test runs
+├── pytest.ini
+├── conftest.py
 ├── .env.example
 └── README.md
 ```
+
+## Tests
+
+Pure logic is unit-tested with pytest (`balance_dispatcher`, `balance_throttle`,
+and the `telegram_sender` caption helpers). Network/API calls and the label flow
+are not unit-tested. Install dev deps and run:
+
+```bash
+python -m pip install -r requirements-dev.txt
+pytest -q
+```
+
+`ci.yml` runs the same suite on every PR that touches `src/`, `tests/`,
+`requirements*.txt`, `pytest.ini`, `conftest.py`, or the CI workflow itself.
 
 ## Requirements
 
@@ -203,9 +242,9 @@ This repo uses two branches:
 
 - **main** holds the source code. It can be protected by branch rules so code
   changes go through pull requests.
-- **bot-state** holds the runtime state files (`processed_orders.json` and
-  `shopee_tokens.json`). It is updated automatically by the bot workflow, with
-  no PR required.
+- **bot-state** holds the runtime state files (`processed_orders.json`,
+  `shopee_tokens.json`, and `balance_throttle.json`). It is updated
+  automatically by the bot workflow, with no PR required.
 
 This separation matters because the bot needs to write state files constantly
 (every time it processes an order or refreshes a token), but those writes are
@@ -214,8 +253,9 @@ keeps `main` clean and lets branch protection rules work as intended.
 
 The workflow always starts from source code on `main`, then overlays only the
 `data/` files from `bot-state` before running the bot. After the bot finishes,
-the workflow commits `data/processed_orders.json` and `data/shopee_tokens.json`
-back to `bot-state`. The commit step runs with `if: always()` so a token refresh
+the workflow commits `data/processed_orders.json`, `data/shopee_tokens.json`,
+and `data/balance_throttle.json` back to `bot-state`. The commit step runs with
+`if: always()` so a token refresh
 or partial processed-order progress can still be preserved even if a later order
 fails.
 
@@ -317,6 +357,12 @@ At the end of every run, a short heartbeat message appears:
 - `✅ Shopee - 11:00 - Tidak ada pesanan baru`
 - `✅ Shopee - 12:00 - 3 label terkirim`
 - `⚠️ Shopee - 13:00 - 2 terkirim, 1 gagal (akan dicoba lagi)`
+
+When labels are shipped, the heartbeat appends a balance-dispatch line:
+`⚖️ Stock Balance: X/Y SKU dipicu` when the balance fired, or
+`⏳ Stock Balance: N SKU menunggu` when the dispatch was deferred by the
+once-per-hour throttle (the SKUs are held in `data/balance_throttle.json` and
+flush on the next eligible run).
 
 If the refresh token expires, a rare manual-intervention alert appears:
 
