@@ -32,12 +32,13 @@ Each run:
       Telegram chat with a caption in Bahasa Indonesia.
     - Marks the `order_sn` as processed only after Telegram confirms delivery,
       then records each shipped variant SKU for the post-run balance dispatch.
-5. After the order loop, dispatches the stock bot's `/stock_balance` once with
-   all touched base SKUs (single `workflow_dispatch`; best-effort, never fatal).
+5. After the order loop, dispatches the stock bot's `/stok_balance` (the legacy
+   `/stock_balance` alias remains accepted) once with all touched base SKUs
+   (single `workflow_dispatch`; best-effort, never fatal).
    The dispatch is throttled to at most once per hour
    (`balance_throttle.MIN_INTERVAL_HOURS`); SKUs touched while the window is
    closed accumulate in `data/balance_throttle.json` and flush together when it
-   reopens, so no SKU is ever dropped (`/stock_balance` is idempotent).
+   reopens, so no SKU is ever dropped (`/stok_balance` is idempotent).
 6. Sends a heartbeat summary at the end of every run so the employee knows
    the bot is alive, even when no new orders came in. The heartbeat appends
    `⚖️ Stock Balance: X/Y SKU dipicu` when a balance was dispatched, or
@@ -79,7 +80,7 @@ itbisa-shopee-order-bot/
 │   ├── label_processor.py           # PDF → Telegram PNGs, 2 pages per image
 │   ├── telegram_sender.py           # Sends images + summaries in Bahasa
 │   ├── state_manager.py             # Loads/saves processed_orders.json
-│   ├── balance_dispatcher.py        # Dispatches /stock_balance once after the run
+│   ├── balance_dispatcher.py        # Dispatches /stok_balance once after the run
 │   └── balance_throttle.py          # Throttles balance dispatch + holds pending SKUs
 ├── tests/                           # pytest unit tests (pure logic only)
 ├── requirements.txt
@@ -208,7 +209,7 @@ secrets:
 - `SHOPEE_SHOP_ID`
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_CHAT_ID`
-- `STOCK_DISPATCH_TOKEN` (PAT used to dispatch the stock bot's `/stock_balance`)
+- `STOCK_DISPATCH_TOKEN` (PAT used to dispatch the stock bot's `/stok_balance`)
 
 ### 3. Push the initial tokens file
 
