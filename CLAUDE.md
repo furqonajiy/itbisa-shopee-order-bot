@@ -32,7 +32,7 @@ Python bot: fetch Shopee orders → ship to dropoff → generate/send waybill la
 - Convert PDF → PNG, merge every 2 PDF pages into 1 vertical image, send via `sendPhoto`.
 - Mark `order_sn` processed ONLY after Telegram confirms every image part delivered. Save state immediately after each success.
 - After success, record `_pick_balance_sku(item)` for every `order.item_list` entry.
-- After the loop + final save: dispatch `/stock_balance` once with all touched base SKUs in a single `workflow_dispatch`.
+- After the loop + final save: dispatch `/stok_balance` (the legacy `/stock_balance` alias remains accepted) once with all touched base SKUs in a single `workflow_dispatch`.
 - Heartbeat summary includes the balance result.
 
 ## Critical helpers — module scope in `src/main.py`
@@ -69,7 +69,7 @@ GET `/api/v2/order/get_package_detail`. Param name is **`package_number_list`** 
 - Returns `{requested, dispatched, failed, skus}`; counts reflect SKUs, not dispatch calls.
 - Best-effort: dispatch failure is logged and reported in the heartbeat, **never raised**.
 - Shopee records via `_pick_balance_sku(item)`, never raw `item_sku`. `record()` is called only in the success branch (after Telegram confirms delivery and state is saved); the dispatch happens once after the loop + final save via `_run_throttled_balance` (see below).
-- **Dispatch spacing (`balance_throttle.py`, duplicated):** `MIN_INTERVAL_HOURS` is the minimum spacing between balance dispatches. **Currently `1` (one balance run per hour) to conserve GitHub Actions minutes** — a burst of order runs in the same hour collapses to a single dispatch. Set to `0` for an immediate rebalance on every run (most minutes, freshest); raise it to trade freshness for fewer runs. Base SKUs touched while a dispatch is withheld (the throttle window, or a failed dispatch) accumulate in `pending_skus` (`data/balance_throttle.json` on `bot-state`) and flush in one dispatch when the window reopens — so withholding never drops a SKU (orders are marked processed immediately; `/stock_balance` is idempotent). `_run_throttled_balance` in `main.py` orchestrates: load state → `merge_pending` → if `window_open` flush all pending (reset window on success), else defer. Heartbeat shows `⏳ Stock Balance: N SKU menunggu` when deferred. `_format_balance_line` treats `failed` as a count.
+- **Dispatch spacing (`balance_throttle.py`, duplicated):** `MIN_INTERVAL_HOURS` is the minimum spacing between balance dispatches. **Currently `1` (one balance run per hour) to conserve GitHub Actions minutes** — a burst of order runs in the same hour collapses to a single dispatch. Set to `0` for an immediate rebalance on every run (most minutes, freshest); raise it to trade freshness for fewer runs. Base SKUs touched while a dispatch is withheld (the throttle window, or a failed dispatch) accumulate in `pending_skus` (`data/balance_throttle.json` on `bot-state`) and flush in one dispatch when the window reopens — so withholding never drops a SKU (orders are marked processed immediately; `/stok_balance` is idempotent). `_run_throttled_balance` in `main.py` orchestrates: load state → `merge_pending` → if `window_open` flush all pending (reset window on success), else defer. Heartbeat shows `⏳ Stock Balance: N SKU menunggu` when deferred. `_format_balance_line` treats `failed` as a count.
 
 ## Workflow (run.yml) — required config
 - Trigger: `workflow_dispatch` only (manual from the Actions tab, or dispatched by the Telegram Worker). No `schedule`/cron.
