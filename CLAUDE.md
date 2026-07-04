@@ -59,7 +59,7 @@ GET `/api/v2/order/get_package_detail`. Param name is **`package_number_list`** 
     - `✅ Shopee - 11:00 - Tidak ada pesanan baru`
     - `✅ Shopee - 12:00 - 3 label terkirim`
     - `⚠️ Shopee - 13:00 - 2 terkirim, 1 gagal (akan dicoba lagi)`
-- Append `⚖️ Stock Balance: X/Y SKU dipicu` when balance fired this run.
+- Append `⚖️ Stock Balance: X/Y SKU dipicu` when balance fired this run (plus a `⚠️ N SKU gagal dipicu (akan dicoba lagi)` line on partial failure), or `⏳ Stock Balance: N SKU menunggu (maks. 1× / N jam)` when the dispatch was throttle-deferred. See `_format_balance_line` in `main.py`.
 
 ## balance_dispatcher.py — duplicated across both order bots intentionally
 - `class BalanceDispatcher` with `record(sku)`, `collected()`, and `dispatch_all()`.
@@ -74,7 +74,7 @@ GET `/api/v2/order/get_package_detail`. Param name is **`package_number_list`** 
 ## Workflow (run.yml) — required config
 - Trigger: `workflow_dispatch` only (manual from the Actions tab, or dispatched by the Telegram Worker). No `schedule`/cron.
 - Checkout `main` as source; overlay `data/` from `bot-state`; run the bot once; commit updated state/token files to `bot-state` with `if: always()` (so token rotations / delivered labels persist even before a later failure).
-- Concurrency: group `bot-state-${{ github.repository }}`, `cancel-in-progress: false`.
+- Concurrency: group `bot-state-${{ github.repository }}`, `cancel-in-progress: false`. `timeout-minutes: 10` (runaway-safe).
 - **Idle-run efficiency:** an `id: precheck` step runs `python -m src.main --precheck` (no poppler) to detect new orders. It emits `has_work=false` ONLY on a clean zero-new-orders result (and sends the heartbeat + saves state itself, via `_do_run(precheck=True)`); on work/error/uncertainty it emits `true`. The **Install poppler** and **Run order processor** steps are gated `if: steps.precheck.outputs.has_work != 'false'` — fail-safe (missing/garbled output → runs). This skips the poppler install + full run on idle `/resi` triggers. `_emit_has_work` / `run_precheck` live in `src/main.py`.
 - Install `poppler-utils` (pdf2image needs it) only when there is work; install step is `apt-get install -y poppler-utils || (apt-get update && apt-get install -y poppler-utils)` (skip the slow update on the common path, fall back for safety). Python 3.11. pip-cached.
 - `actions/checkout@v5+`, `actions/setup-python@v6+`.
