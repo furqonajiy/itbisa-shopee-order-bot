@@ -296,7 +296,7 @@ def get_shipping_label_pdf(order_sn):
 
     Sometimes the label is not ready right away in step 4, so we retry up to
     3 times within this single function call. If it is still not ready after
-    that, we return None and let the next scheduled run try again.
+    that, we return None and let the next run try again.
 
     Args:
       order_sn: the Shopee order number string.
@@ -332,7 +332,7 @@ def get_shipping_label_pdf(order_sn):
 
         print(f"  Label for {order_sn} not ready yet, attempt {attempt + 1}/3")
 
-    # STEP 5: Give up for this run. The next scheduled run will try again.
+    # STEP 5: Give up for this run. The next run will try again.
     print(f"  Label for {order_sn} still not ready, will retry next run")
     return None
 

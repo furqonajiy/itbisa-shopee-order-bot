@@ -111,7 +111,7 @@ def send_summary(text):
 
     Returns:
       True if delivered, False otherwise. We do not retry on failure
-      because the next scheduled run will send another summary anyway.
+      because the next run will send another summary anyway.
     """
 
     # STEP 1: Build the URL for the sendMessage endpoint.
