@@ -28,8 +28,8 @@ What this script does, in order:
   8. Send a heartbeat summary to Telegram so the employee knows the bot is
      alive, even if there were no orders this run.
 
-The GitHub Actions workflow runs this script on cron, manual dispatch, or
-Telegram Worker dispatch.
+The GitHub Actions workflow runs this script on manual dispatch or Telegram
+Worker dispatch (workflow_dispatch only — there is no cron/schedule).
 """
 
 import os
@@ -153,7 +153,7 @@ def _is_ready_to_ship(order):
     LOGISTICS_READY and is_shipment_arranged is False. Any other
     state — still allocating, already arranged, detail call error,
     or missing package_number — returns False so the caller skips
-    this order and retries on the next scheduled run.
+    this order and retries on the next run.
 
     This protects the v2.logistics.ship_order daily success rate
     (>90% required, monitored over 7 consecutive days) by skipping
