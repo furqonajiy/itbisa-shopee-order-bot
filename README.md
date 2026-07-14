@@ -94,7 +94,8 @@ itbisa-shopee-order-bot/
 ## Tests
 
 Pure logic is unit-tested with pytest (`balance_dispatcher`, `balance_throttle`,
-and the `telegram_sender` caption helpers). Network/API calls and the label flow
+the `telegram_sender` caption helpers, and `label_processor._crop_bottom_whitespace`).
+Network/API calls and the label network/PDF-render path (poppler `convert_from_bytes`)
 are not unit-tested. Install dev deps and run:
 
 ```bash
