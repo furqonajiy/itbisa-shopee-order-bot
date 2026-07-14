@@ -9,7 +9,7 @@ Python bot: fetch Shopee orders → ship to dropoff → generate/send waybill la
 - `src/main.py` (orchestration), `src/shopee_client.py`, `src/shopee_auth.py`, `src/label_processor.py`, `src/telegram_sender.py`, `src/state_manager.py`, `src/balance_dispatcher.py`, `src/balance_throttle.py`.
 - Operator scripts: `scripts/bootstrap_tokens.py` (one-time: exchange an auth `code` for the initial `data/shopee_tokens.json`), `scripts/test_telegram.py` (diagnostic Telegram send), `scripts/cleanup_branches.py` (repo maintenance: deletes AI-named / AI-authored / merged branches on `origin`; never `main`/`bot-state`; dry-run by default, `--execute` to delete).
 - Workflow: `.github/workflows/run.yml` (execution, `workflow_dispatch`); `ci.yml` (quality gate — runs `pytest` on PRs touching `src/**`, `tests/**`, `requirements*.txt`, `pytest.ini`, `conftest.py`, or `ci.yml`; pip-cached, cancels superseded runs via `concurrency`; `timeout-minutes: 10`; no secrets, never touches `bot-state`).
-- Tests: `tests/` (pytest). Pure logic only — `balance_dispatcher` (`to_base_sku`, dedup, best-effort no-token dispatch), `balance_throttle` (`merge_pending`, `window_open`), and `telegram_sender` caption helpers (`_mono`, `_pick_sku`, `build_caption`). Dev deps in `requirements-dev.txt`; run `pytest -q`. Network/API and the label flow are not unit-tested.
+- Tests: `tests/` (pytest). Pure logic only — `balance_dispatcher` (`to_base_sku`, dedup, best-effort no-token dispatch), `balance_throttle` (`merge_pending`, `window_open`), `telegram_sender` caption helpers (`_mono`, `_pick_sku`, `build_caption`), and `label_processor._crop_bottom_whitespace` (bottom-crop ignores an isolated render speck in the blank tail, preserves genuine bottom content). Dev deps in `requirements-dev.txt`; run `pytest -q`. The label network/PDF-render path (poppler `convert_from_bytes`) is not unit-tested.
 - **Track unit: `order_sn`.**
 
 ## Constants
@@ -29,7 +29,7 @@ Python bot: fetch Shopee orders → ship to dropoff → generate/send waybill la
 - For `READY_TO_SHIP`: pre-check `_is_ready_to_ship(order)` BEFORE `v2.logistics.ship_order`. Skip silently (Actions log only, retry next run) when not ready.
 - Only when the pre-check passes: `ship_order_to_dropoff(order_sn)` with `dropoff: {}` (= "Atur Pengiriman" → "Antar ke Counter").
 - Label flow: `get_shipping_document_parameter` → `get_tracking_number` → `create_shipping_document(tracking_number)` → `download_shipping_document`. If tracking or PDF not ready: skip and retry next run.
-- Convert PDF → PNG, merge every 2 PDF pages into 1 vertical image, send via `sendPhoto`.
+- Convert PDF → PNG, merge every 2 PDF pages into 1 vertical image, send via `sendPhoto`. `label_processor._crop_bottom_whitespace` trims the blank tail below the label; a row counts as content only with ≥ `_content_row_min_dark(width)` dark pixels (≥1% of width, floor 6), so a single sub-visible render speck in the blank area can't defeat the crop and leave the whole white A4 tail attached (the intermittent "resi not cropped" bug).
 - Mark `order_sn` processed ONLY after Telegram confirms every image part delivered. Save state immediately after each success.
 - After success, record `_pick_balance_sku(item)` for every `order.item_list` entry.
 - After the loop + final save: dispatch `/stok_balance` (the legacy `/stock_balance` alias remains accepted) once with all touched base SKUs in a single `workflow_dispatch`.

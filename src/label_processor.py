@@ -26,24 +26,47 @@ from src import config
 
 _MERGED_PAGE_GAP_PX = 12
 
+# A row counts as real label content only when it holds at least this many dark
+# pixels (a fraction of the width, with a small floor). Scanning for a SINGLE
+# dark pixel let one sub-visible render speck in the blank area below the label
+# defeat the whole crop — the intermittent "waybill not cropped" bug: the scan
+# stopped at that speck and kept the entire blank A4 tail. Requiring a short run
+# of dark pixels ignores isolated specks while still catching any genuine text
+# or barcode row (those have far more dark pixels than the threshold).
+_CONTENT_ROW_MIN_DARK_FRACTION = 0.01
+_CONTENT_ROW_MIN_DARK_FLOOR = 6
+
+
+def _content_row_min_dark(width):
+    """Minimum dark pixels a row needs to count as content (not a stray speck)."""
+    return max(_CONTENT_ROW_MIN_DARK_FLOOR, int(width * _CONTENT_ROW_MIN_DARK_FRACTION))
+
 
 def _crop_bottom_whitespace(image, white_threshold=250, bottom_padding_px=8):
     """
     Removes trailing blank space at the bottom of a rendered label image.
     Keeps top/left/right unchanged for safety.
+
+    A row is treated as the content boundary only when it holds enough dark
+    pixels (`_content_row_min_dark`), so a lone render artifact in the blank
+    area below the label can no longer keep the whole white tail attached.
     """
 
     grayscale = image.convert("L")
     width, height = grayscale.size
     pixels = grayscale.load()
+    min_dark = _content_row_min_dark(width)
 
     last_content_row = None
 
     for y in range(height - 1, -1, -1):
+        dark_in_row = 0
         for x in range(width):
             if pixels[x, y] < white_threshold:
-                last_content_row = y
-                break
+                dark_in_row += 1
+                if dark_in_row >= min_dark:
+                    last_content_row = y
+                    break
         if last_content_row is not None:
             break
 
