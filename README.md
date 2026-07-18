@@ -40,7 +40,10 @@ Each run:
    closed accumulate in `data/balance_throttle.json` and flush together when it
    reopens, so no SKU is ever dropped (`/stok_balance` is idempotent).
 6. Sends a heartbeat summary at the end of every run so the employee knows
-   the bot is alive, even when no new orders came in. The heartbeat appends
+   the bot is alive, even when no new orders came in. Orders in a
+   skip-and-retry wait (Shopee still allocating, package/label not ready)
+   are reported as "menunggu Shopee" with their order numbers and reasons;
+   only real errors count as "gagal". The heartbeat appends
    `⚖️ Stock Balance: X/Y SKU dipicu` when a balance was dispatched, or
    `⏳ Stock Balance: N SKU menunggu` when the dispatch was deferred by the
    throttle.

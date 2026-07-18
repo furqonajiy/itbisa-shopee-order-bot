@@ -233,37 +233,64 @@ def _pick_sku(item):
     return item.get("item_name", "(tidak ada nama)")
 
 
-def build_summary(time_hhmm, success_count, skipped_count):
+_SUMMARY_DETAIL_MAX = 10  # max order lines listed per group in the heartbeat
+
+
+def _summary_detail_lines(icon, entries):
+    """Renders '{icon} {order_sn} — {reason}' lines, capped at
+    _SUMMARY_DETAIL_MAX with an '...dan N lainnya' overflow line."""
+    lines = [f"{icon} {order_sn} — {reason}"
+             for order_sn, reason in entries[:_SUMMARY_DETAIL_MAX]]
+    overflow = len(entries) - _SUMMARY_DETAIL_MAX
+    if overflow > 0:
+        lines.append(f"...dan {overflow} lainnya")
+    return lines
+
+
+def build_summary(time_hhmm, success_count, waiting=None, failed=None):
     """
     Builds the heartbeat summary message in Bahasa Indonesia.
 
-    Three patterns based on what happened during the run:
-      - 0 orders:   "✅ Shopee - 11:00 - Tidak ada pesanan baru"
-      - All sent:   "✅ Shopee - 12:00 - 3 label terkirim"
-      - Some failed: "⚠️ Shopee - 13:00 - 2 terkirim, 1 gagal (akan dicoba lagi)"
+    waiting = [(order_sn, reason)] for skip-and-retry states that are NOT
+    errors (Shopee still allocating, package not ready, label pending) —
+    counted as "menunggu Shopee". failed = [(order_sn, reason)] for real
+    failures (ship call error, Telegram delivery error) — counted as
+    "gagal". Both groups list their order numbers with the short reason so
+    the operator never has to open the Actions log to see which orders are
+    pending and why.
 
-    Args:
-      time_hhmm: current Jakarta time as "HH:MM" string.
-      success_count: number of labels successfully sent this run.
-      skipped_count: number of orders that failed and will retry next run.
+    Patterns:
+      - 0 orders:    "✅ Shopee - 11:00 - Tidak ada pesanan baru"
+      - All sent:    "✅ Shopee - 12:00 - 3 label terkirim"
+      - Mixed:       "⚠️ Shopee - 13:00 - 2 terkirim, 7 menunggu Shopee,
+                      1 gagal (akan dicoba lagi)" + per-order detail lines
+                      ("⏳ {order_sn} — {reason}" / "❌ {order_sn} — {reason}").
 
     Returns:
       A formatted string ready to send via send_summary().
     """
+    waiting = waiting or []
+    failed = failed or []
 
     # STEP 1: No new orders this run.
-    if success_count == 0 and skipped_count == 0:
+    if success_count == 0 and not waiting and not failed:
         return f"✅ Shopee - {time_hhmm} - Tidak ada pesanan baru"
 
     # STEP 2: Everything was processed successfully.
-    if skipped_count == 0:
+    if not waiting and not failed:
         return f"✅ Shopee - {time_hhmm} - {success_count} label terkirim"
 
-    # STEP 3: Some orders failed. Use a warning emoji so the employee notices.
-    return (
-        f"⚠️ Shopee - {time_hhmm} - {success_count} terkirim, "
-        f"{skipped_count} gagal (akan dicoba lagi)"
-    )
+    # STEP 3: Some orders are pending. Warn, and say which and why.
+    parts = [f"{success_count} terkirim"]
+    if waiting:
+        parts.append(f"{len(waiting)} menunggu Shopee")
+    if failed:
+        parts.append(f"{len(failed)} gagal")
+    lines = [f"⚠️ Shopee - {time_hhmm} - " + ", ".join(parts)
+             + " (akan dicoba lagi)"]
+    lines.extend(_summary_detail_lines("⏳", waiting))
+    lines.extend(_summary_detail_lines("❌", failed))
+    return "\n".join(lines)
 
 
 def build_safety_stop_message(time_hhmm, order_count, max_allowed):

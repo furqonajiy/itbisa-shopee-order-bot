@@ -149,11 +149,12 @@ def _pick_balance_sku(item):
 def _is_ready_to_ship(order):
     """Pre-check before v2.logistics.ship_order per Shopee Open Platform.
 
-    Returns True only when the package's fulfillment_status is
-    LOGISTICS_READY and is_shipment_arranged is False. Any other
-    state — still allocating, already arranged, detail call error,
-    or missing package_number — returns False so the caller skips
-    this order and retries on the next run.
+    Returns (ready, reason): ready is True only when the package's
+    fulfillment_status is LOGISTICS_READY and is_shipment_arranged is
+    False (reason is then None). Any other state — still allocating,
+    already arranged, detail call error, or missing package_number —
+    returns (False, short Bahasa Indonesia reason) so the caller skips
+    this order, reports why in the heartbeat, and retries next run.
 
     This protects the v2.logistics.ship_order daily success rate
     (>90% required, monitored over 7 consecutive days) by skipping
@@ -170,7 +171,8 @@ def _is_ready_to_ship(order):
         Must include "order_sn" and "package_list".
 
     Returns:
-      True if safe to call ship_order_to_dropoff(order_sn), else False.
+      (True, None) if safe to call ship_order_to_dropoff(order_sn),
+      else (False, reason).
     """
     order_sn = order["order_sn"]
 
@@ -178,27 +180,32 @@ def _is_ready_to_ship(order):
     if not packages:
         print(f"  ⏭️ {order_sn}: package_list kosong di order detail; "
               f"skip, akan dicoba lagi next run.")
-        return False
+        return False, "info paket belum tersedia"
 
     package_number = (packages[0].get("package_number") or "").strip()
     if not package_number:
         print(f"  ⏭️ {order_sn}: package_number kosong; "
               f"skip, akan dicoba lagi next run.")
-        return False
+        return False, "info paket belum tersedia"
 
     try:
         resp = shopee_client.get_package_detail(order_sn, package_number)
     except Exception as e:
         print(f"  ⏭️ {order_sn}/{package_number}: "
               f"get_package_detail gagal: {e}; skip.")
-        return False
+        # error_not_found = the package is not queryable yet because Shopee
+        # is still allocating the logistics channel (provisional package
+        # number). Anything else is an unexpected check failure.
+        if "error_not_found" in str(e):
+            return False, "menunggu alokasi Shopee"
+        return False, "cek status paket gagal"
 
     body = (resp or {}).get("response") or {}
     returned_packages = body.get("package_list") or []
     if not returned_packages:
         print(f"  ⏭️ {order_sn}/{package_number}: "
               f"response.package_list kosong; skip, akan dicoba lagi next run.")
-        return False
+        return False, "info paket belum tersedia"
 
     pkg = returned_packages[0]
     fulfillment_status = pkg.get("fulfillment_status")
@@ -211,9 +218,11 @@ def _is_ready_to_ship(order):
             f"is_shipment_arranged={is_shipment_arranged}); "
             f"skip, akan dicoba lagi next run."
         )
-        return False
+        if is_shipment_arranged:
+            return False, "pengiriman sudah diatur — menunggu status"
+        return False, f"belum siap ({fulfillment_status})"
 
-    return True
+    return True, None
 
 
 def _emit_has_work(value: bool) -> None:
@@ -322,7 +331,7 @@ def _do_run(precheck=False):
         # Persist pruning from state_manager.load() even on heartbeat-only runs.
         state_manager.save(processed)
 
-        summary = telegram_sender.build_summary(_now_jakarta_hhmm(), 0, 0)
+        summary = telegram_sender.build_summary(_now_jakarta_hhmm(), 0)
         telegram_sender.send_summary(summary)
         print(f"Sent heartbeat: {summary}")
         if precheck:
@@ -348,7 +357,8 @@ def _do_run(precheck=False):
 
     # STEP 6: Process each new order one at a time.
     success_count = 0
-    skipped_count = 0
+    waiting = []  # (order_sn, reason) — skip-and-retry states, not errors
+    failed = []   # (order_sn, reason) — unexpected failures
     for order in new_orders:
         order_sn = order["order_sn"]
         order_status = order.get("order_status", "UNKNOWN")
@@ -365,8 +375,9 @@ def _do_run(precheck=False):
         # don't burn the API call success rate on predictable failures
         # (still allocating / already arranged / package missing).
         if order_status == "READY_TO_SHIP":
-            if not _is_ready_to_ship(order):
-                skipped_count += 1
+            ready, not_ready_reason = _is_ready_to_ship(order)
+            if not ready:
+                waiting.append((order_sn, not_ready_reason))
                 continue
 
             try:
@@ -376,7 +387,7 @@ def _do_run(precheck=False):
             except Exception as e:
                 print(f"  ✗ Failed to arrange shipment for {order_sn}: {e}")
                 print(f"    Will retry next run.")
-                skipped_count += 1
+                failed.append((order_sn, "atur pengiriman gagal"))
                 continue
 
         # STEP 6b: Get the shipping label PDF from Shopee. The retry logic
@@ -385,7 +396,7 @@ def _do_run(precheck=False):
         pdf_bytes = shopee_client.get_shipping_label_pdf(order_sn)
         if pdf_bytes is None:
             print(f"  Skipping {order_sn} (label not ready). Will retry next run.")
-            skipped_count += 1
+            waiting.append((order_sn, "label belum siap"))
             continue
 
         # STEP 6c: Convert the PDF into Telegram-ready PNG images.
@@ -424,7 +435,7 @@ def _do_run(precheck=False):
                     balance.record(sku)
         else:
             print(f"  ✗ Telegram delivery failed. Will retry next run.")
-            skipped_count += 1
+            failed.append((order_sn, "kirim Telegram gagal"))
 
     # STEP 7: Save once more at the end. Successful orders are already saved
     # immediately after Telegram delivery; this final save keeps the file in
@@ -442,14 +453,17 @@ def _do_run(precheck=False):
     # STEP 9: Send a summary heartbeat so the employee knows what happened,
     # including the balance dispatch outcome.
     summary = telegram_sender.build_summary(
-        _now_jakarta_hhmm(), success_count, skipped_count
+        _now_jakarta_hhmm(), success_count, waiting, failed
     )
     summary += _format_balance_line(balance_result)
     telegram_sender.send_summary(summary)
 
     # STEP 10: Print a summary so the GitHub Actions log is easy to scan.
     print("=" * 60)
-    print(f"Run complete: {success_count} sent, {skipped_count} skipped")
+    print(
+        f"Run complete: {success_count} sent, "
+        f"{len(waiting)} waiting, {len(failed)} failed"
+    )
     print(
         f"Balance: {balance_result['dispatched']}/{balance_result['requested']} "
         f"SKU dispatched"
