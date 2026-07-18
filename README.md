@@ -285,7 +285,7 @@ When you initially set up the bot:
   bot-writable.
 - Do not manually edit files on `bot-state` unless you are recovering from a
   problem. Any manual edit is at risk of being overwritten by the next
-  scheduled run.
+  run.
 
 ## How authentication works
 
@@ -334,8 +334,8 @@ For each new order, one or more label images arrive with a caption like:
 🚚 SPX Express
 
 Barang:
-  • 20 x ITBISA-LED-5MM-RED
-  • 15 x ITBISA-LED-5MM-GREEN
+• 20 x ITBISA-LED-5MM-RED
+• 15 x ITBISA-LED-5MM-GREEN
 ```
 
 Multi-page labels are grouped before sending:
