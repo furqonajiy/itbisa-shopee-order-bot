@@ -9,7 +9,7 @@ Python bot: fetch Shopee orders → ship to dropoff → generate/send waybill la
 - `src/main.py` (orchestration), `src/shopee_client.py`, `src/shopee_auth.py`, `src/label_processor.py`, `src/telegram_sender.py`, `src/state_manager.py`, `src/balance_dispatcher.py`, `src/balance_throttle.py`.
 - Operator scripts: `scripts/bootstrap_tokens.py` (one-time: exchange an auth `code` for the initial `data/shopee_tokens.json`), `scripts/test_telegram.py` (diagnostic Telegram send), `scripts/cleanup_branches.py` (repo maintenance: deletes AI-named / AI-authored / merged branches on `origin`; never `main`/`bot-state`; dry-run by default, `--execute` to delete).
 - Workflow: `.github/workflows/run.yml` (execution, `workflow_dispatch`); `ci.yml` (quality gate — runs `pytest` on PRs touching `src/**`, `tests/**`, `requirements*.txt`, `pytest.ini`, `conftest.py`, or `ci.yml`; pip-cached, cancels superseded runs via `concurrency`; `timeout-minutes: 10`; no secrets, never touches `bot-state`).
-- Tests: `tests/` (pytest). Pure logic only — `balance_dispatcher` (`to_base_sku`, dedup, best-effort no-token dispatch), `balance_throttle` (`merge_pending`, `window_open`), `telegram_sender` caption helpers (`_mono`, `_pick_sku`, `build_caption`), and `label_processor._crop_bottom_whitespace` (bottom-crop ignores an isolated render speck in the blank tail, preserves genuine bottom content). Dev deps in `requirements-dev.txt`; run `pytest -q`. The label network/PDF-render path (poppler `convert_from_bytes`) is not unit-tested.
+- Tests: `tests/` (pytest). Pure logic only — `balance_dispatcher` (`to_base_sku`, dedup, best-effort no-token dispatch), `balance_throttle` (`merge_pending`, `window_open`), `telegram_sender` caption helpers (`_mono`, `_pick_sku`, `build_caption`), `label_processor._crop_bottom_whitespace` (bottom-crop ignores an isolated render speck in the blank tail, preserves genuine bottom content), and `test_heartbeat_summary.py` (`build_summary` waiting-vs-failed split, per-order detail lines, cap + overflow). Dev deps in `requirements-dev.txt`; run `pytest -q`. The label network/PDF-render path (poppler `convert_from_bytes`) is not unit-tested.
 - **Track unit: `order_sn`.**
 
 ## Constants
@@ -36,7 +36,7 @@ Python bot: fetch Shopee orders → ship to dropoff → generate/send waybill la
 - Heartbeat summary includes the balance result.
 
 ## Critical helpers — module scope in `src/main.py`
-- `_is_ready_to_ship(order)`: reads `order.package_list[0].package_number`, calls `shopee_client.get_package_detail(order_sn, package_number)`. Returns `True` ONLY when `response.package_list[0].fulfillment_status == "LOGISTICS_READY"` AND `is_shipment_arranged == false`. Any failure mode (missing `package_list`/`package_number`, API exception, not-ready state) → `False`; caller increments `skipped_count` and continues. Same skip-and-retry pattern as tracking-/label-not-ready. Cost: +1 GET per `READY_TO_SHIP` order per run.
+- `_is_ready_to_ship(order)`: reads `order.package_list[0].package_number`, calls `shopee_client.get_package_detail(order_sn, package_number)`. Returns `(ready, reason)` — ready is `True` ONLY when `response.package_list[0].fulfillment_status == "LOGISTICS_READY"` AND `is_shipment_arranged == false` (reason `None`). Any failure mode (missing `package_list`/`package_number`, API exception, not-ready state) → `(False, short BI reason)` — a `get_package_detail` `error_not_found` maps to `menunggu alokasi Shopee` (provisional package number, Shopee still allocating); caller records the order in the heartbeat's `waiting` list and continues. Same skip-and-retry pattern as tracking-/label-not-ready. Cost: +1 GET per `READY_TO_SHIP` order per run.
 - `_pick_balance_sku(item)`: `model_sku` (variant) first, `item_sku` (parent) second. **No `item_name` fallback** — an item name is never a valid stock-bot catalog key. Returns `""` when both empty (caller skips recording). Do NOT import `_pick_sku` from `telegram_sender`; its third tier differs.
 
 `telegram_sender._pick_sku(item)`: variant → parent → `item_name`. Caption only.
@@ -55,10 +55,10 @@ GET `/api/v2/order/get_package_detail`. Param name is **`package_number_list`** 
 - First image gets the full caption; later images get "Bagian X/N".
 - Caption item lines: `• {qty} x {sku}` — single space, no leading indent. SKU via `_pick_sku`, plus courier. The caption is sent with `parse_mode=Markdown`; order number, courier, and SKU are wrapped in backtick code spans (`_mono`) so they are tap-to-copy. `_mono` strips backticks from the value so a code span can never break and fail the label send.
 - Do NOT show recipient name/address (Shopee masks it; the label already contains it).
-- Heartbeat uses the plain label `Shopee` (hardcoded in `telegram_sender.build_summary`; no `SHOPEE_LABEL` constant in this repo):
+- Heartbeat uses the plain label `Shopee` (hardcoded in `telegram_sender.build_summary`; no `SHOPEE_LABEL` constant in this repo). `build_summary(time, success, waiting, failed)` separates **skip-and-retry waits** (`waiting` = pre-check not ready / still allocating / label pending → "menunggu Shopee") from **real failures** (`failed` = ship call error, Telegram delivery error → "gagal"), and lists each pending order as `⏳/❌ {order_sn} — {reason}` (capped at `_SUMMARY_DETAIL_MAX` = 10 per group, `...dan N lainnya` overflow):
     - `✅ Shopee - 11:00 - Tidak ada pesanan baru`
     - `✅ Shopee - 12:00 - 3 label terkirim`
-    - `⚠️ Shopee - 13:00 - 2 terkirim, 1 gagal (akan dicoba lagi)`
+    - `⚠️ Shopee - 13:00 - 2 terkirim, 7 menunggu Shopee, 1 gagal (akan dicoba lagi)` + detail lines
 - Append `⚖️ Stock Balance: X/Y SKU dipicu` when balance fired this run (plus a `⚠️ N SKU gagal dipicu (akan dicoba lagi)` line on partial failure), or `⏳ Stock Balance: N SKU menunggu (maks. 1× / N jam)` when the dispatch was throttle-deferred. See `_format_balance_line` in `main.py`.
 
 ## balance_dispatcher.py — duplicated across both order bots intentionally
