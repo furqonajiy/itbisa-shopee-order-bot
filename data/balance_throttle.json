@@ -1,4 +1,11 @@
 {
   "last_dispatch_at": "2026-07-22T05:44:17.247190+00:00",
-  "pending_skus": []
+  "pending_skus": [
+    "ITBISA-ABC-BATERAI-AA-ALKALINE",
+    "ITBISA-ABC-BATERAI-AAA-ALKALINE",
+    "ITBISA-BUZZER-ACTIVE-5V",
+    "ITBISA-DC-TO-DC-STEPUP-XL6009",
+    "ITBISA-LED-MAX7219-4IN1-TIGHT",
+    "ITBISA-RELAY-12V-5PIN-BLUE"
+  ]
 }
