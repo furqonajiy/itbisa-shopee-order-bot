@@ -36,6 +36,16 @@ _MERGED_PAGE_GAP_PX = 12
 _CONTENT_ROW_MIN_DARK_FRACTION = 0.01
 _CONTENT_ROW_MIN_DARK_FLOOR = 6
 
+# Genuine label rows (barcodes, the address block, the box frame, the
+# order-detail table) always carry ink in the CENTRE of the row. The SPX resi
+# watermark ("SPXID…") that Shopee tiles down both page margins — and stray
+# render specks in the corners — sit only at the far left/right edges. Counting
+# dark pixels within the central band (ignoring the outer margins) means a
+# watermark-/edge-only row no longer registers as content, so it can't keep the
+# whole blank A4 tail attached (the recurring "resi not cropped / long resi"
+# bug). Every real label row still crosses the centre and binds the crop.
+_CONTENT_CENTER_BAND_FRACTION = 0.5  # inspect the middle 50% of the width
+
 
 def _content_row_min_dark(width):
     """Minimum dark pixels a row needs to count as content (not a stray speck)."""
@@ -48,8 +58,9 @@ def _crop_bottom_whitespace(image, white_threshold=250, bottom_padding_px=8):
     Keeps top/left/right unchanged for safety.
 
     A row is treated as the content boundary only when it holds enough dark
-    pixels (`_content_row_min_dark`), so a lone render artifact in the blank
-    area below the label can no longer keep the whole white tail attached.
+    pixels (`_content_row_min_dark`) **within its central band**, so neither a
+    lone render artifact nor the SPX watermark tiled down the page margins can
+    keep the whole white tail attached.
     """
 
     grayscale = image.convert("L")
@@ -57,11 +68,16 @@ def _crop_bottom_whitespace(image, white_threshold=250, bottom_padding_px=8):
     pixels = grayscale.load()
     min_dark = _content_row_min_dark(width)
 
+    # Only inspect the central band; ignore the outer margins where the SPX
+    # watermark / corner specks live.
+    margin = int(width * (1 - _CONTENT_CENTER_BAND_FRACTION) / 2)
+    x_start, x_end = margin, width - margin
+
     last_content_row = None
 
     for y in range(height - 1, -1, -1):
         dark_in_row = 0
-        for x in range(width):
+        for x in range(x_start, x_end):
             if pixels[x, y] < white_threshold:
                 dark_in_row += 1
                 if dark_in_row >= min_dark:

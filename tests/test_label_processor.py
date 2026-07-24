@@ -49,6 +49,25 @@ def test_crop_keeps_genuine_bottom_content():
     assert 800 < out.height <= 800 + 8 + 2
 
 
+def test_crop_ignores_margin_watermark_tail():
+    # Shopee tiles the SPX resi watermark ("SPXID...") down both page margins.
+    # Watermark stripes at the far left/right edges deep in the tail must NOT
+    # keep the whole blank tail attached (the "long resi" bug) — only the real
+    # centred content bounds the crop.
+    img = _white(400, 1200)
+    for y in range(0, 60):
+        _fill_row(img, y)  # genuine full-width content at the top
+    # Watermark only at the outer margins, far below the label.
+    for y in range(900, 950):
+        for x in list(range(0, 30)) + list(range(370, 400)):
+            img.putpixel((x, y), (0, 0, 0))
+
+    out = label_processor._crop_bottom_whitespace(img)
+
+    assert out.height <= 60 + 8 + 2  # cropped to the real content
+    assert out.height < 900          # the margin watermark tail is gone
+
+
 def test_crop_all_white_returns_unchanged():
     img = _white(400, 1200)
     out = label_processor._crop_bottom_whitespace(img)
