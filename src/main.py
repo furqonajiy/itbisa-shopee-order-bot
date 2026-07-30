@@ -392,8 +392,22 @@ def _do_run(precheck=False):
 
         # STEP 6b: Get the shipping label PDF from Shopee. The retry logic
         # inside get_shipping_label_pdf handles the case where Shopee is
-        # still generating the label when we ask for it.
-        pdf_bytes = shopee_client.get_shipping_label_pdf(order_sn)
+        # still generating the label when we ask for it (returns None).
+        #
+        # Shopee's label endpoints can ALSO fail hard and transiently — e.g.
+        # create_shipping_document returning "common.error_server - Something
+        # wrong. Please try later." — which raises. That must be caught here:
+        # an unguarded raise aborts the whole run, so one bad order strands
+        # every order queued behind it and the workflow goes red. Treat it
+        # like the ship_order failure above: record it and move on.
+        try:
+            pdf_bytes = shopee_client.get_shipping_label_pdf(order_sn)
+        except Exception as e:
+            print(f"  ✗ Failed to get label for {order_sn}: {e}")
+            print(f"    Will retry next run.")
+            failed.append((order_sn, "label gagal dibuat"))
+            continue
+
         if pdf_bytes is None:
             print(f"  Skipping {order_sn} (label not ready). Will retry next run.")
             waiting.append((order_sn, "label belum siap"))
@@ -402,7 +416,15 @@ def _do_run(precheck=False):
         # STEP 6c: Convert the PDF into Telegram-ready PNG images.
         # Multiple PDF pages are merged two pages per image to reduce
         # Telegram messages while keeping the label order unchanged.
-        png_pages = label_processor.pdf_to_pngs(pdf_bytes)
+        # A malformed PDF would raise out of poppler — same containment rule
+        # as above, never let one order kill the batch.
+        try:
+            png_pages = label_processor.pdf_to_pngs(pdf_bytes)
+        except Exception as e:
+            print(f"  ✗ Failed to render label for {order_sn}: {e}")
+            print(f"    Will retry next run.")
+            failed.append((order_sn, "render label gagal"))
+            continue
         print(f"  Rendered {len(png_pages)} Telegram label image(s) from PDF")
 
         # STEP 6d: Build the caption and send all label images to Telegram.
