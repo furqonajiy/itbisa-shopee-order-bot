@@ -71,6 +71,10 @@ jobs:
       # uncertain it emits true. The poppler install and the full run below are
       # skipped only when has_work is explicitly 'false', so a missing/garbled
       # output fails safe to running.
+      #
+      # STOCK_DISPATCH_TOKEN is required here too: an idle precheck also drains
+      # the pending stock-balance queue, and without the token every idle flush
+      # would fail and re-queue forever.
       - name: Check for new orders (skip poppler when idle)
         id: precheck
         env:
@@ -79,6 +83,7 @@ jobs:
           SHOPEE_SHOP_ID: ${{ secrets.SHOPEE_SHOP_ID }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          STOCK_DISPATCH_TOKEN: ${{ secrets.STOCK_DISPATCH_TOKEN }}
         run: python -m src.main --precheck
 
       # STEP 7: Install poppler (pdf2image needs it to render labels) — only
