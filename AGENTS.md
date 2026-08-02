@@ -22,5 +22,12 @@
 ### Maintainer environment
 - The maintainer runs Windows. Any CLI command handed over must be in **PowerShell** syntax.
 
+### Verify before pushing
+- Run `pytest -q`. Add cases to the existing files in `tests/`; never add a second runner or a new test framework.
+
+### Repo-specific guards (do not weaken)
+- **Never drop a stock-balance SKU.** Withheld SKUs persist in `data/balance_throttle.json` and every run drains that queue — including a run with no new orders. An early return that skips `_run_throttled_balance` strands them.
+- One bad order must never abort the run: every step in the per-order loop is contained and recorded, then `continue`.
+
 ### Sync marker
 - A root file `YYYY-MM-DD_HHMM.txt` (WIB) marks the last sync. On every update to this repo, rename it to the current WIB timestamp.
