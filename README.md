@@ -39,6 +39,9 @@ Each run:
    (`balance_throttle.MIN_INTERVAL_HOURS`); SKUs touched while the window is
    closed accumulate in `data/balance_throttle.json` and flush together when it
    reopens, so no SKU is ever dropped (`/stok_balance` is idempotent).
+   **Every run drains that queue, including a run with no new orders** — a
+   pending SKU must never have to wait for an unrelated order to arrive before
+   it can be balanced.
 6. Sends a heartbeat summary at the end of every run so the employee knows
    the bot is alive, even when no new orders came in. Orders in a
    skip-and-retry wait (Shopee still allocating, package/label not ready)
@@ -97,9 +100,11 @@ itbisa-shopee-order-bot/
 ## Tests
 
 Pure logic is unit-tested with pytest (`balance_dispatcher`, `balance_throttle`,
-the `telegram_sender` caption helpers, and `label_processor._crop_bottom_whitespace`).
-Network/API calls and the label network/PDF-render path (poppler `convert_from_bytes`)
-are not unit-tested. Install dev deps and run:
+the `telegram_sender` caption helpers, `label_processor._crop_bottom_whitespace`,
+the heartbeat summary, and the idle-run stock-balance flush — the last of these
+drives the real `_do_run` with every external boundary stubbed, so it needs no
+network). Live API calls and the label PDF-render path (poppler
+`convert_from_bytes`) are not unit-tested. Install dev deps and run:
 
 ```bash
 python -m pip install -r requirements-dev.txt
