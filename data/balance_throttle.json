@@ -1,4 +1,11 @@
 {
   "last_dispatch_at": "2026-08-04T18:50:19.157937+00:00",
-  "pending_skus": []
+  "pending_skus": [
+    "ITBISA-DIODA-1N4007-DO41",
+    "ITBISA-RELAY-5V-4PIN-BLUE",
+    "ITBISA-RESISTOR-10K-1/4W",
+    "ITBISA-RESISTOR-1K-1/4W",
+    "ITBISA-RESISTOR-4K7-1/4W",
+    "ITBISA-SOCKET-IC-DIP8-NARROW"
+  ]
 }
