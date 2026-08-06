@@ -77,3 +77,71 @@ def test_crop_all_white_returns_unchanged():
 def test_content_row_min_dark_scales_with_width_and_has_floor():
     assert label_processor._content_row_min_dark(400) == 6      # floor wins
     assert label_processor._content_row_min_dark(2000) == 20     # 1% of width
+
+
+# ----------------------------------------------------------------------
+# The margin watermark — this bot kept scanning the FULL width after the
+# sibling Shopee bot was fixed, so a tiled resi watermark down the page edges
+# bound the crop and the whole blank A4 tail stayed attached.
+# ----------------------------------------------------------------------
+def _fill_margins(img, y, band_px=30):
+    """Ink at the far left and right only — where the resi watermark tiles."""
+    for x in range(0, band_px):
+        img.putpixel((x, y), (0, 0, 0))
+    for x in range(img.width - band_px, img.width):
+        img.putpixel((x, y), (0, 0, 0))
+
+
+def test_crop_ignores_margin_watermark_below_label():
+    img = _white(400, 1200)
+    for y in range(0, 60):          # the real label
+        _fill_row(img, y)
+    for y in range(900, 1100, 8):   # watermark tiled down BOTH margins
+        _fill_margins(img, y)
+
+    out = label_processor._crop_bottom_whitespace(img)
+    assert out.height < 200, (
+        f"margin watermark still bound the crop: height {out.height} of {img.height}")
+
+
+def test_crop_ignores_scattered_dots_that_clear_the_total():
+    # A sparse watermark can hold MORE dark pixels than the total threshold
+    # while being only isolated dots. Counting the total alone (what the code
+    # did while its comment claimed a run) let this bind the crop.
+    img = _white(400, 1200)
+    for y in range(0, 60):
+        _fill_row(img, y)
+    for x in range(100, 300, 7):    # 29 scattered dots, well over min_dark
+        img.putpixel((x, 1000), (0, 0, 0))
+
+    out = label_processor._crop_bottom_whitespace(img)
+    assert out.height < 200, (
+        f"scattered dots still bound the crop: height {out.height}")
+
+
+def test_crop_keeps_a_thin_but_real_centre_line():
+    # The guard must not over-crop. A 6px-wide mark in the centre is real ink
+    # (0.8 mm at 200 DPI) and must still bind the crop -- losing label content
+    # is worse than leaving a tail attached.
+    img = _white(400, 1200)
+    for y in range(0, 60):
+        _fill_row(img, y)
+    for y in range(1000, 1004):
+        _fill_row(img, y, x0=197, x1=203)
+
+    out = label_processor._crop_bottom_whitespace(img)
+    assert out.height >= 1004, f"real centre content was cropped away: {out.height}"
+
+
+def test_barcode_like_row_still_binds_the_crop():
+    # A row crossing a barcode is alternating bars, not one long run. Requiring
+    # a LONG run would reject it and cut the barcode off the label.
+    img = _white(400, 1200)
+    for y in range(0, 60):
+        _fill_row(img, y)
+    for y in range(1000, 1010):
+        for x0 in range(150, 260, 10):
+            _fill_row(img, y, x0=x0, x1=x0 + 4)   # 4px bars, 6px gaps
+
+    out = label_processor._crop_bottom_whitespace(img)
+    assert out.height >= 1010, f"barcode row was cropped away: {out.height}"
