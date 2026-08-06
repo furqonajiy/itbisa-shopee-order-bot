@@ -46,10 +46,39 @@ _CONTENT_ROW_MIN_DARK_FLOOR = 6
 # bug). Every real label row still crosses the centre and binds the crop.
 _CONTENT_CENTER_BAND_FRACTION = 0.5  # inspect the middle 50% of the width
 
+# A speck is one or two stray pixels; any real printed stroke is wider. At 200
+# DPI three pixels is 0.4 mm, comfortably below the thinnest barcode bar, so this
+# rejects specks WITHOUT risking a real row. Deliberately small: over-cropping
+# cuts label content off, which is worse than leaving a tail attached.
+_CONTENT_MIN_RUN_PX = 3
+
 
 def _content_row_min_dark(width):
     """Minimum dark pixels a row needs to count as content (not a stray speck)."""
     return max(_CONTENT_ROW_MIN_DARK_FLOOR, int(width * _CONTENT_ROW_MIN_DARK_FRACTION))
+
+
+def _row_is_content(pixels, y, x_start, x_end, white_threshold, min_dark):
+    """True when row `y` holds real label ink within [x_start, x_end).
+
+    TWO conditions, because either alone has been fooled in production:
+      * total dark pixels >= `min_dark` -- rejects a lone speck;
+      * longest CONSECUTIVE dark run >= `_CONTENT_MIN_RUN_PX` -- rejects a
+        scattered watermark that clears the total but is only isolated dots.
+    The previous code checked the total ONLY, while its comment claimed it
+    required a run; a sparse watermark crossing the band therefore passed.
+    """
+    total = 0
+    run = best_run = 0
+    for x in range(x_start, x_end):
+        if pixels[x, y] < white_threshold:
+            total += 1
+            run += 1
+            if run > best_run:
+                best_run = run
+        else:
+            run = 0
+    return total >= min_dark and best_run >= _CONTENT_MIN_RUN_PX
 
 
 def _crop_bottom_whitespace(image, white_threshold=250, bottom_padding_px=8):
@@ -76,14 +105,8 @@ def _crop_bottom_whitespace(image, white_threshold=250, bottom_padding_px=8):
     last_content_row = None
 
     for y in range(height - 1, -1, -1):
-        dark_in_row = 0
-        for x in range(x_start, x_end):
-            if pixels[x, y] < white_threshold:
-                dark_in_row += 1
-                if dark_in_row >= min_dark:
-                    last_content_row = y
-                    break
-        if last_content_row is not None:
+        if _row_is_content(pixels, y, x_start, x_end, white_threshold, min_dark):
+            last_content_row = y
             break
 
     if last_content_row is None:
@@ -92,8 +115,15 @@ def _crop_bottom_whitespace(image, white_threshold=250, bottom_padding_px=8):
     crop_bottom = min(height, last_content_row + 1 + bottom_padding_px)
 
     if crop_bottom >= height:
+        # Nothing trimmed. Say so: a silent no-op here is exactly what "the resi
+        # is long again" looks like, and without this line the log gives no way
+        # to tell a correctly-full page from a crop that failed.
+        print(f"  [label] tidak ada yang dipotong — baris konten terakhir "
+              f"{last_content_row} dari tinggi {height}")
         return image
 
+    print(f"  [label] dipotong {height - crop_bottom}px dari {height}px "
+          f"(konten terakhir di baris {last_content_row})")
     return image.crop((0, 0, width, crop_bottom))
 
 
