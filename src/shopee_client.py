@@ -14,6 +14,7 @@ Public functions (used by main.py):
   - get_package_detail(order_sn, package_number) -> dict (raw Shopee response)
   - ship_order_to_dropoff(order_sn) -> None (raises on error)
   - get_shipping_label_pdf(order_sn) -> bytes (or None if not ready yet)
+  - get_tracking_number(order_sn) -> str resi ('' if not issued yet)
 """
 
 import hashlib
@@ -480,6 +481,29 @@ def _get_suggested_document_type(order_sn):
     return result_list[0].get("suggest_shipping_document_type", "THERMAL_AIR_WAYBILL")
 
 
+# Tracking numbers already fetched this run. get_shipping_label_pdf needs the
+# number to create the document, and main.py needs the same number to record
+# WHICH parcel the goods left in. Memoising it means the second reader costs no
+# extra API call — and, more importantly, both see the SAME number, so the
+# recorded resi can never disagree with the one printed on the label.
+_TRACKING_MEMO: dict[str, str] = {}
+
+
+def get_tracking_number(order_sn):
+    """The resi Shopee assigned to this order, '' if not issued yet.
+
+    Public read of what `get_shipping_label_pdf` already fetched. Served from
+    this run's memo when available, so recording the resi is free.
+    """
+    if order_sn in _TRACKING_MEMO:
+        return _TRACKING_MEMO[order_sn]
+    try:
+        return _get_tracking_number(order_sn)
+    except Exception as e:                                  # noqa: BLE001
+        print(f"  ⚠ resi {order_sn} tidak terbaca: {e}")
+        return ""
+
+
 def _get_tracking_number(order_sn):
     """
     Fetches the tracking number Shopee assigned to this order.
@@ -495,7 +519,10 @@ def _get_tracking_number(order_sn):
     response = requests.get(url, params={"order_sn": order_sn}, timeout=30)
     data = _check_shopee_json_ok(response, context=f"get_tracking_number {order_sn}")
 
-    return data.get("response", {}).get("tracking_number", "")
+    tracking_number = data.get("response", {}).get("tracking_number", "")
+    if tracking_number:
+        _TRACKING_MEMO[order_sn] = tracking_number
+    return tracking_number
 
 
 def _create_shipping_document(order_sn, document_type, tracking_number):
