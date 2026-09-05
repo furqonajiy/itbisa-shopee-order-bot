@@ -12,6 +12,12 @@ venv/
 *.pdf
 *.png
 !data/*.json
+# Runtime state lives on the bot-state branch, never on main. Tracking it here
+# makes the runner's `git checkout -B bot-state` abort with "local changes would
+# be overwritten" and the whole run fails AFTER the labels were already sent.
+# processed_orders.json / shopee_tokens.json / balance_throttle.json are absent
+# from main for the same reason; order_items.json belongs with them.
+data/order_items.json
 
 # IDE
 .vscode/
