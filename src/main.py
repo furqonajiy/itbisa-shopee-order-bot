@@ -442,6 +442,20 @@ def _do_run(precheck=False):
             waiting.append((order_sn, "label belum siap"))
             continue
 
+        # A label exists, so Shopee has issued a resi and these goods are
+        # committed to shipping. Record it now — this is the moment the stock
+        # physically leaves, and the resi is what the operator quotes to the
+        # courier when a parcel has to be traced. Recorded here rather than after
+        # Telegram delivery: a Telegram failure does not put the goods back.
+        try:
+            resi = shopee_client.get_tracking_number(order_sn)
+            if resi:
+                order_items.save(order_items.record_tracking(
+                    order_sn, resi, order_items.load()))
+                print(f"  Resi {order_sn}: {resi}")
+        except Exception as e:                              # noqa: BLE001
+            print(f"  ⚠ gagal mencatat resi {order_sn}: {e}")
+
         # STEP 6c: Convert the PDF into Telegram-ready PNG images.
         # Multiple PDF pages are merged two pages per image to reduce
         # Telegram messages while keeping the label order unchanged.

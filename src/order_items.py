@@ -102,6 +102,35 @@ def save(state: dict, path: Path | str = _PATH) -> None:
         json.dump(state, f, indent=2, sort_keys=True, ensure_ascii=False)
 
 
+def record_tracking(order_sn: str, tracking_number: str, state: dict | None = None,
+                    now: datetime | None = None) -> dict:
+    """Attach the resi to an order already recorded, and stamp when it shipped.
+
+    The resi is the proof the goods actually left, and the handle the operator
+    uses to find the parcel with the courier. Recorded SEPARATELY from the item
+    lines because they become known at different moments: the items are known as
+    soon as the order is seen, the resi only once Shopee issues it — which can be
+    a later run, or never if the order is cancelled first.
+
+    Blank resi is ignored rather than stored: an empty string would be
+    indistinguishable from "shipped, number unknown", and the caller already
+    logs why it was not issued.
+    """
+    state = dict(state or {})
+    sn = str(order_sn or "").strip()
+    resi = str(tracking_number or "").strip()
+    if not sn or not resi:
+        return state
+    rec = dict(state.get(sn) or {})
+    rec["tracking_number"] = resi
+    # Keep the first issue time: a re-run must not make the parcel look newer
+    # than it is, for the same reason first_seen never drifts.
+    rec.setdefault("shipped_at",
+                   (now or datetime.now(timezone.utc)).isoformat())
+    state[sn] = rec
+    return state
+
+
 def record(orders: list[dict], state: dict | None = None,
            now: datetime | None = None) -> dict:
     """Upsert every order's item lines into the state and return it.
@@ -120,7 +149,11 @@ def record(orders: list[dict], state: dict | None = None,
             continue
         items = extract(order)
         prev = state.get(sn) or {}
-        state[sn] = {
+        # Carry the resi forward: `record` runs on every pending order every run,
+        # and rebuilding the row from scratch would erase a resi captured in an
+        # earlier run — losing exactly the proof this file exists to keep.
+        carried = {k: prev[k] for k in ("tracking_number", "shipped_at") if k in prev}
+        state[sn] = {**carried,
             "order_status": order.get("order_status") or prev.get("order_status") or "",
             # Keep the first sighting: it is when the goods started moving.
             "first_seen": prev.get("first_seen") or stamp,

@@ -100,3 +100,47 @@ def test_save_then_load_roundtrip(tmp_path):
         {"model_sku": "ITBISA-A", "model_quantity_purchased": 3}])])
     order_items.save(s, p)
     assert order_items.load(p) == s
+
+
+def test_record_tracking_attaches_resi_and_stamps_shipped_at():
+    now = datetime(2026, 9, 5, 12, 0, tzinfo=timezone.utc)
+    s = order_items.record([_order("SN1", [
+        {"model_sku": "ITBISA-A", "model_quantity_purchased": 3}])], now=now)
+    s = order_items.record_tracking("SN1", "JX1234567890", s, now=now)
+    assert s["SN1"]["tracking_number"] == "JX1234567890"
+    assert s["SN1"]["shipped_at"] == now.isoformat()
+    # The items must survive untouched — the resi is extra evidence, not a
+    # replacement for what was in the parcel.
+    assert s["SN1"]["items"] == [{"sku": "ITBISA-A", "qty": 3}]
+
+
+def test_record_tracking_keeps_first_shipped_at():
+    first = datetime(2026, 9, 5, 12, 0, tzinfo=timezone.utc)
+    later = datetime(2026, 9, 6, 12, 0, tzinfo=timezone.utc)
+    s = order_items.record_tracking("SN1", "JX1", None, now=first)
+    s = order_items.record_tracking("SN1", "JX1", s, now=later)
+    # A re-run must not make the parcel look newer than it is.
+    assert s["SN1"]["shipped_at"] == first.isoformat()
+
+
+def test_blank_resi_is_ignored_not_stored():
+    # An empty string would be indistinguishable from "shipped, number unknown".
+    s = order_items.record_tracking("SN1", "", None)
+    assert s == {}
+    s = order_items.record_tracking("", "JX1", None)
+    assert s == {}
+
+
+def test_a_later_record_run_never_erases_the_resi():
+    # `record` runs on EVERY pending order every run. Rebuilding the row from
+    # scratch would erase a resi captured in an earlier run — losing exactly the
+    # proof this file exists to keep.
+    s = order_items.record([_order("SN1", [
+        {"model_sku": "ITBISA-A", "model_quantity_purchased": 3}])])
+    s = order_items.record_tracking("SN1", "JX9", s)
+    s = order_items.record([_order("SN1", [
+        {"model_sku": "ITBISA-A", "model_quantity_purchased": 3}],
+        status="PROCESSED")], s)
+    assert s["SN1"]["tracking_number"] == "JX9"
+    assert "shipped_at" in s["SN1"]
+    assert s["SN1"]["order_status"] == "PROCESSED"
