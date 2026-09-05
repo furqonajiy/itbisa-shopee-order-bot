@@ -6,7 +6,9 @@
 # State file management:
 #   This workflow uses TWO branches:
 #     - main: source code, protected by branch rules requiring PRs.
-#     - bot-state: runtime state files (processed_orders.json, shopee_tokens.json).
+#     - bot-state: runtime state files (processed_orders.json, shopee_tokens.json,
+#       order_items.json — WHAT each order contained, so a stock opname can tell
+#       a write-off from goods already packed for shipment).
 #   This separation lets the bot commit state freely without touching main.
 #   See README "State Management" section for setup details.
 
@@ -47,6 +49,7 @@ jobs:
           if git rev-parse --verify origin/bot-state >/dev/null 2>&1; then
             # Copy the data/ files from bot-state into our working directory.
             git checkout origin/bot-state -- data/processed_orders.json || echo "  No processed_orders.json on bot-state yet, will create on first commit"
+            git checkout origin/bot-state -- data/order_items.json || echo "  No order_items.json on bot-state yet, will create on first commit"
             git checkout origin/bot-state -- data/shopee_tokens.json || echo "  No shopee_tokens.json on bot-state yet, will create on first commit"
             git checkout origin/bot-state -- data/balance_throttle.json || echo "  No balance_throttle.json on bot-state yet, will create on first commit"
           else
@@ -126,6 +129,7 @@ jobs:
           # the working tree, because the next step will switch branches.
           mkdir -p /tmp/bot-state-data
           cp data/processed_orders.json /tmp/bot-state-data/ 2>/dev/null || true
+          cp data/order_items.json /tmp/bot-state-data/ 2>/dev/null || true
           cp data/shopee_tokens.json /tmp/bot-state-data/ 2>/dev/null || true
           cp data/balance_throttle.json /tmp/bot-state-data/ 2>/dev/null || true
 
@@ -142,11 +146,13 @@ jobs:
           # Copy the saved state files into the bot-state working tree.
           mkdir -p data
           cp /tmp/bot-state-data/processed_orders.json data/ 2>/dev/null || true
+          cp /tmp/bot-state-data/order_items.json data/ 2>/dev/null || true
           cp /tmp/bot-state-data/shopee_tokens.json data/ 2>/dev/null || true
           cp /tmp/bot-state-data/balance_throttle.json data/ 2>/dev/null || true
 
           # Stage and commit only if something changed.
           git add data/processed_orders.json data/shopee_tokens.json
+          git add data/order_items.json 2>/dev/null || true
           git add data/balance_throttle.json 2>/dev/null || true
           git diff --staged --quiet || git commit -m "Update state [skip ci]"
 

@@ -46,6 +46,7 @@ from src import (
     state_manager,
     balance_dispatcher,
     balance_throttle,
+    order_items,
 )
 
 JAKARTA_TZ = timezone(timedelta(hours=7))
@@ -315,6 +316,20 @@ def _do_run(precheck=False):
     print("Fetching pending orders from Shopee...")
     orders = shopee_client.get_pending_orders()
     print(f"Shopee returned {len(orders)} pending orders")
+
+    # Record WHAT each pending order contains before any of it is filtered.
+    # The item lines are already in this response (`item_list` is requested in
+    # shopee_client._get_order_details) and were previously discarded, leaving
+    # the shop unable to tell a stock write-off from a shipment in progress: an
+    # opname taken while orders are READY_TO_SHIP counts a shelf whose goods are
+    # already packed, while the book still counts them as on hand.
+    # Recorded for EVERY pending order, not just the new ones — goods leave the
+    # shelf when the order is picked, not when its label finally prints.
+    try:
+        order_items.save(order_items.record(orders, order_items.load()))
+    except Exception as e:                                  # noqa: BLE001
+        # Bookkeeping must never block a label. Report and continue.
+        print(f"  ⚠ gagal mencatat isi order: {e}")
 
     # STEP 3: Filter out orders we already processed in a previous run,
     # then sort them by order_sn ascending so Telegram receives labels in a
