@@ -7,8 +7,10 @@
         "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
       }
     ],
-    "last_seen": "2026-09-05T16:50:08.310887+00:00",
+    "last_seen": "2026-09-05T16:51:51.599544+00:00",
     "order_status": "PROCESSED",
-    "pending_items": false
+    "pending_items": false,
+    "shipped_at": "2026-09-05T16:51:52.353409+00:00",
+    "tracking_number": "SPXID066159137919"
   }
 }
