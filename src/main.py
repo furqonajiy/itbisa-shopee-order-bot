@@ -326,7 +326,26 @@ def _do_run(precheck=False):
     # Recorded for EVERY pending order, not just the new ones — goods leave the
     # shelf when the order is picked, not when its label finally prints.
     try:
-        order_items.save(order_items.record(orders, order_items.load()))
+        items_state = order_items.record(orders, order_items.load())
+        # Fill in the resi for any pending order that still lacks one.
+        #
+        # Recording it in the label flow alone is not enough: that flow only runs
+        # for orders NOT yet in `processed`, so an order labelled before this
+        # feature existed — or on any run reporting "0 are new" — would keep its
+        # items forever and never get the resi. The parcel is exactly what you
+        # need months later to prove a shipment happened.
+        #
+        # Costs one call per pending order that is still missing a number, and
+        # never re-asks once recorded, so a settled order is free forever.
+        for order in orders or []:
+            sn = str(order.get("order_sn") or "").strip()
+            if not sn or (items_state.get(sn) or {}).get("tracking_number"):
+                continue
+            resi = shopee_client.get_tracking_number(sn)
+            if resi:
+                items_state = order_items.record_tracking(sn, resi, items_state)
+                print(f"  Resi {sn}: {resi}")
+        order_items.save(items_state)
     except Exception as e:                                  # noqa: BLE001
         # Bookkeeping must never block a label. Report and continue.
         print(f"  ⚠ gagal mencatat isi order: {e}")
