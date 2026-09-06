@@ -7,10 +7,58 @@
         "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
       }
     ],
-    "last_seen": "2026-09-05T16:51:51.599544+00:00",
+    "last_seen": "2026-09-06T05:23:42.046836+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-05T16:51:52.353409+00:00",
     "tracking_number": "SPXID066159137919"
+  },
+  "260906ADS62QGP": {
+    "first_seen": "2026-09-06T05:23:30.243422+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-BUZZER-ACTIVE-5V"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-1K-1/4W"
+      }
+    ],
+    "last_seen": "2026-09-06T05:23:42.046836+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-06T05:23:54.985752+00:00",
+    "tracking_number": "SPXID069126579429"
+  },
+  "260906AQE6Q9WX": {
+    "first_seen": "2026-09-06T05:23:30.243422+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-10K-1/4W"
+      },
+      {
+        "qty": 25,
+        "sku": "ITBISA-RESISTOR-1K-1/4W"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-22K-1/4W"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-TERMINAL-BLOCK-KF301-2P-BLUE"
+      }
+    ],
+    "last_seen": "2026-09-06T05:23:42.046836+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-06T05:24:08.461432+00:00",
+    "tracking_number": "SPXID066217485259"
   }
 }
