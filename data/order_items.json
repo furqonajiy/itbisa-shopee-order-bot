@@ -60,5 +60,61 @@
     "pending_items": false,
     "shipped_at": "2026-09-06T05:24:08.461432+00:00",
     "tracking_number": "SPXID066217485259"
+  },
+  "260906BBXGH7VD": {
+    "first_seen": "2026-09-06T18:55:06.001440+00:00",
+    "items": [
+      {
+        "qty": 8,
+        "sku": "ITBISA-BUZZER-ACTIVE-5V"
+      }
+    ],
+    "last_seen": "2026-09-06T18:55:19.256267+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-06T18:55:35.014591+00:00",
+    "tracking_number": "SPXID067412605729"
+  },
+  "260906BGV6CYDV": {
+    "first_seen": "2026-09-06T18:55:06.001440+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      }
+    ],
+    "last_seen": "2026-09-06T18:55:19.256267+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-06T18:55:48.464589+00:00",
+    "tracking_number": "SPXID062991781589"
+  },
+  "260906BNB48JGE": {
+    "first_seen": "2026-09-06T18:55:06.001440+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-BUZZER-ACTIVE-5V"
+      }
+    ],
+    "last_seen": "2026-09-06T18:55:19.256267+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-06T18:56:04.976131+00:00",
+    "tracking_number": "SPXID060227655789"
+  },
+  "260907BX37S303": {
+    "first_seen": "2026-09-06T18:55:06.001440+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "40PCS-ITBISA-JUMPER-FF-10CM"
+      }
+    ],
+    "last_seen": "2026-09-06T18:55:19.256267+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-06T18:56:19.795233+00:00",
+    "tracking_number": "SPXID062193335699"
   }
 }
