@@ -69,8 +69,8 @@
         "sku": "ITBISA-BUZZER-ACTIVE-5V"
       }
     ],
-    "last_seen": "2026-09-06T18:55:19.256267+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-07T08:47:30.475420+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-06T18:55:35.014591+00:00",
     "tracking_number": "SPXID067412605729"
@@ -83,8 +83,8 @@
         "sku": "ITBISA-IC-PC817-DIP4"
       }
     ],
-    "last_seen": "2026-09-06T18:55:19.256267+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-07T08:47:30.475420+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-06T18:55:48.464589+00:00",
     "tracking_number": "SPXID062991781589"
@@ -97,8 +97,8 @@
         "sku": "ITBISA-BUZZER-ACTIVE-5V"
       }
     ],
-    "last_seen": "2026-09-06T18:55:19.256267+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-07T08:47:30.475420+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-06T18:56:04.976131+00:00",
     "tracking_number": "SPXID060227655789"
@@ -111,10 +111,136 @@
         "sku": "40PCS-ITBISA-JUMPER-FF-10CM"
       }
     ],
-    "last_seen": "2026-09-06T18:55:19.256267+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-07T08:47:30.475420+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-06T18:56:19.795233+00:00",
     "tracking_number": "SPXID062193335699"
+  },
+  "260907CB3FTPNX": {
+    "first_seen": "2026-09-07T08:47:07.173949+00:00",
+    "items": [
+      {
+        "qty": 3,
+        "sku": "ITBISA-SOCKET-IC-DIP14-NARROW"
+      }
+    ],
+    "last_seen": "2026-09-07T08:47:30.475420+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-07T08:47:50.634236+00:00",
+    "tracking_number": "SPXID060712845079"
+  },
+  "260907D3ARP9VK": {
+    "first_seen": "2026-09-07T08:47:07.173949+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-09-07T08:47:30.475420+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-07T08:48:04.203030+00:00",
+    "tracking_number": "SPXID066809478809"
+  },
+  "260907DDN293Q4": {
+    "first_seen": "2026-09-07T08:47:07.173949+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-BUZZER-ACTIVE-5V"
+      }
+    ],
+    "last_seen": "2026-09-07T08:47:30.475420+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-07T08:48:18.613748+00:00",
+    "tracking_number": "SPXID061283941089"
+  },
+  "260907DJCTCSEK": {
+    "first_seen": "2026-09-07T08:47:07.173949+00:00",
+    "items": [
+      {
+        "qty": 1000,
+        "sku": "ITBISA-IDC-2X5-AMPHENOL-FEMALE"
+      }
+    ],
+    "last_seen": "2026-09-07T08:47:30.475420+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-07T08:48:32.690594+00:00",
+    "tracking_number": "SPXID066243865669"
+  },
+  "260907DJP12GKP": {
+    "first_seen": "2026-09-07T08:47:07.173949+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-7SEGMENT-CATHODE-RED-2.30-1BIT"
+      }
+    ],
+    "last_seen": "2026-09-07T08:47:30.475420+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-07T08:48:45.928714+00:00",
+    "tracking_number": "SPXID062108671579"
+  },
+  "260907DJQ94TYG": {
+    "first_seen": "2026-09-07T08:47:07.173949+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-7SEGMENT-CATHODE-RED-2.30-1BIT"
+      }
+    ],
+    "last_seen": "2026-09-07T08:47:30.475420+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-07T08:48:59.162805+00:00",
+    "tracking_number": "SPXID068828777039"
+  },
+  "260907DJQQCAMW": {
+    "first_seen": "2026-09-07T08:47:07.173949+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-7SEGMENT-CATHODE-RED-2.30-1BIT"
+      }
+    ],
+    "last_seen": "2026-09-07T08:47:30.475420+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-07T08:49:13.036932+00:00",
+    "tracking_number": "SPXID062039765229"
+  },
+  "260907DJR4QNX9": {
+    "first_seen": "2026-09-07T08:47:07.173949+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-7SEGMENT-CATHODE-RED-2.30-1BIT"
+      }
+    ],
+    "last_seen": "2026-09-07T08:47:30.475420+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-07T08:49:26.102117+00:00",
+    "tracking_number": "SPXID060021380919"
+  },
+  "260907DKV7N2PN": {
+    "first_seen": "2026-09-07T08:47:07.173949+00:00",
+    "items": [
+      {
+        "qty": 60,
+        "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-09-07T08:47:30.475420+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-07T08:49:39.379750+00:00",
+    "tracking_number": "SPXID067424510699"
   }
 }
