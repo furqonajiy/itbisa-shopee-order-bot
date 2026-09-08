@@ -243,6 +243,24 @@
     "shipped_at": "2026-09-07T08:49:39.379750+00:00",
     "tracking_number": "SPXID067424510699"
   },
+  "260907DN8B3UHS": {
+    "first_seen": "2026-09-08T05:56:33.640685+00:00",
+    "items": [
+      {
+        "qty": 50,
+        "sku": "ITBISA-IC-74HC245N-DIP20"
+      },
+      {
+        "qty": 100,
+        "sku": "ITBISA-RESISTOR-680K-1/4W"
+      }
+    ],
+    "last_seen": "2026-09-08T05:56:50.166829+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-08T05:57:10.437457+00:00",
+    "tracking_number": "SPXID063950388799"
+  },
   "260907DPTUH9YD": {
     "first_seen": "2026-09-07T09:46:44.493630+00:00",
     "items": [
@@ -268,5 +286,107 @@
     "pending_items": false,
     "shipped_at": "2026-09-07T09:47:05.935545+00:00",
     "tracking_number": "SPXID061149279409"
+  },
+  "260907E5H8CV8S": {
+    "first_seen": "2026-09-08T05:56:33.640685+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-DC-TO-DC-STEPUP-XL6009"
+      },
+      {
+        "qty": 4,
+        "sku": "ITBISA-IC-74HC245N-DIP20"
+      }
+    ],
+    "last_seen": "2026-09-08T05:56:50.166829+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-08T05:57:24.007839+00:00",
+    "tracking_number": "SPXID061396446599"
+  },
+  "260907E5P4QAFX": {
+    "first_seen": "2026-09-08T05:56:33.640685+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-BUZZER-ACTIVE-5V"
+      }
+    ],
+    "last_seen": "2026-09-08T05:56:50.166829+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-08T05:57:37.279622+00:00",
+    "tracking_number": "SPXID068595579549"
+  },
+  "260907E6P7WMQ1": {
+    "first_seen": "2026-09-08T05:56:33.640685+00:00",
+    "items": [
+      {
+        "qty": 4,
+        "sku": "ITBISA-IC-74HC245N-DIP20"
+      }
+    ],
+    "last_seen": "2026-09-08T05:56:50.166829+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-08T05:57:50.316958+00:00",
+    "tracking_number": "SPXID061622891339"
+  },
+  "260907E7PU6Q44": {
+    "first_seen": "2026-09-08T05:56:33.640685+00:00",
+    "items": [
+      {
+        "qty": 50,
+        "sku": "ITBISA-SOCKET-IC-DIP28-NARROW"
+      }
+    ],
+    "last_seen": "2026-09-08T05:56:50.166829+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-08T05:58:03.355209+00:00",
+    "tracking_number": "SPXID063539489769"
+  },
+  "260907EC2PTCC2": {
+    "first_seen": "2026-09-08T05:56:33.640685+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-09-08T05:56:50.166829+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-08T05:58:16.228572+00:00",
+    "tracking_number": "SPXID061868517799"
+  },
+  "260908FFN29P69": {
+    "first_seen": "2026-09-08T05:56:33.640685+00:00",
+    "items": [
+      {
+        "qty": 6,
+        "sku": "ITBISA-PIN-HEADER-MALE-1X40PIN-LURUS"
+      }
+    ],
+    "last_seen": "2026-09-08T05:56:50.166829+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-08T05:58:29.428099+00:00",
+    "tracking_number": "SPXID067396854479"
+  },
+  "260908FKFE3V44": {
+    "first_seen": "2026-09-08T05:56:33.640685+00:00",
+    "items": [
+      {
+        "qty": 15,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      }
+    ],
+    "last_seen": "2026-09-08T05:56:50.166829+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-08T05:58:42.581991+00:00",
+    "tracking_number": "SPXID063660531989"
   }
 }
