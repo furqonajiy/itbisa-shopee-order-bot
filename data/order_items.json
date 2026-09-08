@@ -255,7 +255,7 @@
         "sku": "ITBISA-RESISTOR-680K-1/4W"
       }
     ],
-    "last_seen": "2026-09-08T07:08:12.212634+00:00",
+    "last_seen": "2026-09-08T11:10:44.665100+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-08T05:57:10.437457+00:00",
@@ -299,7 +299,7 @@
         "sku": "ITBISA-IC-74HC245N-DIP20"
       }
     ],
-    "last_seen": "2026-09-08T07:08:12.212634+00:00",
+    "last_seen": "2026-09-08T11:10:44.665100+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-08T05:57:24.007839+00:00",
@@ -313,7 +313,7 @@
         "sku": "ITBISA-BUZZER-ACTIVE-5V"
       }
     ],
-    "last_seen": "2026-09-08T07:08:12.212634+00:00",
+    "last_seen": "2026-09-08T11:10:44.665100+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-08T05:57:37.279622+00:00",
@@ -327,7 +327,7 @@
         "sku": "ITBISA-IC-74HC245N-DIP20"
       }
     ],
-    "last_seen": "2026-09-08T07:08:12.212634+00:00",
+    "last_seen": "2026-09-08T11:10:44.665100+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-08T05:57:50.316958+00:00",
@@ -341,7 +341,7 @@
         "sku": "ITBISA-SOCKET-IC-DIP28-NARROW"
       }
     ],
-    "last_seen": "2026-09-08T07:08:12.212634+00:00",
+    "last_seen": "2026-09-08T11:10:44.665100+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-08T05:58:03.355209+00:00",
@@ -355,7 +355,7 @@
         "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-09-08T07:08:12.212634+00:00",
+    "last_seen": "2026-09-08T11:10:44.665100+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-08T05:58:16.228572+00:00",
@@ -369,7 +369,7 @@
         "sku": "ITBISA-PIN-HEADER-MALE-1X40PIN-LURUS"
       }
     ],
-    "last_seen": "2026-09-08T07:08:12.212634+00:00",
+    "last_seen": "2026-09-08T11:10:44.665100+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-08T05:58:29.428099+00:00",
@@ -383,7 +383,7 @@
         "sku": "ITBISA-IC-PC817-DIP4"
       }
     ],
-    "last_seen": "2026-09-08T07:08:12.212634+00:00",
+    "last_seen": "2026-09-08T11:10:44.665100+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-08T05:58:42.581991+00:00",
@@ -401,10 +401,24 @@
         "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
       }
     ],
-    "last_seen": "2026-09-08T07:08:12.212634+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-08T11:10:44.665100+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-08T07:08:23.898940+00:00",
     "tracking_number": "SPXID069664114099"
+  },
+  "260908G32SU2Y2": {
+    "first_seen": "2026-09-08T11:10:34.582673+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-BUZZER-ACTIVE-5V"
+      }
+    ],
+    "last_seen": "2026-09-08T11:10:44.665100+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-08T11:10:57.526532+00:00",
+    "tracking_number": "SPXID067595570199"
   }
 }
