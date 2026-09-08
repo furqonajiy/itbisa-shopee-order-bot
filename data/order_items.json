@@ -420,5 +420,33 @@
     "pending_items": false,
     "shipped_at": "2026-09-08T11:10:57.526532+00:00",
     "tracking_number": "SPXID067595570199"
+  },
+  "260908GRN6MU64": {
+    "first_seen": "2026-09-08T14:47:24.831003+00:00",
+    "items": [
+      {
+        "qty": 2,
+        "sku": "40PCS-ITBISA-JUMPER-MM-10CM"
+      }
+    ],
+    "last_seen": "2026-09-08T14:47:42.191243+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-08T14:47:54.042336+00:00",
+    "tracking_number": "SPXID065205743399"
+  },
+  "260908GS9VG8JF": {
+    "first_seen": "2026-09-08T14:47:24.831003+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-09-08T14:47:42.191243+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-08T14:48:06.516770+00:00",
+    "tracking_number": "SPXID067584745039"
   }
 }
