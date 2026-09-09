@@ -407,6 +407,18 @@
     "shipped_at": "2026-09-08T07:08:23.898940+00:00",
     "tracking_number": "SPXID069664114099"
   },
+  "260908G2KNCND0": {
+    "first_seen": "2026-09-09T09:56:55.572836+00:00",
+    "items": [
+      {
+        "qty": 75,
+        "sku": "ITBISA-BUZZER-ACTIVE-5V"
+      }
+    ],
+    "last_seen": "2026-09-09T09:57:11.922107+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false
+  },
   "260908G32SU2Y2": {
     "first_seen": "2026-09-08T11:10:34.582673+00:00",
     "items": [
@@ -429,8 +441,8 @@
         "sku": "40PCS-ITBISA-JUMPER-MM-10CM"
       }
     ],
-    "last_seen": "2026-09-08T14:47:42.191243+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-09T09:57:11.922107+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-08T14:47:54.042336+00:00",
     "tracking_number": "SPXID065205743399"
@@ -443,10 +455,102 @@
         "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-09-08T14:47:42.191243+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-09T09:57:11.922107+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-08T14:48:06.516770+00:00",
     "tracking_number": "SPXID067584745039"
+  },
+  "260908GTH4FJP1": {
+    "first_seen": "2026-09-09T09:56:55.572836+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
+      }
+    ],
+    "last_seen": "2026-09-09T09:57:11.922107+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-09T09:57:33.324028+00:00",
+    "tracking_number": "SPXID064329523969"
+  },
+  "260909H1SUQWH5": {
+    "first_seen": "2026-09-09T09:56:55.572836+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-RESISTOR-100K-1/4W"
+      }
+    ],
+    "last_seen": "2026-09-09T09:57:11.922107+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-09T09:57:46.252945+00:00",
+    "tracking_number": "SPXID062304805569"
+  },
+  "260909HQ3E87QH": {
+    "first_seen": "2026-09-09T09:56:55.572836+00:00",
+    "items": [
+      {
+        "qty": 15,
+        "sku": "ITBISA-JACK-DC-005-FEMALE"
+      }
+    ],
+    "last_seen": "2026-09-09T09:57:11.922107+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-09T09:58:00.401288+00:00",
+    "tracking_number": "SPXID069885737739"
+  },
+  "260909J5C3CRC3": {
+    "first_seen": "2026-09-09T09:56:55.572836+00:00",
+    "items": [
+      {
+        "qty": 6,
+        "sku": "ITBISA-7SEGMENT-CATHODE-RED-2.30-1BIT"
+      }
+    ],
+    "last_seen": "2026-09-09T09:57:11.922107+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-09T09:58:14.483054+00:00",
+    "tracking_number": "SPXID067490422159"
+  },
+  "260909J98WCT67": {
+    "first_seen": "2026-09-09T09:56:55.572836+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
+      }
+    ],
+    "last_seen": "2026-09-09T09:57:11.922107+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-09T09:58:27.797419+00:00",
+    "tracking_number": "SPXID063462161259"
+  },
+  "260909JR3YYCDT": {
+    "first_seen": "2026-09-09T09:56:55.572836+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-3K3-1/4W"
+      },
+      {
+        "qty": 10,
+        "sku": "ITBISA-RESISTOR-4K7-1/4W"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-6K8-1/4W"
+      }
+    ],
+    "last_seen": "2026-09-09T09:57:11.922107+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-09T09:58:40.644134+00:00",
+    "tracking_number": "CM31210700946"
   }
 }
