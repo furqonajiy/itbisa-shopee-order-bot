@@ -554,5 +554,81 @@
     "pending_items": false,
     "shipped_at": "2026-09-09T09:58:40.644134+00:00",
     "tracking_number": "CM31210700946"
+  },
+  "260910KNJ0KUY0": {
+    "first_seen": "2026-09-10T06:29:56.621616+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
+      }
+    ],
+    "last_seen": "2026-09-10T06:30:12.025140+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-10T06:30:37.701926+00:00",
+    "tracking_number": "SPXID060279337589"
+  },
+  "260910M57XD3A6": {
+    "first_seen": "2026-09-10T06:29:56.621616+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-JACK-DC-005-FEMALE"
+      },
+      {
+        "qty": 10,
+        "sku": "ITBISA-KAPASITOR-ELCO-100UF-25V"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-KAPASITOR-ELCO-47UF-50V"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-100K-1/4W"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-1K-1/4W"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-1M-1/4W"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-22K-1/4W"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-2K2-1/4W"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-47K-1/4W"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-4K7-1/4W"
+      }
+    ],
+    "last_seen": "2026-09-10T06:30:12.025140+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-10T06:30:55.303356+00:00",
+    "tracking_number": "SPXID069230196849"
+  },
+  "260910MW80HEWX": {
+    "first_seen": "2026-09-10T06:29:56.621616+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-USB-A-TO-B-30CM"
+      }
+    ],
+    "last_seen": "2026-09-10T06:30:12.025140+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false
   }
 }
