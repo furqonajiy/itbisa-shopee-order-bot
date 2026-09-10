@@ -563,8 +563,8 @@
         "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
       }
     ],
-    "last_seen": "2026-09-10T06:30:12.025140+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-10T09:48:04.761048+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-10T06:30:37.701926+00:00",
     "tracking_number": "SPXID060279337589"
@@ -613,8 +613,8 @@
         "sku": "ITBISA-RESISTOR-4K7-1/4W"
       }
     ],
-    "last_seen": "2026-09-10T06:30:12.025140+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-10T09:48:04.761048+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-10T06:30:55.303356+00:00",
     "tracking_number": "SPXID069230196849"
@@ -627,8 +627,46 @@
         "sku": "ITBISA-USB-A-TO-B-30CM"
       }
     ],
-    "last_seen": "2026-09-10T06:30:12.025140+00:00",
+    "last_seen": "2026-09-10T09:48:04.761048+00:00",
     "order_status": "READY_TO_SHIP",
     "pending_items": false
+  },
+  "260910N40KSMDA": {
+    "first_seen": "2026-09-10T09:47:45.650322+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-USB-A-TO-B-30CM"
+      }
+    ],
+    "last_seen": "2026-09-10T09:48:04.761048+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false
+  },
+  "260910N4YT9UQ7": {
+    "first_seen": "2026-09-10T09:47:45.650322+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "40PCS-ITBISA-JUMPER-FF-10CM"
+      }
+    ],
+    "last_seen": "2026-09-10T09:48:04.761048+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false
+  },
+  "260910N7G7B5X8": {
+    "first_seen": "2026-09-10T09:47:45.650322+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-BLUETOOTH-MODULE-HC05"
+      }
+    ],
+    "last_seen": "2026-09-10T09:48:04.761048+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-10T09:48:22.614076+00:00",
+    "tracking_number": "SPXID063238157549"
   }
 }
