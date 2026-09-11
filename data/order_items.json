@@ -627,9 +627,11 @@
         "sku": "ITBISA-USB-A-TO-B-30CM"
       }
     ],
-    "last_seen": "2026-09-10T09:48:04.761048+00:00",
+    "last_seen": "2026-09-11T06:03:25.557410+00:00",
     "order_status": "READY_TO_SHIP",
-    "pending_items": false
+    "pending_items": false,
+    "shipped_at": "2026-09-11T06:03:43.120068+00:00",
+    "tracking_number": "SPXID061605800909"
   },
   "260910N40KSMDA": {
     "first_seen": "2026-09-10T09:47:45.650322+00:00",
@@ -639,7 +641,7 @@
         "sku": "ITBISA-USB-A-TO-B-30CM"
       }
     ],
-    "last_seen": "2026-09-10T09:48:04.761048+00:00",
+    "last_seen": "2026-09-11T06:03:25.557410+00:00",
     "order_status": "READY_TO_SHIP",
     "pending_items": false
   },
@@ -651,9 +653,11 @@
         "sku": "40PCS-ITBISA-JUMPER-FF-10CM"
       }
     ],
-    "last_seen": "2026-09-10T09:48:04.761048+00:00",
+    "last_seen": "2026-09-11T06:03:25.557410+00:00",
     "order_status": "READY_TO_SHIP",
-    "pending_items": false
+    "pending_items": false,
+    "shipped_at": "2026-09-11T06:04:01.088598+00:00",
+    "tracking_number": "SPXID065470719569"
   },
   "260910N7G7B5X8": {
     "first_seen": "2026-09-10T09:47:45.650322+00:00",
@@ -663,10 +667,52 @@
         "sku": "ITBISA-BLUETOOTH-MODULE-HC05"
       }
     ],
-    "last_seen": "2026-09-10T09:48:04.761048+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-11T06:03:25.557410+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-10T09:48:22.614076+00:00",
     "tracking_number": "SPXID063238157549"
+  },
+  "260910NCQG8SA2": {
+    "first_seen": "2026-09-11T06:03:05.093120+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-USB-A-TO-B-30CM"
+      }
+    ],
+    "last_seen": "2026-09-11T06:03:25.557410+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-11T06:04:14.623091+00:00",
+    "tracking_number": "SPXID065868591959"
+  },
+  "260910NPN0Q1S4": {
+    "first_seen": "2026-09-11T06:03:05.093120+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-IC-UA741CN-DIP8"
+      }
+    ],
+    "last_seen": "2026-09-11T06:03:25.557410+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-11T06:04:27.753634+00:00",
+    "tracking_number": "SPXID066365650569"
+  },
+  "260911PXYYYJH5": {
+    "first_seen": "2026-09-11T06:03:05.093120+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-BUZZER-ACTIVE-5V"
+      }
+    ],
+    "last_seen": "2026-09-11T06:03:25.557410+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-11T06:04:40.892646+00:00",
+    "tracking_number": "SPXID061277662829"
   }
 }
