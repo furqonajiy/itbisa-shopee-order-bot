@@ -734,5 +734,131 @@
     "pending_items": false,
     "shipped_at": "2026-09-11T08:26:47.996555+00:00",
     "tracking_number": "SPXID069882956009"
+  },
+  "260911QSYSAGN7": {
+    "first_seen": "2026-09-12T06:05:50.044972+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-IC-UA741CN-DIP8"
+      }
+    ],
+    "last_seen": "2026-09-12T06:06:06.656207+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-12T06:06:27.112932+00:00",
+    "tracking_number": "SPXID061852789199"
+  },
+  "260911QTBUGHE2": {
+    "first_seen": "2026-09-12T06:05:50.044972+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-USB-A-TO-B-30CM"
+      }
+    ],
+    "last_seen": "2026-09-12T06:06:06.656207+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-12T06:06:40.765453+00:00",
+    "tracking_number": "SPXID069631864149"
+  },
+  "260911QYBYN2RD": {
+    "first_seen": "2026-09-12T06:05:50.044972+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-BUZZER-ACTIVE-5V"
+      }
+    ],
+    "last_seen": "2026-09-12T06:06:06.656207+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false
+  },
+  "260911R3AF09X6": {
+    "first_seen": "2026-09-12T06:05:50.044972+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      }
+    ],
+    "last_seen": "2026-09-12T06:06:06.656207+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false
+  },
+  "260912S98GVK1K": {
+    "first_seen": "2026-09-12T06:05:50.044972+00:00",
+    "items": [
+      {
+        "qty": 23,
+        "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
+      }
+    ],
+    "last_seen": "2026-09-12T06:06:06.656207+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-12T06:07:02.805153+00:00",
+    "tracking_number": "SPXID068978614289"
+  },
+  "260912SBS6E3YR": {
+    "first_seen": "2026-09-12T06:05:50.044972+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-09-12T06:06:06.656207+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-12T06:07:16.268043+00:00",
+    "tracking_number": "SPXID066196162389"
+  },
+  "260912SPCUG7QX": {
+    "first_seen": "2026-09-12T06:05:50.044972+00:00",
+    "items": [
+      {
+        "qty": 50,
+        "sku": "ITBISA-BUZZER-ACTIVE-5V"
+      },
+      {
+        "qty": 50,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      }
+    ],
+    "last_seen": "2026-09-12T06:06:06.656207+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-12T06:07:29.414164+00:00",
+    "tracking_number": "SPXID061963189629"
+  },
+  "260912STE8BQ3D": {
+    "first_seen": "2026-09-12T06:05:50.044972+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
+      }
+    ],
+    "last_seen": "2026-09-12T06:06:06.656207+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-12T06:07:42.238474+00:00",
+    "tracking_number": "SPXID064829945699"
+  },
+  "260912SWGS690V": {
+    "first_seen": "2026-09-12T06:05:50.044972+00:00",
+    "items": [
+      {
+        "qty": 35,
+        "sku": "ITBISA-BUZZER-ACTIVE-5V"
+      }
+    ],
+    "last_seen": "2026-09-12T06:06:06.656207+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-12T06:07:55.370508+00:00",
+    "tracking_number": "SPXID067233268759"
   }
 }
