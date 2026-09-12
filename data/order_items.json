@@ -743,7 +743,7 @@
         "sku": "ITBISA-IC-UA741CN-DIP8"
       }
     ],
-    "last_seen": "2026-09-12T06:08:53.258728+00:00",
+    "last_seen": "2026-09-12T10:26:14.033491+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-12T06:06:27.112932+00:00",
@@ -757,7 +757,7 @@
         "sku": "ITBISA-USB-A-TO-B-30CM"
       }
     ],
-    "last_seen": "2026-09-12T06:08:53.258728+00:00",
+    "last_seen": "2026-09-12T10:26:14.033491+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-12T06:06:40.765453+00:00",
@@ -771,7 +771,7 @@
         "sku": "ITBISA-BUZZER-ACTIVE-5V"
       }
     ],
-    "last_seen": "2026-09-12T06:08:53.258728+00:00",
+    "last_seen": "2026-09-12T10:26:14.033491+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-12T06:08:43.203239+00:00",
@@ -785,7 +785,7 @@
         "sku": "ITBISA-IC-PC817-DIP4"
       }
     ],
-    "last_seen": "2026-09-12T06:08:53.258728+00:00",
+    "last_seen": "2026-09-12T10:26:14.033491+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-12T06:08:43.997624+00:00",
@@ -799,7 +799,7 @@
         "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
       }
     ],
-    "last_seen": "2026-09-12T06:08:53.258728+00:00",
+    "last_seen": "2026-09-12T10:26:14.033491+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-12T06:07:02.805153+00:00",
@@ -813,7 +813,7 @@
         "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-09-12T06:08:53.258728+00:00",
+    "last_seen": "2026-09-12T10:26:14.033491+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-12T06:07:16.268043+00:00",
@@ -831,7 +831,7 @@
         "sku": "ITBISA-IC-PC817-DIP4"
       }
     ],
-    "last_seen": "2026-09-12T06:08:53.258728+00:00",
+    "last_seen": "2026-09-12T10:26:14.033491+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-12T06:07:29.414164+00:00",
@@ -845,7 +845,7 @@
         "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
       }
     ],
-    "last_seen": "2026-09-12T06:08:53.258728+00:00",
+    "last_seen": "2026-09-12T10:26:14.033491+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-12T06:07:42.238474+00:00",
@@ -859,10 +859,24 @@
         "sku": "ITBISA-BUZZER-ACTIVE-5V"
       }
     ],
-    "last_seen": "2026-09-12T06:08:53.258728+00:00",
+    "last_seen": "2026-09-12T10:26:14.033491+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-12T06:07:55.370508+00:00",
     "tracking_number": "SPXID067233268759"
+  },
+  "260912T5RQUAS9": {
+    "first_seen": "2026-09-12T10:25:55.566899+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      }
+    ],
+    "last_seen": "2026-09-12T10:26:14.033491+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-12T10:26:26.993336+00:00",
+    "tracking_number": "SPXID067927969659"
   }
 }
