@@ -873,7 +873,7 @@
         "sku": "ITBISA-IC-PC817-DIP4"
       }
     ],
-    "last_seen": "2026-09-14T06:30:49.089355+00:00",
+    "last_seen": "2026-09-14T10:49:39.409021+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-12T10:26:26.993336+00:00",
@@ -929,8 +929,8 @@
         "sku": "ITBISA-IC-UA741CN-DIP8"
       }
     ],
-    "last_seen": "2026-09-14T06:30:49.089355+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-14T10:49:39.409021+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-14T06:31:06.462939+00:00",
     "tracking_number": "SPXID067160042969"
@@ -957,7 +957,7 @@
         "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
       }
     ],
-    "last_seen": "2026-09-14T06:30:49.089355+00:00",
+    "last_seen": "2026-09-14T10:49:39.409021+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-14T06:30:40.304001+00:00",
@@ -975,8 +975,8 @@
         "sku": "ITBISA-SOCKET-IC-DIP16-NARROW"
       }
     ],
-    "last_seen": "2026-09-14T06:30:49.089355+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-14T10:49:39.409021+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-14T06:31:30.000177+00:00",
     "tracking_number": "SPXID060910445209"
@@ -989,8 +989,8 @@
         "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
       }
     ],
-    "last_seen": "2026-09-14T06:30:49.089355+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-14T10:49:39.409021+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-14T06:31:42.450815+00:00",
     "tracking_number": "SPXID062145306949"
@@ -1011,8 +1011,8 @@
         "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
       }
     ],
-    "last_seen": "2026-09-14T06:30:49.089355+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-14T10:49:39.409021+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-14T06:31:54.993571+00:00",
     "tracking_number": "SPXID068760951639"
@@ -1025,8 +1025,8 @@
         "sku": "ITBISA-USB-A-TO-B-30CM"
       }
     ],
-    "last_seen": "2026-09-14T06:30:49.089355+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-14T10:49:39.409021+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-14T06:32:08.229031+00:00",
     "tracking_number": "SPXID060808008209"
@@ -1039,8 +1039,8 @@
         "sku": "ITBISA-IC-UA741CN-DIP8"
       }
     ],
-    "last_seen": "2026-09-14T06:30:49.089355+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-14T10:49:39.409021+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-14T06:32:21.372734+00:00",
     "tracking_number": "SPXID064765591029"
@@ -1053,8 +1053,8 @@
         "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
       }
     ],
-    "last_seen": "2026-09-14T06:30:49.089355+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-14T10:49:39.409021+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-14T06:32:33.813598+00:00",
     "tracking_number": "SPXID067562699039"
@@ -1067,10 +1067,38 @@
         "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-09-14T06:30:49.089355+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-14T10:49:39.409021+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-14T06:32:46.052931+00:00",
     "tracking_number": "SPXID064472923219"
+  },
+  "26091421XS4W2J": {
+    "first_seen": "2026-09-14T10:49:28.180159+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-BUZZER-ACTIVE-5V"
+      }
+    ],
+    "last_seen": "2026-09-14T10:49:39.409021+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-14T10:49:51.657700+00:00",
+    "tracking_number": "SPXID065688449699"
+  },
+  "26091424XM7GM6": {
+    "first_seen": "2026-09-14T10:49:28.180159+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-SOCKET-IC-DIP14-NARROW"
+      }
+    ],
+    "last_seen": "2026-09-14T10:49:39.409021+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-14T10:50:03.831175+00:00",
+    "tracking_number": "SPXID064459827579"
   }
 }
