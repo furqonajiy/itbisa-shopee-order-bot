@@ -1081,8 +1081,8 @@
         "sku": "ITBISA-BUZZER-ACTIVE-5V"
       }
     ],
-    "last_seen": "2026-09-14T10:49:39.409021+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-14T14:59:50.693440+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-14T10:49:51.657700+00:00",
     "tracking_number": "SPXID065688449699"
@@ -1095,10 +1095,68 @@
         "sku": "ITBISA-SOCKET-IC-DIP14-NARROW"
       }
     ],
-    "last_seen": "2026-09-14T10:49:39.409021+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-14T14:59:50.693440+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-14T10:50:03.831175+00:00",
     "tracking_number": "SPXID064459827579"
+  },
+  "2609142FJNKR9W": {
+    "first_seen": "2026-09-14T14:59:34.999039+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-7SEGMENT-CATHODE-RED-2.30-1BIT"
+      }
+    ],
+    "last_seen": "2026-09-14T14:59:50.693440+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-14T15:00:28.713325+00:00",
+    "tracking_number": "SPXID061058514419"
+  },
+  "2609142K91MC9U": {
+    "first_seen": "2026-09-14T14:59:34.999039+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-BUZZER-ACTIVE-5V"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-LED-SUPERBRIGHT-5MM-RED"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-10K-1/4W"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-220-1/4W"
+      }
+    ],
+    "last_seen": "2026-09-14T14:59:50.693440+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-14T15:00:41.764343+00:00",
+    "tracking_number": "SPXID063296683989"
+  },
+  "2609142N40Y486": {
+    "first_seen": "2026-09-14T14:59:34.999039+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-2K2-1/4W"
+      },
+      {
+        "qty": 10,
+        "sku": "ITBISA-RESISTOR-4K7-1/4W"
+      }
+    ],
+    "last_seen": "2026-09-14T14:59:50.693440+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-14T15:00:54.860791+00:00",
+    "tracking_number": "SPXID062661287449"
   }
 }
