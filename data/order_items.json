@@ -1081,7 +1081,7 @@
         "sku": "ITBISA-BUZZER-ACTIVE-5V"
       }
     ],
-    "last_seen": "2026-09-14T14:59:50.693440+00:00",
+    "last_seen": "2026-09-15T05:59:29.140780+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-14T10:49:51.657700+00:00",
@@ -1095,7 +1095,7 @@
         "sku": "ITBISA-SOCKET-IC-DIP14-NARROW"
       }
     ],
-    "last_seen": "2026-09-14T14:59:50.693440+00:00",
+    "last_seen": "2026-09-15T05:59:29.140780+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-14T10:50:03.831175+00:00",
@@ -1109,8 +1109,8 @@
         "sku": "ITBISA-7SEGMENT-CATHODE-RED-2.30-1BIT"
       }
     ],
-    "last_seen": "2026-09-14T14:59:50.693440+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-15T05:59:29.140780+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-14T15:00:28.713325+00:00",
     "tracking_number": "SPXID061058514419"
@@ -1135,8 +1135,8 @@
         "sku": "ITBISA-RESISTOR-220-1/4W"
       }
     ],
-    "last_seen": "2026-09-14T14:59:50.693440+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-15T05:59:29.140780+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-14T15:00:41.764343+00:00",
     "tracking_number": "SPXID063296683989"
@@ -1153,10 +1153,100 @@
         "sku": "ITBISA-RESISTOR-4K7-1/4W"
       }
     ],
-    "last_seen": "2026-09-14T14:59:50.693440+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-15T05:59:29.140780+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-14T15:00:54.860791+00:00",
     "tracking_number": "SPXID062661287449"
+  },
+  "2609153NB0BTYR": {
+    "first_seen": "2026-09-15T05:59:08.045028+00:00",
+    "items": [
+      {
+        "qty": 77,
+        "sku": "ITBISA-BUZZER-ACTIVE-5V"
+      },
+      {
+        "qty": 150,
+        "sku": "ITBISA-SOCKET-IC-DIP20-NARROW"
+      }
+    ],
+    "last_seen": "2026-09-15T05:59:29.140780+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-15T05:59:45.731120+00:00",
+    "tracking_number": "SPXID068814631369"
+  },
+  "26091541XWG31C": {
+    "first_seen": "2026-09-15T05:59:08.045028+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-10K-1/4W"
+      },
+      {
+        "qty": 10,
+        "sku": "ITBISA-RESISTOR-1K-1/4W"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-SOCKET-IC-DIP14-NARROW"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-SOCKET-IC-DIP16-NARROW"
+      },
+      {
+        "qty": 10,
+        "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
+      }
+    ],
+    "last_seen": "2026-09-15T05:59:29.140780+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-15T05:59:59.289825+00:00",
+    "tracking_number": "SPXID063099990609"
+  },
+  "26091543JFC8WP": {
+    "first_seen": "2026-09-15T05:59:08.045028+00:00",
+    "items": [
+      {
+        "qty": 3,
+        "sku": "ITBISA-7SEGMENT-ANODE-RED-2.30-1BIT"
+      }
+    ],
+    "last_seen": "2026-09-15T05:59:29.140780+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-15T06:00:13.141251+00:00",
+    "tracking_number": "SPXID063130480519"
+  },
+  "260915492GQAA2": {
+    "first_seen": "2026-09-15T05:59:08.045028+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-SOCKET-IC-DIP20-NARROW"
+      }
+    ],
+    "last_seen": "2026-09-15T05:59:29.140780+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-15T06:00:26.178238+00:00",
+    "tracking_number": "SPXID067836576589"
+  },
+  "2609154AT2BMHR": {
+    "first_seen": "2026-09-15T05:59:08.045028+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-7SEGMENT-ANODE-RED-2.30-1BIT"
+      }
+    ],
+    "last_seen": "2026-09-15T05:59:29.140780+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-15T06:00:39.016720+00:00",
+    "tracking_number": "SPXID069605180539"
   }
 }
