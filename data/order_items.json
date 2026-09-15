@@ -1095,7 +1095,7 @@
         "sku": "ITBISA-SOCKET-IC-DIP14-NARROW"
       }
     ],
-    "last_seen": "2026-09-15T08:41:30.592857+00:00",
+    "last_seen": "2026-09-15T14:53:12.972503+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-14T10:50:03.831175+00:00",
@@ -1229,7 +1229,7 @@
         "sku": "ITBISA-SOCKET-IC-DIP20-NARROW"
       }
     ],
-    "last_seen": "2026-09-15T08:41:30.592857+00:00",
+    "last_seen": "2026-09-15T14:53:12.972503+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-15T06:00:26.178238+00:00",
@@ -1243,7 +1243,7 @@
         "sku": "ITBISA-7SEGMENT-ANODE-RED-2.30-1BIT"
       }
     ],
-    "last_seen": "2026-09-15T08:41:30.592857+00:00",
+    "last_seen": "2026-09-15T14:53:12.972503+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-15T06:00:39.016720+00:00",
@@ -1257,8 +1257,8 @@
         "sku": "ITBISA-IC-UA741CN-DIP8"
       }
     ],
-    "last_seen": "2026-09-15T08:41:30.592857+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-15T14:53:12.972503+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-15T08:41:45.899674+00:00",
     "tracking_number": "SPXID064701445319"
@@ -1271,8 +1271,8 @@
         "sku": "ITBISA-RESISTOR-100K-1/4W"
       }
     ],
-    "last_seen": "2026-09-15T08:41:30.592857+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-15T14:53:12.972503+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-15T08:41:59.413111+00:00",
     "tracking_number": "SPXID063990259159"
@@ -1285,10 +1285,84 @@
         "sku": "ITBISA-BLUETOOTH-MODULE-HC05"
       }
     ],
-    "last_seen": "2026-09-15T08:41:30.592857+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-15T14:53:12.972503+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-15T08:42:12.910377+00:00",
     "tracking_number": "SPXID066185667709"
+  },
+  "2609154QBM3XEG": {
+    "first_seen": "2026-09-15T14:52:57.828603+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-KAPASITOR-ELCO-2200UF-25V"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-PIN-HEADER-MALE-1X40PIN-LURUS"
+      },
+      {
+        "qty": 10,
+        "sku": "ITBISA-RESISTOR-100K-1/4W"
+      },
+      {
+        "qty": 30,
+        "sku": "ITBISA-RESISTOR-10K-1/4W"
+      },
+      {
+        "qty": 50,
+        "sku": "ITBISA-RESISTOR-15K-1/4W"
+      },
+      {
+        "qty": 50,
+        "sku": "ITBISA-RESISTOR-2K2-1/4W"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-56K-1/4W"
+      },
+      {
+        "qty": 10,
+        "sku": "ITBISA-SOCKET-IC-DIP16-NARROW"
+      },
+      {
+        "qty": 10,
+        "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
+      }
+    ],
+    "last_seen": "2026-09-15T14:53:12.972503+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-15T14:53:27.431645+00:00",
+    "tracking_number": "SPXID060295293609"
+  },
+  "26091558EF3DVQ": {
+    "first_seen": "2026-09-15T14:52:57.828603+00:00",
+    "items": [
+      {
+        "qty": 13,
+        "sku": "ITBISA-IC-UA741CN-DIP8"
+      }
+    ],
+    "last_seen": "2026-09-15T14:53:12.972503+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-15T14:53:41.141689+00:00",
+    "tracking_number": "SPXID065584647019"
+  },
+  "26091559C6W35Y": {
+    "first_seen": "2026-09-15T14:52:57.828603+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-RESISTOR-1M-1/4W"
+      }
+    ],
+    "last_seen": "2026-09-15T14:53:12.972503+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-15T14:53:54.036752+00:00",
+    "tracking_number": "SPXID060080169729"
   }
 }
