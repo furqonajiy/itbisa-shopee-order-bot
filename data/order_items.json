@@ -1257,7 +1257,7 @@
         "sku": "ITBISA-IC-UA741CN-DIP8"
       }
     ],
-    "last_seen": "2026-09-15T14:57:48.135167+00:00",
+    "last_seen": "2026-09-16T08:36:19.834349+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-15T08:41:45.899674+00:00",
@@ -1271,7 +1271,7 @@
         "sku": "ITBISA-RESISTOR-100K-1/4W"
       }
     ],
-    "last_seen": "2026-09-15T14:57:48.135167+00:00",
+    "last_seen": "2026-09-16T08:36:19.834349+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-15T08:41:59.413111+00:00",
@@ -1285,7 +1285,7 @@
         "sku": "ITBISA-BLUETOOTH-MODULE-HC05"
       }
     ],
-    "last_seen": "2026-09-15T14:57:48.135167+00:00",
+    "last_seen": "2026-09-16T08:36:19.834349+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-15T08:42:12.910377+00:00",
@@ -1331,7 +1331,7 @@
         "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
       }
     ],
-    "last_seen": "2026-09-15T14:57:48.135167+00:00",
+    "last_seen": "2026-09-16T08:36:19.834349+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-15T14:53:27.431645+00:00",
@@ -1345,7 +1345,7 @@
         "sku": "ITBISA-IC-UA741CN-DIP8"
       }
     ],
-    "last_seen": "2026-09-15T14:57:48.135167+00:00",
+    "last_seen": "2026-09-16T08:36:19.834349+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-15T14:53:41.141689+00:00",
@@ -1359,10 +1359,52 @@
         "sku": "ITBISA-RESISTOR-1M-1/4W"
       }
     ],
-    "last_seen": "2026-09-15T14:57:48.135167+00:00",
+    "last_seen": "2026-09-16T08:36:19.834349+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-15T14:53:54.036752+00:00",
     "tracking_number": "SPXID060080169729"
+  },
+  "2609155AXA12A7": {
+    "first_seen": "2026-09-16T08:36:01.788168+00:00",
+    "items": [
+      {
+        "qty": 30,
+        "sku": "ITBISA-IC-74HC595N-DIP16"
+      }
+    ],
+    "last_seen": "2026-09-16T08:36:19.834349+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-16T08:36:34.794707+00:00",
+    "tracking_number": "SPXID068948875619"
+  },
+  "2609166NC1H3ES": {
+    "first_seen": "2026-09-16T08:36:01.788168+00:00",
+    "items": [
+      {
+        "qty": 50,
+        "sku": "ITBISA-IDC-2X5-AMPHENOL-FEMALE"
+      }
+    ],
+    "last_seen": "2026-09-16T08:36:19.834349+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-16T08:36:48.540045+00:00",
+    "tracking_number": "SPXID066168924019"
+  },
+  "2609166WTKW5F9": {
+    "first_seen": "2026-09-16T08:36:01.788168+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-USB-A-TO-B-30CM"
+      }
+    ],
+    "last_seen": "2026-09-16T08:36:19.834349+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-16T08:37:02.939489+00:00",
+    "tracking_number": "SPXID069960641189"
   }
 }
