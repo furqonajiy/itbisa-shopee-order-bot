@@ -1406,5 +1406,23 @@
     "pending_items": false,
     "shipped_at": "2026-09-16T08:37:02.939489+00:00",
     "tracking_number": "SPXID069960641189"
+  },
+  "260917926MRS5J": {
+    "first_seen": "2026-09-17T05:49:15.457521+00:00",
+    "items": [
+      {
+        "qty": 30,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-PIN-HEADER-MALE-1X40PIN-LURUS"
+      }
+    ],
+    "last_seen": "2026-09-17T05:49:25.734184+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-17T05:49:39.014015+00:00",
+    "tracking_number": "SPXID065174442019"
   }
 }
