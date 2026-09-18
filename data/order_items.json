@@ -1424,5 +1424,79 @@
     "pending_items": false,
     "shipped_at": "2026-09-17T05:49:39.014015+00:00",
     "tracking_number": "SPXID065174442019"
+  },
+  "260917A1PACRAR": {
+    "first_seen": "2026-09-18T05:15:52.120080+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
+      }
+    ],
+    "last_seen": "2026-09-18T05:16:04.798512+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-18T05:16:19.949580+00:00",
+    "tracking_number": "SPXID069461650309"
+  },
+  "260917AF852GC3": {
+    "first_seen": "2026-09-18T05:15:52.120080+00:00",
+    "items": [
+      {
+        "qty": 15,
+        "sku": "ITBISA-JACK-DC-005-FEMALE"
+      }
+    ],
+    "last_seen": "2026-09-18T05:16:04.798512+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-18T05:16:32.932389+00:00",
+    "tracking_number": "SPXID064411059929"
+  },
+  "260918AK1231YV": {
+    "first_seen": "2026-09-18T05:15:52.120080+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-09-18T05:16:04.798512+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-18T05:16:45.870339+00:00",
+    "tracking_number": "SPXID064494249939"
+  },
+  "260918BBEQYR12": {
+    "first_seen": "2026-09-18T05:15:52.120080+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-RESISTOR-39K-1/4W"
+      }
+    ],
+    "last_seen": "2026-09-18T05:16:04.798512+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-18T05:16:58.849951+00:00",
+    "tracking_number": "SPXID067884226389"
+  },
+  "260918BPHNA4S8": {
+    "first_seen": "2026-09-18T05:15:52.120080+00:00",
+    "items": [
+      {
+        "qty": 50,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      },
+      {
+        "qty": 50,
+        "sku": "ITBISA-RESISTOR-1K-1/4W"
+      }
+    ],
+    "last_seen": "2026-09-18T05:16:04.798512+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-18T05:17:11.364344+00:00",
+    "tracking_number": "SPXID062407617839"
   }
 }
