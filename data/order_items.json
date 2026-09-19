@@ -1507,8 +1507,8 @@
         "sku": "ITBISA-7SEGMENT-ANODE-RED-1.00-1BIT"
       }
     ],
-    "last_seen": "2026-09-19T16:09:43.358864+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-19T17:02:38.099104+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-19T16:09:55.768600+00:00",
     "tracking_number": "SPXID061307375649"
@@ -1521,8 +1521,8 @@
         "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-09-19T16:09:43.358864+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-19T17:02:38.099104+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-19T16:10:08.554514+00:00",
     "tracking_number": "SPXID066547968759"
