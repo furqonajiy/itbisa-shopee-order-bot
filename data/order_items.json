@@ -1507,7 +1507,7 @@
         "sku": "ITBISA-7SEGMENT-ANODE-RED-1.00-1BIT"
       }
     ],
-    "last_seen": "2026-09-20T06:00:24.377090+00:00",
+    "last_seen": "2026-09-20T09:02:12.706941+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-19T16:09:55.768600+00:00",
@@ -1521,7 +1521,7 @@
         "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-09-20T06:00:24.377090+00:00",
+    "last_seen": "2026-09-20T09:02:12.706941+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-19T16:10:08.554514+00:00",
@@ -1535,8 +1535,8 @@
         "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
       }
     ],
-    "last_seen": "2026-09-20T06:00:24.377090+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-20T09:02:12.706941+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-20T06:00:36.798496+00:00",
     "tracking_number": "SPXID064553127249"
@@ -1549,8 +1549,8 @@
         "sku": "ITBISA-USB-A-TO-B-30CM"
       }
     ],
-    "last_seen": "2026-09-20T06:00:24.377090+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-20T09:02:12.706941+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-20T06:00:50.933885+00:00",
     "tracking_number": "SPXID061832725879"
