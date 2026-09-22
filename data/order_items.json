@@ -1675,7 +1675,7 @@
         "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-09-21T13:12:12.752687+00:00",
+    "last_seen": "2026-09-22T05:53:27.208305+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-21T12:39:00.872144+00:00",
@@ -1689,7 +1689,7 @@
         "sku": "ITBISA-IC-PC817-DIP4"
       }
     ],
-    "last_seen": "2026-09-21T13:12:12.752687+00:00",
+    "last_seen": "2026-09-22T05:53:27.208305+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-21T12:39:14.221762+00:00",
@@ -1703,8 +1703,8 @@
         "sku": "ITBISA-SOCKET-IC-DIP14-NARROW"
       }
     ],
-    "last_seen": "2026-09-21T13:12:12.752687+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-22T05:53:27.208305+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-21T13:12:26.103160+00:00",
     "tracking_number": "SPXID061061697259"
@@ -1722,5 +1722,33 @@
     "pending_items": false,
     "shipped_at": "2026-09-21T13:12:42.104273+00:00",
     "tracking_number": "SPXID066850596619"
+  },
+  "260922MMHCM85J": {
+    "first_seen": "2026-09-22T05:53:17.692478+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-IC-JRC4558D-DIP8"
+      }
+    ],
+    "last_seen": "2026-09-22T05:53:27.208305+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-22T05:53:39.372791+00:00",
+    "tracking_number": "SPXID064282850539"
+  },
+  "260922NE8ACJXF": {
+    "first_seen": "2026-09-22T05:53:17.692478+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-LED-SUPERBRIGHT-5MM-WHITE"
+      }
+    ],
+    "last_seen": "2026-09-22T05:53:27.208305+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-22T05:53:52.143198+00:00",
+    "tracking_number": "SPXID064722848619"
   }
 }
