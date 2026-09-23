@@ -1750,5 +1750,121 @@
     "pending_items": false,
     "shipped_at": "2026-09-22T05:53:52.143198+00:00",
     "tracking_number": "SPXID064722848619"
+  },
+  "260922P3Q3TYH8": {
+    "first_seen": "2026-09-23T06:25:23.864448+00:00",
+    "items": [
+      {
+        "qty": 15,
+        "sku": "ITBISA-JACK-DC-005-FEMALE"
+      },
+      {
+        "qty": 8,
+        "sku": "ITBISA-RELAY-5V-5PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-09-23T06:25:46.798586+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-23T06:26:06.988026+00:00",
+    "tracking_number": "SPXID064382917769"
+  },
+  "260922PKWPR2RM": {
+    "first_seen": "2026-09-23T06:25:23.864448+00:00",
+    "items": [
+      {
+        "qty": 50,
+        "sku": "ITBISA-JACK-DC-005-FEMALE"
+      }
+    ],
+    "last_seen": "2026-09-23T06:25:46.798586+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-23T06:26:19.852961+00:00",
+    "tracking_number": "SPXID067620455179"
+  },
+  "260923Q4XA586J": {
+    "first_seen": "2026-09-23T06:25:23.864448+00:00",
+    "items": [
+      {
+        "qty": 6,
+        "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
+      }
+    ],
+    "last_seen": "2026-09-23T06:25:46.798586+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-23T06:26:32.139184+00:00",
+    "tracking_number": "SPXID060238531099"
+  },
+  "260923Q9435HAW": {
+    "first_seen": "2026-09-23T06:25:23.864448+00:00",
+    "items": [
+      {
+        "qty": 7,
+        "sku": "ITBISA-IC-CD4094BM-SMD-SOP16"
+      }
+    ],
+    "last_seen": "2026-09-23T06:25:46.798586+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-23T06:26:44.973233+00:00",
+    "tracking_number": "SPXID064256165369"
+  },
+  "260923R87GVSVC": {
+    "first_seen": "2026-09-23T06:25:23.864448+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-BLUETOOTH-MODULE-HC05"
+      }
+    ],
+    "last_seen": "2026-09-23T06:25:46.798586+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-23T06:26:57.339546+00:00",
+    "tracking_number": "SPXID065106742529"
+  },
+  "260923RCH24N20": {
+    "first_seen": "2026-09-23T06:25:23.864448+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "40PCS-ITBISA-JUMPER-MM-10CM"
+      }
+    ],
+    "last_seen": "2026-09-23T06:25:46.798586+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-23T06:27:09.921828+00:00",
+    "tracking_number": "SPXID064216290299"
+  },
+  "260923REPNVMVQ": {
+    "first_seen": "2026-09-23T06:25:23.864448+00:00",
+    "items": [
+      {
+        "qty": 25,
+        "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
+      }
+    ],
+    "last_seen": "2026-09-23T06:25:46.798586+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-23T06:27:22.156139+00:00",
+    "tracking_number": "SPXID069648392669"
+  },
+  "260923RFT7KJQE": {
+    "first_seen": "2026-09-23T06:25:23.864448+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "40PCS-ITBISA-JUMPER-MM-10CM"
+      }
+    ],
+    "last_seen": "2026-09-23T06:25:46.798586+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-23T06:27:34.691620+00:00",
+    "tracking_number": "SPXID062577793999"
   }
 }
