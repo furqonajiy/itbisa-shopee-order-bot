@@ -1763,8 +1763,8 @@
         "sku": "ITBISA-RELAY-5V-5PIN-BLUE"
       }
     ],
-    "last_seen": "2026-09-23T06:25:46.798586+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-23T12:04:41.145874+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-23T06:26:06.988026+00:00",
     "tracking_number": "SPXID064382917769"
@@ -1777,8 +1777,8 @@
         "sku": "ITBISA-JACK-DC-005-FEMALE"
       }
     ],
-    "last_seen": "2026-09-23T06:25:46.798586+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-23T12:04:41.145874+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-23T06:26:19.852961+00:00",
     "tracking_number": "SPXID067620455179"
@@ -1791,8 +1791,8 @@
         "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
       }
     ],
-    "last_seen": "2026-09-23T06:25:46.798586+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-23T12:04:41.145874+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-23T06:26:32.139184+00:00",
     "tracking_number": "SPXID060238531099"
@@ -1805,8 +1805,8 @@
         "sku": "ITBISA-IC-CD4094BM-SMD-SOP16"
       }
     ],
-    "last_seen": "2026-09-23T06:25:46.798586+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-23T12:04:41.145874+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-23T06:26:44.973233+00:00",
     "tracking_number": "SPXID064256165369"
@@ -1819,8 +1819,8 @@
         "sku": "ITBISA-BLUETOOTH-MODULE-HC05"
       }
     ],
-    "last_seen": "2026-09-23T06:25:46.798586+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-23T12:04:41.145874+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-23T06:26:57.339546+00:00",
     "tracking_number": "SPXID065106742529"
@@ -1833,8 +1833,8 @@
         "sku": "40PCS-ITBISA-JUMPER-MM-10CM"
       }
     ],
-    "last_seen": "2026-09-23T06:25:46.798586+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-23T12:04:41.145874+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-23T06:27:09.921828+00:00",
     "tracking_number": "SPXID064216290299"
@@ -1847,8 +1847,8 @@
         "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
       }
     ],
-    "last_seen": "2026-09-23T06:25:46.798586+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-23T12:04:41.145874+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-23T06:27:22.156139+00:00",
     "tracking_number": "SPXID069648392669"
@@ -1861,10 +1861,52 @@
         "sku": "40PCS-ITBISA-JUMPER-MM-10CM"
       }
     ],
-    "last_seen": "2026-09-23T06:25:46.798586+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-23T12:04:41.145874+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-23T06:27:34.691620+00:00",
     "tracking_number": "SPXID062577793999"
+  },
+  "260923RNE06RJ8": {
+    "first_seen": "2026-09-23T12:04:29.890048+00:00",
+    "items": [
+      {
+        "qty": 15,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      }
+    ],
+    "last_seen": "2026-09-23T12:04:41.145874+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-23T12:04:54.471242+00:00",
+    "tracking_number": "SPXID069993924039"
+  },
+  "260923RSNU0EFK": {
+    "first_seen": "2026-09-23T12:04:29.890048+00:00",
+    "items": [
+      {
+        "qty": 4,
+        "sku": "ITBISA-IC-74HC245N-DIP20"
+      }
+    ],
+    "last_seen": "2026-09-23T12:04:41.145874+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-23T12:05:07.401232+00:00",
+    "tracking_number": "SPXID064674752429"
+  },
+  "260923S4JH07C0": {
+    "first_seen": "2026-09-23T12:04:29.890048+00:00",
+    "items": [
+      {
+        "qty": 50,
+        "sku": "ITBISA-JACK-DC-005-FEMALE"
+      }
+    ],
+    "last_seen": "2026-09-23T12:04:41.145874+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-23T12:05:19.746825+00:00",
+    "tracking_number": "SPXID060407086929"
   }
 }
