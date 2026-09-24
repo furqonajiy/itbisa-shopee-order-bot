@@ -1908,5 +1908,79 @@
     "pending_items": false,
     "shipped_at": "2026-09-23T12:05:19.746825+00:00",
     "tracking_number": "SPXID060407086929"
+  },
+  "260924T863KDB5": {
+    "first_seen": "2026-09-24T10:39:07.447468+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-IC-ULN2003AN-DIP16"
+      }
+    ],
+    "last_seen": "2026-09-24T10:39:21.146893+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-24T10:39:37.588118+00:00",
+    "tracking_number": "SPXID067943209169"
+  },
+  "260924U0PUQTA0": {
+    "first_seen": "2026-09-24T10:39:07.447468+00:00",
+    "items": [
+      {
+        "qty": 50,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-JACK-DC-005-FEMALE"
+      }
+    ],
+    "last_seen": "2026-09-24T10:39:21.146893+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-24T10:39:52.315834+00:00",
+    "tracking_number": "SPXID066826118729"
+  },
+  "260924U4AGYQ1Y": {
+    "first_seen": "2026-09-24T10:39:07.447468+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-PIN-HEADER-MALE-1X40PIN-LURUS"
+      }
+    ],
+    "last_seen": "2026-09-24T10:39:21.146893+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-24T10:40:05.770469+00:00",
+    "tracking_number": "SPXID067608315689"
+  },
+  "260924U7GM7B57": {
+    "first_seen": "2026-09-24T10:39:07.447468+00:00",
+    "items": [
+      {
+        "qty": 30,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      }
+    ],
+    "last_seen": "2026-09-24T10:39:21.146893+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-24T10:40:18.821167+00:00",
+    "tracking_number": "SPXID064182430319"
+  },
+  "260924UCVBBJJD": {
+    "first_seen": "2026-09-24T10:39:07.447468+00:00",
+    "items": [
+      {
+        "qty": 6,
+        "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
+      }
+    ],
+    "last_seen": "2026-09-24T10:39:21.146893+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-24T10:40:31.544946+00:00",
+    "tracking_number": "SPXID060368529869"
   }
 }
