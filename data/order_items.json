@@ -2115,9 +2115,11 @@
         "sku": "ITBISA-RELAY-5V-5PIN-BLUE"
       }
     ],
-    "last_seen": "2026-09-26T03:42:03.686791+00:00",
-    "order_status": "READY_TO_SHIP",
-    "pending_items": false
+    "last_seen": "2026-09-26T06:02:54.938697+00:00",
+    "order_status": "PROCESSED",
+    "pending_items": false,
+    "shipped_at": "2026-09-26T06:02:47.274175+00:00",
+    "tracking_number": "SPXID069967477169"
   },
   "2609262MW6HWEW": {
     "first_seen": "2026-09-26T03:41:54.250619+00:00",
@@ -2135,10 +2137,24 @@
         "sku": "ITBISA-RESISTOR-1K-1/4W"
       }
     ],
-    "last_seen": "2026-09-26T03:42:03.686791+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-26T06:02:54.938697+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-26T03:42:19.829878+00:00",
     "tracking_number": "SPXID061454910899"
+  },
+  "2609262TJX0HWQ": {
+    "first_seen": "2026-09-26T06:02:45.680265+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
+      }
+    ],
+    "last_seen": "2026-09-26T06:02:54.938697+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-26T06:03:18.615670+00:00",
+    "tracking_number": "SPXID066773024679"
   }
 }
