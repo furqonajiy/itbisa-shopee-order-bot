@@ -2102,5 +2102,43 @@
     "pending_items": false,
     "shipped_at": "2026-09-25T09:27:03.354355+00:00",
     "tracking_number": "SPXID062234238809"
+  },
+  "2609261W9YF1RE": {
+    "first_seen": "2026-09-26T03:41:54.250619+00:00",
+    "items": [
+      {
+        "qty": 9,
+        "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
+      },
+      {
+        "qty": 9,
+        "sku": "ITBISA-RELAY-5V-5PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-09-26T03:42:03.686791+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false
+  },
+  "2609262MW6HWEW": {
+    "first_seen": "2026-09-26T03:41:54.250619+00:00",
+    "items": [
+      {
+        "qty": 15,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      },
+      {
+        "qty": 6,
+        "sku": "ITBISA-RELAY-5V-5PIN-BLUE"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-1K-1/4W"
+      }
+    ],
+    "last_seen": "2026-09-26T03:42:03.686791+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-26T03:42:19.829878+00:00",
+    "tracking_number": "SPXID061454910899"
   }
 }
