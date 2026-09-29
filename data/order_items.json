@@ -2207,8 +2207,8 @@
         "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
       }
     ],
-    "last_seen": "2026-09-28T08:45:48.250619+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-29T05:38:14.715396+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-28T08:46:49.204747+00:00",
     "tracking_number": "SPXID060488960419"
@@ -2350,5 +2350,61 @@
     "pending_items": false,
     "shipped_at": "2026-09-28T08:48:44.548291+00:00",
     "tracking_number": "SPXID068566235799"
+  },
+  "2609288BUEHEWY": {
+    "first_seen": "2026-09-29T05:38:00.690733+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-09-29T05:38:14.715396+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-29T05:38:30.261830+00:00",
+    "tracking_number": "SPXID067827334269"
+  },
+  "2609299TBN53DF": {
+    "first_seen": "2026-09-29T05:38:00.690733+00:00",
+    "items": [
+      {
+        "qty": 200,
+        "sku": "ITBISA-NPN-BC547-TO92"
+      }
+    ],
+    "last_seen": "2026-09-29T05:38:14.715396+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-29T05:38:43.808236+00:00",
+    "tracking_number": "SPXID067471448039"
+  },
+  "260929A9DWJK7X": {
+    "first_seen": "2026-09-29T05:38:00.690733+00:00",
+    "items": [
+      {
+        "qty": 1000,
+        "sku": "ITBISA-IC-CD4017BE-DIP16"
+      }
+    ],
+    "last_seen": "2026-09-29T05:38:14.715396+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-29T05:38:57.477985+00:00",
+    "tracking_number": "CM94366063491"
+  },
+  "260929AEHYHBKW": {
+    "first_seen": "2026-09-29T05:38:00.690733+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "40PCS-ITBISA-JUMPER-FF-10CM"
+      }
+    ],
+    "last_seen": "2026-09-29T05:38:14.715396+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-29T05:39:10.552813+00:00",
+    "tracking_number": "CM48368752080"
   }
 }
