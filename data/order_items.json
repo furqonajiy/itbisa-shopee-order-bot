@@ -2406,5 +2406,89 @@
     "pending_items": false,
     "shipped_at": "2026-09-29T05:39:10.552813+00:00",
     "tracking_number": "CM48368752080"
+  },
+  "260929AU43FGS5": {
+    "first_seen": "2026-09-30T05:57:51.536803+00:00",
+    "items": [
+      {
+        "qty": 8,
+        "sku": "ITBISA-IC-74HC595N-DIP16"
+      }
+    ],
+    "last_seen": "2026-09-30T05:58:07.891207+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-30T05:58:30.949798+00:00",
+    "tracking_number": "SPXID067362808819"
+  },
+  "260929B8MM5GX5": {
+    "first_seen": "2026-09-30T05:57:51.536803+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-PIN-HEADER-MALE-1X40PIN-LURUS"
+      }
+    ],
+    "last_seen": "2026-09-30T05:58:07.891207+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-30T05:58:51.359644+00:00",
+    "tracking_number": "SPXID061639426759"
+  },
+  "260930CJT1JG07": {
+    "first_seen": "2026-09-30T05:57:51.536803+00:00",
+    "items": [
+      {
+        "qty": 50,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
+      }
+    ],
+    "last_seen": "2026-09-30T05:58:07.891207+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-30T05:59:06.815778+00:00",
+    "tracking_number": "SPXID068373776399"
+  },
+  "260930CKDP008V": {
+    "first_seen": "2026-09-30T05:57:51.536803+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-09-30T05:58:07.891207+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false
+  },
+  "260930CW96KHSK": {
+    "first_seen": "2026-09-30T05:57:51.536803+00:00",
+    "items": [
+      {
+        "qty": 30,
+        "sku": "ITBISA-7SEGMENT-ANODE-RED-1.00-1BIT"
+      },
+      {
+        "qty": 10,
+        "sku": "ITBISA-DIODA-1N4007-DO41"
+      },
+      {
+        "qty": 4,
+        "sku": "ITBISA-IC-74HC245N-DIP20"
+      },
+      {
+        "qty": 40,
+        "sku": "ITBISA-IC-CD4094BM-SMD-SOP16"
+      }
+    ],
+    "last_seen": "2026-09-30T05:58:07.891207+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-30T06:00:28.078677+00:00",
+    "tracking_number": "SPXID067839895359"
   }
 }
