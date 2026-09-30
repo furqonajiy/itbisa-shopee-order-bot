@@ -2461,8 +2461,8 @@
         "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-09-30T06:15:12.219476+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-30T22:52:30.307818+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-30T06:15:28.269457+00:00",
     "tracking_number": "SPXID062045775459"
@@ -2492,5 +2492,89 @@
     "pending_items": false,
     "shipped_at": "2026-09-30T06:00:28.078677+00:00",
     "tracking_number": "SPXID067839895359"
+  },
+  "260930D61C1BW2": {
+    "first_seen": "2026-09-30T22:52:18.135335+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-IC-74HC245N-DIP20"
+      }
+    ],
+    "last_seen": "2026-09-30T22:52:30.307818+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-30T22:52:45.612550+00:00",
+    "tracking_number": "SPXID06087720165A"
+  },
+  "260930D7HQU12J": {
+    "first_seen": "2026-09-30T22:52:18.135335+00:00",
+    "items": [
+      {
+        "qty": 100,
+        "sku": "ITBISA-SOCKET-IC-DIP28-NARROW"
+      }
+    ],
+    "last_seen": "2026-09-30T22:52:30.307818+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-30T22:52:58.245739+00:00",
+    "tracking_number": "SPXID06664603609A"
+  },
+  "260930D8104BJ7": {
+    "first_seen": "2026-09-30T22:52:18.135335+00:00",
+    "items": [
+      {
+        "qty": 8,
+        "sku": "ITBISA-IC-74HC595N-DIP16"
+      }
+    ],
+    "last_seen": "2026-09-30T22:52:30.307818+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-30T22:53:10.958781+00:00",
+    "tracking_number": "SPXID06363530333A"
+  },
+  "260930DGHJDBN5": {
+    "first_seen": "2026-09-30T22:52:18.135335+00:00",
+    "items": [
+      {
+        "qty": 50,
+        "sku": "ITBISA-RELAY-5V-5PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-09-30T22:52:30.307818+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-30T22:53:23.169493+00:00",
+    "tracking_number": "SPXID06685727480A"
+  },
+  "260930DYE7G9JT": {
+    "first_seen": "2026-09-30T22:52:18.135335+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-USB-A-TO-B-30CM"
+      }
+    ],
+    "last_seen": "2026-09-30T22:52:30.307818+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-30T22:53:35.699640+00:00",
+    "tracking_number": "SPXID06068024897A"
+  },
+  "261001EHB22X49": {
+    "first_seen": "2026-09-30T22:52:18.135335+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
+      }
+    ],
+    "last_seen": "2026-09-30T22:52:30.307818+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-09-30T22:53:48.217593+00:00",
+    "tracking_number": "SPXID06556332040A"
   }
 }
