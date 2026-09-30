@@ -2415,8 +2415,8 @@
         "sku": "ITBISA-IC-74HC595N-DIP16"
       }
     ],
-    "last_seen": "2026-09-30T05:58:07.891207+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-30T06:15:12.219476+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-30T05:58:30.949798+00:00",
     "tracking_number": "SPXID067362808819"
@@ -2429,8 +2429,8 @@
         "sku": "ITBISA-PIN-HEADER-MALE-1X40PIN-LURUS"
       }
     ],
-    "last_seen": "2026-09-30T05:58:07.891207+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-30T06:15:12.219476+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-30T05:58:51.359644+00:00",
     "tracking_number": "SPXID061639426759"
@@ -2447,8 +2447,8 @@
         "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
       }
     ],
-    "last_seen": "2026-09-30T05:58:07.891207+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-30T06:15:12.219476+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-30T05:59:06.815778+00:00",
     "tracking_number": "SPXID068373776399"
@@ -2461,9 +2461,11 @@
         "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-09-30T05:58:07.891207+00:00",
+    "last_seen": "2026-09-30T06:15:12.219476+00:00",
     "order_status": "READY_TO_SHIP",
-    "pending_items": false
+    "pending_items": false,
+    "shipped_at": "2026-09-30T06:15:28.269457+00:00",
+    "tracking_number": "SPXID062045775459"
   },
   "260930CW96KHSK": {
     "first_seen": "2026-09-30T05:57:51.536803+00:00",
@@ -2485,8 +2487,8 @@
         "sku": "ITBISA-IC-CD4094BM-SMD-SOP16"
       }
     ],
-    "last_seen": "2026-09-30T05:58:07.891207+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-09-30T06:15:12.219476+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-09-30T06:00:28.078677+00:00",
     "tracking_number": "SPXID067839895359"
