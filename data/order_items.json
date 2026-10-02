@@ -2585,7 +2585,7 @@
         "sku": "ITBISA-IDC-2X5-AMPHENOL-FEMALE"
       }
     ],
-    "last_seen": "2026-10-02T06:35:02.911494+00:00",
+    "last_seen": "2026-10-02T06:42:15.916914+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-01T11:00:22.081897+00:00",
@@ -2599,7 +2599,7 @@
         "sku": "ITBISA-JACK-DC-005-FEMALE"
       }
     ],
-    "last_seen": "2026-10-02T06:35:02.911494+00:00",
+    "last_seen": "2026-10-02T06:42:15.916914+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-01T11:00:35.491070+00:00",
@@ -2617,7 +2617,7 @@
         "sku": "ITBISA-RESISTOR-1K-1/4W"
       }
     ],
-    "last_seen": "2026-10-02T06:35:02.911494+00:00",
+    "last_seen": "2026-10-02T06:42:15.916914+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-01T11:00:48.665127+00:00",
@@ -2631,7 +2631,7 @@
         "sku": "40PCS-ITBISA-JUMPER-FF-10CM"
       }
     ],
-    "last_seen": "2026-10-02T06:35:02.911494+00:00",
+    "last_seen": "2026-10-02T06:42:15.916914+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-01T11:01:01.795383+00:00",
@@ -2645,7 +2645,7 @@
         "sku": "ITBISA-RESISTOR-1K-1/4W"
       }
     ],
-    "last_seen": "2026-10-02T06:35:02.911494+00:00",
+    "last_seen": "2026-10-02T06:42:15.916914+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-01T12:14:13.788437+00:00",
@@ -2659,8 +2659,8 @@
         "sku": "ITBISA-JACK-DC-005-FEMALE"
       }
     ],
-    "last_seen": "2026-10-02T06:35:02.911494+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-02T06:42:15.916914+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-02T06:35:16.501155+00:00",
     "tracking_number": "SPXID06884914082A"
@@ -2673,8 +2673,8 @@
         "sku": "ITBISA-USB-A-TO-B-30CM"
       }
     ],
-    "last_seen": "2026-10-02T06:35:02.911494+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-02T06:42:15.916914+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-02T06:35:29.490340+00:00",
     "tracking_number": "CM49862672995"
@@ -2687,8 +2687,8 @@
         "sku": "ITBISA-USB-A-TO-B-30CM"
       }
     ],
-    "last_seen": "2026-10-02T06:35:02.911494+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-02T06:42:15.916914+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-02T06:35:42.419639+00:00",
     "tracking_number": "SPXID06432158700A"
