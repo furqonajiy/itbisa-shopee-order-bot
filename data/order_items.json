@@ -2701,8 +2701,8 @@
         "sku": "ITBISA-RESISTOR-120K-1/4W"
       }
     ],
-    "last_seen": "2026-10-03T05:58:45.412945+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-03T12:38:34.132087+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-03T05:58:58.595697+00:00",
     "tracking_number": "SPXID06659111502A"
@@ -2720,5 +2720,47 @@
     "pending_items": false,
     "shipped_at": "2026-10-03T05:59:11.282442+00:00",
     "tracking_number": "SPXID06648543810A"
+  },
+  "261003MR1K59W9": {
+    "first_seen": "2026-10-03T12:38:24.240112+00:00",
+    "items": [
+      {
+        "qty": 40,
+        "sku": "ITBISA-ARDUINO-UNO-R3-328P-SMD"
+      }
+    ],
+    "last_seen": "2026-10-03T12:38:34.132087+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-03T12:38:47.230228+00:00",
+    "tracking_number": "SPXID06914463653A"
+  },
+  "261003N12HYTNJ": {
+    "first_seen": "2026-10-03T12:38:24.240112+00:00",
+    "items": [
+      {
+        "qty": 8,
+        "sku": "ITBISA-IC-74HC595N-DIP16"
+      }
+    ],
+    "last_seen": "2026-10-03T12:38:34.132087+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-03T12:38:59.871499+00:00",
+    "tracking_number": "SPXID06189410233A"
+  },
+  "261003N5Y6H5XE": {
+    "first_seen": "2026-10-03T12:38:24.240112+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
+      }
+    ],
+    "last_seen": "2026-10-03T12:38:34.132087+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-03T12:39:12.610293+00:00",
+    "tracking_number": "SPXID06433066908A"
   }
 }
