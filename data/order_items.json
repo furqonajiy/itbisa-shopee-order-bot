@@ -2692,5 +2692,33 @@
     "pending_items": false,
     "shipped_at": "2026-10-02T06:35:42.419639+00:00",
     "tracking_number": "SPXID06432158700A"
+  },
+  "261002JSM60SR4": {
+    "first_seen": "2026-10-03T05:58:27.453232+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-120K-1/4W"
+      }
+    ],
+    "last_seen": "2026-10-03T05:58:45.412945+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-03T05:58:58.595697+00:00",
+    "tracking_number": "SPXID06659111502A"
+  },
+  "261003M24G0D77": {
+    "first_seen": "2026-10-03T05:58:27.453232+00:00",
+    "items": [
+      {
+        "qty": 8,
+        "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
+      }
+    ],
+    "last_seen": "2026-10-03T05:58:45.412945+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-03T05:59:11.282442+00:00",
+    "tracking_number": "SPXID06648543810A"
   }
 }
