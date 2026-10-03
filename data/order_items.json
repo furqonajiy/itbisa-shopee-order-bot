@@ -2729,7 +2729,7 @@
         "sku": "ITBISA-ARDUINO-UNO-R3-328P-SMD"
       }
     ],
-    "last_seen": "2026-10-03T12:39:34.081714+00:00",
+    "last_seen": "2026-10-03T21:04:54.182851+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-03T12:38:47.230228+00:00",
@@ -2743,7 +2743,7 @@
         "sku": "ITBISA-IC-74HC595N-DIP16"
       }
     ],
-    "last_seen": "2026-10-03T12:39:34.081714+00:00",
+    "last_seen": "2026-10-03T21:04:54.182851+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-03T12:38:59.871499+00:00",
@@ -2757,10 +2757,56 @@
         "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
       }
     ],
-    "last_seen": "2026-10-03T12:39:34.081714+00:00",
+    "last_seen": "2026-10-03T21:04:54.182851+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-03T12:39:12.610293+00:00",
     "tracking_number": "SPXID06433066908A"
+  },
+  "261003N9CT4MEV": {
+    "first_seen": "2026-10-03T21:04:41.261331+00:00",
+    "items": [
+      {
+        "qty": 8,
+        "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
+      }
+    ],
+    "last_seen": "2026-10-03T21:04:54.182851+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-03T21:05:08.512859+00:00",
+    "tracking_number": "SPXID06211777500A"
+  },
+  "261003NA1VCQ10": {
+    "first_seen": "2026-10-03T21:04:41.261331+00:00",
+    "items": [
+      {
+        "qty": 200,
+        "sku": "ITBISA-RESISTOR-1K-1/4W"
+      }
+    ],
+    "last_seen": "2026-10-03T21:04:54.182851+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-03T21:05:22.218054+00:00",
+    "tracking_number": "SPXID06314350326A"
+  },
+  "261004NPW19DTU": {
+    "first_seen": "2026-10-03T21:04:41.261331+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-IC-74HC595N-DIP16"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-IC-ULN2003AN-DIP16"
+      }
+    ],
+    "last_seen": "2026-10-03T21:04:54.182851+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-03T21:05:35.400877+00:00",
+    "tracking_number": "SPXID06240172266A"
   }
 }
