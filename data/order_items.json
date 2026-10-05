@@ -2873,8 +2873,8 @@
         "sku": "ITBISA-7SEGMENT-ANODE-RED-1.00-1BIT"
       }
     ],
-    "last_seen": "2026-10-05T06:54:03.159529+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-05T07:51:19.254971+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-05T06:54:19.324505+00:00",
     "tracking_number": "SPXID06473843740A"
@@ -2887,8 +2887,8 @@
         "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
       }
     ],
-    "last_seen": "2026-10-05T06:54:03.159529+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-05T07:51:19.254971+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-05T06:54:32.883561+00:00",
     "tracking_number": "SPXID06087426377A"
@@ -2901,8 +2901,8 @@
         "sku": "ITBISA-IC-74HC245N-DIP20"
       }
     ],
-    "last_seen": "2026-10-05T06:54:03.159529+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-05T07:51:19.254971+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-05T06:54:46.141330+00:00",
     "tracking_number": "SPXID06179656613A"
@@ -2915,8 +2915,8 @@
         "sku": "ITBISA-IC-PC817-DIP4"
       }
     ],
-    "last_seen": "2026-10-05T06:54:03.159529+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-05T07:51:19.254971+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-05T06:54:59.175839+00:00",
     "tracking_number": "SPXID06267108349A"
@@ -2929,10 +2929,28 @@
         "sku": "40PCS-ITBISA-JUMPER-FF-10CM"
       }
     ],
-    "last_seen": "2026-10-05T06:54:03.159529+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-05T07:51:19.254971+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-05T06:55:12.123829+00:00",
     "tracking_number": "CM70763794527"
+  },
+  "261005SMPB6EWK": {
+    "first_seen": "2026-10-05T07:51:10.123405+00:00",
+    "items": [
+      {
+        "qty": 100,
+        "sku": "ITBISA-IDC-2X5-AMPHENOL-FEMALE"
+      },
+      {
+        "qty": 200,
+        "sku": "ITBISA-SOCKET-IC-DIP16-NARROW"
+      }
+    ],
+    "last_seen": "2026-10-05T07:51:19.254971+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-05T07:51:31.666156+00:00",
+    "tracking_number": "SPXID06933883181A"
   }
 }
