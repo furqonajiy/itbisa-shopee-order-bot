@@ -2864,5 +2864,75 @@
     "pending_items": false,
     "shipped_at": "2026-10-04T09:29:28.193253+00:00",
     "tracking_number": "SPXID06322821068A"
+  },
+  "261004QS4T8ACR": {
+    "first_seen": "2026-10-05T06:53:46.569478+00:00",
+    "items": [
+      {
+        "qty": 8,
+        "sku": "ITBISA-7SEGMENT-ANODE-RED-1.00-1BIT"
+      }
+    ],
+    "last_seen": "2026-10-05T06:54:03.159529+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-05T06:54:19.324505+00:00",
+    "tracking_number": "SPXID06473843740A"
+  },
+  "261004R3KHUYH8": {
+    "first_seen": "2026-10-05T06:53:46.569478+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
+      }
+    ],
+    "last_seen": "2026-10-05T06:54:03.159529+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-05T06:54:32.883561+00:00",
+    "tracking_number": "SPXID06087426377A"
+  },
+  "261005S2RKYKC2": {
+    "first_seen": "2026-10-05T06:53:46.569478+00:00",
+    "items": [
+      {
+        "qty": 17,
+        "sku": "ITBISA-IC-74HC245N-DIP20"
+      }
+    ],
+    "last_seen": "2026-10-05T06:54:03.159529+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-05T06:54:46.141330+00:00",
+    "tracking_number": "SPXID06179656613A"
+  },
+  "261005S67CSKP5": {
+    "first_seen": "2026-10-05T06:53:46.569478+00:00",
+    "items": [
+      {
+        "qty": 15,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      }
+    ],
+    "last_seen": "2026-10-05T06:54:03.159529+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-05T06:54:59.175839+00:00",
+    "tracking_number": "SPXID06267108349A"
+  },
+  "261005SJW9V9FT": {
+    "first_seen": "2026-10-05T06:53:46.569478+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "40PCS-ITBISA-JUMPER-FF-10CM"
+      }
+    ],
+    "last_seen": "2026-10-05T06:54:03.159529+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-05T06:55:12.123829+00:00",
+    "tracking_number": "CM70763794527"
   }
 }
