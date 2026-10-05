@@ -2980,5 +2980,19 @@
     "pending_items": false,
     "shipped_at": "2026-10-05T12:11:14.276782+00:00",
     "tracking_number": "SPXID06113918802A"
+  },
+  "261005TD0R84NC": {
+    "first_seen": "2026-10-05T14:17:08.226160+00:00",
+    "items": [
+      {
+        "qty": 6,
+        "sku": "ITBISA-PIN-HEADER-MALE-1X40PIN-LURUS"
+      }
+    ],
+    "last_seen": "2026-10-05T14:17:22.934109+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-05T14:17:34.167439+00:00",
+    "tracking_number": "SPXID06448832800A"
   }
 }
