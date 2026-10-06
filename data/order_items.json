@@ -2989,10 +2989,76 @@
         "sku": "ITBISA-PIN-HEADER-MALE-1X40PIN-LURUS"
       }
     ],
-    "last_seen": "2026-10-05T14:17:22.934109+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-06T07:11:09.929063+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-05T14:17:34.167439+00:00",
     "tracking_number": "SPXID06448832800A"
+  },
+  "261006U7XS8WC7": {
+    "first_seen": "2026-10-06T07:10:48.269202+00:00",
+    "items": [
+      {
+        "qty": 15,
+        "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
+      }
+    ],
+    "last_seen": "2026-10-06T07:11:09.929063+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-06T07:11:26.506848+00:00",
+    "tracking_number": "SPXID06534803294A"
+  },
+  "261006UDJSF6N5": {
+    "first_seen": "2026-10-06T07:10:48.269202+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-RESISTOR-100K-1/4W"
+      }
+    ],
+    "last_seen": "2026-10-06T07:11:09.929063+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-06T07:11:40.102126+00:00",
+    "tracking_number": "SPXID06796353191A"
+  },
+  "261006UFYPV0K4": {
+    "first_seen": "2026-10-06T07:10:48.269202+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-ARDUINO-UNO-R3-328P-SMD"
+      }
+    ],
+    "last_seen": "2026-10-06T07:11:09.929063+00:00",
+    "order_status": "IN_CANCEL",
+    "pending_items": false
+  },
+  "261006UH1UT9WQ": {
+    "first_seen": "2026-10-06T07:10:48.269202+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "40PCS-ITBISA-JUMPER-MF-20CM"
+      }
+    ],
+    "last_seen": "2026-10-06T07:11:09.929063+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-06T07:11:56.093429+00:00",
+    "tracking_number": "SPXID06688254812A"
+  },
+  "261006V6JVQCWP": {
+    "first_seen": "2026-10-06T07:10:48.269202+00:00",
+    "items": [
+      {
+        "qty": 2,
+        "sku": "ITBISA-ABC-BATERAI-AA-ALKALINE"
+      }
+    ],
+    "last_seen": "2026-10-06T07:11:09.929063+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false
   }
 }
