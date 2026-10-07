@@ -2989,7 +2989,7 @@
         "sku": "ITBISA-PIN-HEADER-MALE-1X40PIN-LURUS"
       }
     ],
-    "last_seen": "2026-10-06T07:11:09.929063+00:00",
+    "last_seen": "2026-10-07T00:50:55.116318+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-05T14:17:34.167439+00:00",
@@ -3003,8 +3003,8 @@
         "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
       }
     ],
-    "last_seen": "2026-10-06T07:11:09.929063+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-07T00:50:55.116318+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-06T07:11:26.506848+00:00",
     "tracking_number": "SPXID06534803294A"
@@ -3017,8 +3017,8 @@
         "sku": "ITBISA-RESISTOR-100K-1/4W"
       }
     ],
-    "last_seen": "2026-10-06T07:11:09.929063+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-07T00:50:55.116318+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-06T07:11:40.102126+00:00",
     "tracking_number": "SPXID06796353191A"
@@ -3043,8 +3043,8 @@
         "sku": "40PCS-ITBISA-JUMPER-MF-20CM"
       }
     ],
-    "last_seen": "2026-10-06T07:11:09.929063+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-07T00:50:55.116318+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-06T07:11:56.093429+00:00",
     "tracking_number": "SPXID06688254812A"
@@ -3057,8 +3057,66 @@
         "sku": "ITBISA-ABC-BATERAI-AA-ALKALINE"
       }
     ],
-    "last_seen": "2026-10-06T07:11:09.929063+00:00",
+    "last_seen": "2026-10-07T00:50:55.116318+00:00",
+    "order_status": "PROCESSED",
+    "pending_items": false,
+    "shipped_at": "2026-10-07T00:50:43.873063+00:00",
+    "tracking_number": "SPXID06781653684A"
+  },
+  "261006V82GPPEW": {
+    "first_seen": "2026-10-07T00:50:39.883039+00:00",
+    "items": [
+      {
+        "qty": 15,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      }
+    ],
+    "last_seen": "2026-10-07T00:50:55.116318+00:00",
     "order_status": "READY_TO_SHIP",
-    "pending_items": false
+    "pending_items": false,
+    "shipped_at": "2026-10-07T00:51:20.595510+00:00",
+    "tracking_number": "SPXID06795819868A"
+  },
+  "261006VCV4WS3W": {
+    "first_seen": "2026-10-07T00:50:39.883039+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-7SEGMENT-ANODE-RED-0.56-1BIT"
+      }
+    ],
+    "last_seen": "2026-10-07T00:50:55.116318+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-07T00:51:33.795042+00:00",
+    "tracking_number": "SPXID06678646799A"
+  },
+  "261006VXJV09JU": {
+    "first_seen": "2026-10-07T00:50:39.883039+00:00",
+    "items": [
+      {
+        "qty": 50,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      }
+    ],
+    "last_seen": "2026-10-07T00:50:55.116318+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-07T00:51:49.489012+00:00",
+    "tracking_number": "SPXID06700255681A"
+  },
+  "261007022D1YC3": {
+    "first_seen": "2026-10-07T00:50:39.883039+00:00",
+    "items": [
+      {
+        "qty": 16,
+        "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
+      }
+    ],
+    "last_seen": "2026-10-07T00:50:55.116318+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-07T00:52:01.940812+00:00",
+    "tracking_number": "SPXID06521717351A"
   }
 }
