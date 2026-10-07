@@ -3127,10 +3127,24 @@
         "sku": "ITBISA-RESISTOR-56K-1/4W"
       }
     ],
-    "last_seen": "2026-10-07T13:45:39.346869+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-07T22:57:05.655911+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-07T13:45:51.135591+00:00",
     "tracking_number": "SPXID06280308471A"
+  },
+  "2610082TKUMR8P": {
+    "first_seen": "2026-10-07T22:56:54.995467+00:00",
+    "items": [
+      {
+        "qty": 2,
+        "sku": "40PCS-ITBISA-JUMPER-MF-10CM"
+      }
+    ],
+    "last_seen": "2026-10-07T22:57:05.655911+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-07T22:57:18.358433+00:00",
+    "tracking_number": "SPXID06452192689A"
   }
 }
