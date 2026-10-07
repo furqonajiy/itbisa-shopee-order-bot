@@ -3118,5 +3118,19 @@
     "pending_items": false,
     "shipped_at": "2026-10-07T00:52:01.940812+00:00",
     "tracking_number": "SPXID06521717351A"
+  },
+  "26100729GR23HJ": {
+    "first_seen": "2026-10-07T13:45:24.209876+00:00",
+    "items": [
+      {
+        "qty": 50,
+        "sku": "ITBISA-RESISTOR-56K-1/4W"
+      }
+    ],
+    "last_seen": "2026-10-07T13:45:39.346869+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-07T13:45:51.135591+00:00",
+    "tracking_number": "SPXID06280308471A"
   }
 }
