@@ -3127,7 +3127,7 @@
         "sku": "ITBISA-RESISTOR-56K-1/4W"
       }
     ],
-    "last_seen": "2026-10-07T22:57:05.655911+00:00",
+    "last_seen": "2026-10-08T10:30:54.940689+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-07T13:45:51.135591+00:00",
@@ -3141,10 +3141,112 @@
         "sku": "40PCS-ITBISA-JUMPER-MF-10CM"
       }
     ],
-    "last_seen": "2026-10-07T22:57:05.655911+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-08T10:30:54.940689+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-07T22:57:18.358433+00:00",
     "tracking_number": "SPXID06452192689A"
+  },
+  "2610083SSNHKQU": {
+    "first_seen": "2026-10-08T10:30:40.210849+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
+      }
+    ],
+    "last_seen": "2026-10-08T10:30:54.940689+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-08T10:31:12.445466+00:00",
+    "tracking_number": "SPXID06601008916A"
+  },
+  "2610083XQSSJQA": {
+    "first_seen": "2026-10-08T10:30:40.210849+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-IC-ATMEGA328P-DIP28"
+      },
+      {
+        "qty": 30,
+        "sku": "ITBISA-IC-CD4094BM-SMD-SOP16"
+      }
+    ],
+    "last_seen": "2026-10-08T10:30:54.940689+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-08T10:31:26.128818+00:00",
+    "tracking_number": "SPXID06312825710A"
+  },
+  "26100844R7M0T7": {
+    "first_seen": "2026-10-08T10:30:40.210849+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-7SEGMENT-ANODE-RED-1.00-1BIT"
+      }
+    ],
+    "last_seen": "2026-10-08T10:30:54.940689+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-08T10:31:39.616476+00:00",
+    "tracking_number": "SPXID06123168192A"
+  },
+  "26100845429H6H": {
+    "first_seen": "2026-10-08T10:30:40.210849+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-IC-74HC595N-DIP16"
+      }
+    ],
+    "last_seen": "2026-10-08T10:30:54.940689+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-08T10:31:52.919655+00:00",
+    "tracking_number": "SPXID06024028672A"
+  },
+  "2610084B0VRMTR": {
+    "first_seen": "2026-10-08T10:30:40.210849+00:00",
+    "items": [
+      {
+        "qty": 3,
+        "sku": "ITBISA-USB-A-TO-B-30CM"
+      }
+    ],
+    "last_seen": "2026-10-08T10:30:54.940689+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-08T10:32:05.517614+00:00",
+    "tracking_number": "SPXID06430354659A"
+  },
+  "2610084D103V0B": {
+    "first_seen": "2026-10-08T10:30:40.210849+00:00",
+    "items": [
+      {
+        "qty": 15,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      }
+    ],
+    "last_seen": "2026-10-08T10:30:54.940689+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-08T10:32:18.503176+00:00",
+    "tracking_number": "SPXID06151017340A"
+  },
+  "2610084EXGGQ0F": {
+    "first_seen": "2026-10-08T10:30:40.210849+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-7SEGMENT-ANODE-RED-2.30-1BIT"
+      }
+    ],
+    "last_seen": "2026-10-08T10:30:54.940689+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-08T10:32:31.034855+00:00",
+    "tracking_number": "SPXID06494561527A"
   }
 }
