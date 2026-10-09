@@ -3248,5 +3248,95 @@
     "pending_items": false,
     "shipped_at": "2026-10-08T10:32:31.034855+00:00",
     "tracking_number": "SPXID06494561527A"
+  },
+  "2610084JWG2TUB": {
+    "first_seen": "2026-10-09T06:22:54.616190+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "40PCS-ITBISA-JUMPER-MM-20CM"
+      },
+      {
+        "qty": 6,
+        "sku": "ITBISA-7SEGMENT-CATHODE-RED-0.56-1BIT"
+      }
+    ],
+    "last_seen": "2026-10-09T06:23:14.001254+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-09T06:23:31.039379+00:00",
+    "tracking_number": "SPXID06636952073A"
+  },
+  "261008503HY8W4": {
+    "first_seen": "2026-10-09T06:22:54.616190+00:00",
+    "items": [
+      {
+        "qty": 51,
+        "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
+      }
+    ],
+    "last_seen": "2026-10-09T06:23:14.001254+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-09T06:23:44.778074+00:00",
+    "tracking_number": "SPXID06630112964A"
+  },
+  "2610096B2U730V": {
+    "first_seen": "2026-10-09T06:22:54.616190+00:00",
+    "items": [
+      {
+        "qty": 15,
+        "sku": "ITBISA-IC-74HC595N-DIP16"
+      },
+      {
+        "qty": 10,
+        "sku": "ITBISA-IC-ULN2003AN-DIP16"
+      },
+      {
+        "qty": 15,
+        "sku": "ITBISA-NPN-BC547-TO92"
+      },
+      {
+        "qty": 15,
+        "sku": "ITBISA-SOCKET-IC-DIP14-NARROW"
+      },
+      {
+        "qty": 30,
+        "sku": "ITBISA-SOCKET-IC-DIP16-NARROW"
+      }
+    ],
+    "last_seen": "2026-10-09T06:23:14.001254+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-09T06:23:58.909696+00:00",
+    "tracking_number": "SPXID06578489439A"
+  },
+  "2610096CVUYWT3": {
+    "first_seen": "2026-10-09T06:22:54.616190+00:00",
+    "items": [
+      {
+        "qty": 2,
+        "sku": "ITBISA-USB-A-TO-B-30CM"
+      }
+    ],
+    "last_seen": "2026-10-09T06:23:14.001254+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-09T06:24:13.041499+00:00",
+    "tracking_number": "SPXID06263469103A"
+  },
+  "2610096FXVM632": {
+    "first_seen": "2026-10-09T06:22:54.616190+00:00",
+    "items": [
+      {
+        "qty": 30,
+        "sku": "ITBISA-RESISTOR-6K8-1/4W"
+      }
+    ],
+    "last_seen": "2026-10-09T06:23:14.001254+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-09T06:24:26.069836+00:00",
+    "tracking_number": "SPXID06056635993A"
   }
 }
