@@ -3380,5 +3380,79 @@
     "pending_items": false,
     "shipped_at": "2026-10-09T11:43:51.059261+00:00",
     "tracking_number": "SPXID06051820243A"
+  },
+  "2610097EYW4DJJ": {
+    "first_seen": "2026-10-10T10:39:24.655684+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-USB-A-TO-B-30CM"
+      }
+    ],
+    "last_seen": "2026-10-10T10:39:43.551746+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-10T10:40:00.105432+00:00",
+    "tracking_number": "SPXID06784955262A"
+  },
+  "2610107QRTCDQR": {
+    "first_seen": "2026-10-10T10:39:24.655684+00:00",
+    "items": [
+      {
+        "qty": 1000,
+        "sku": "ITBISA-IC-CD4017BE-DIP16"
+      }
+    ],
+    "last_seen": "2026-10-10T10:39:43.551746+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-10T10:40:13.817187+00:00",
+    "tracking_number": "SPXID06552994953A"
+  },
+  "2610109049WFH6": {
+    "first_seen": "2026-10-10T10:39:24.655684+00:00",
+    "items": [
+      {
+        "qty": 50,
+        "sku": "ITBISA-RESISTOR-10K-1/4W"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-15K-1/4W"
+      }
+    ],
+    "last_seen": "2026-10-10T10:39:43.551746+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-10T10:40:27.814037+00:00",
+    "tracking_number": "SPXID06085978268A"
+  },
+  "26101095FW4VXJ": {
+    "first_seen": "2026-10-10T10:39:24.655684+00:00",
+    "items": [
+      {
+        "qty": 15,
+        "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
+      }
+    ],
+    "last_seen": "2026-10-10T10:39:43.551746+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-10T10:40:41.806052+00:00",
+    "tracking_number": "SPXID06441552111A"
+  },
+  "26101095HGP9G9": {
+    "first_seen": "2026-10-10T10:39:24.655684+00:00",
+    "items": [
+      {
+        "qty": 12,
+        "sku": "ITBISA-IC-74HC595N-DIP16"
+      }
+    ],
+    "last_seen": "2026-10-10T10:39:43.551746+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-10T10:40:55.724644+00:00",
+    "tracking_number": "SPXID06744863998A"
   }
 }
