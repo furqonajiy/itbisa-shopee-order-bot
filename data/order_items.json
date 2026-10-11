@@ -3463,8 +3463,8 @@
         "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-10-10T19:50:13.965723+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-11T08:53:46.011690+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-10T19:50:30.555083+00:00",
     "tracking_number": "SPXID06838878741A"
@@ -3477,8 +3477,8 @@
         "sku": "ITBISA-IC-74HC595N-DIP16"
       }
     ],
-    "last_seen": "2026-10-10T19:50:13.965723+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-11T08:53:46.011690+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-10T19:50:45.226395+00:00",
     "tracking_number": "SPXID06024970003A"
@@ -3491,10 +3491,42 @@
         "sku": "ITBISA-IC-PC817-DIP4"
       }
     ],
-    "last_seen": "2026-10-10T19:50:13.965723+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-11T08:53:46.011690+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-10T19:50:59.188555+00:00",
     "tracking_number": "SPXID06944803839A"
+  },
+  "261011B55C2CCA": {
+    "first_seen": "2026-10-11T08:53:27.564463+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-7SEGMENT-ANODE-RED-0.56-1BIT"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-7SEGMENT-CATHODE-RED-0.56-1BIT"
+      }
+    ],
+    "last_seen": "2026-10-11T08:53:46.011690+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-11T08:53:58.433237+00:00",
+    "tracking_number": "CM88333884224"
+  },
+  "261011BDXPQH9X": {
+    "first_seen": "2026-10-11T08:53:27.564463+00:00",
+    "items": [
+      {
+        "qty": 6,
+        "sku": "ITBISA-PIN-HEADER-MALE-1X40PIN-LURUS"
+      }
+    ],
+    "last_seen": "2026-10-11T08:53:46.011690+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-11T08:54:11.284423+00:00",
+    "tracking_number": "SPXID06767342734A"
   }
 }
