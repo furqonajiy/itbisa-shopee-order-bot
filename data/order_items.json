@@ -3463,7 +3463,7 @@
         "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-10-11T08:53:46.011690+00:00",
+    "last_seen": "2026-10-11T11:10:59.721988+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-10T19:50:30.555083+00:00",
@@ -3477,7 +3477,7 @@
         "sku": "ITBISA-IC-74HC595N-DIP16"
       }
     ],
-    "last_seen": "2026-10-11T08:53:46.011690+00:00",
+    "last_seen": "2026-10-11T11:10:59.721988+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-10T19:50:45.226395+00:00",
@@ -3491,7 +3491,7 @@
         "sku": "ITBISA-IC-PC817-DIP4"
       }
     ],
-    "last_seen": "2026-10-11T08:53:46.011690+00:00",
+    "last_seen": "2026-10-11T11:10:59.721988+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-10T19:50:59.188555+00:00",
@@ -3509,8 +3509,8 @@
         "sku": "ITBISA-7SEGMENT-CATHODE-RED-0.56-1BIT"
       }
     ],
-    "last_seen": "2026-10-11T08:53:46.011690+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-11T11:10:59.721988+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-11T08:53:58.433237+00:00",
     "tracking_number": "CM88333884224"
@@ -3523,10 +3523,28 @@
         "sku": "ITBISA-PIN-HEADER-MALE-1X40PIN-LURUS"
       }
     ],
-    "last_seen": "2026-10-11T08:53:46.011690+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-11T11:10:59.721988+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-11T08:54:11.284423+00:00",
     "tracking_number": "SPXID06767342734A"
+  },
+  "261011BVVNT5XV": {
+    "first_seen": "2026-10-11T11:10:33.511039+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "6PCS-ITBISA-ABC-BATERAI-AAA-ALKALINE"
+      },
+      {
+        "qty": 1,
+        "sku": "ITBISA-RTC-DS3231M"
+      }
+    ],
+    "last_seen": "2026-10-11T11:10:59.721988+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-11T11:11:11.917361+00:00",
+    "tracking_number": "SPXID06705365379A"
   }
 }
