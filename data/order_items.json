@@ -3509,7 +3509,7 @@
         "sku": "ITBISA-7SEGMENT-CATHODE-RED-0.56-1BIT"
       }
     ],
-    "last_seen": "2026-10-11T11:10:59.721988+00:00",
+    "last_seen": "2026-10-12T05:34:05.068231+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-11T08:53:58.433237+00:00",
@@ -3541,10 +3541,110 @@
         "sku": "ITBISA-RTC-DS3231M"
       }
     ],
-    "last_seen": "2026-10-11T11:10:59.721988+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-12T05:34:05.068231+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-11T11:11:11.917361+00:00",
     "tracking_number": "SPXID06705365379A"
+  },
+  "261011C830SAWH": {
+    "first_seen": "2026-10-12T05:33:36.622149+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-RAPID-BOHLAM-E10-3.8V-SCREW"
+      }
+    ],
+    "last_seen": "2026-10-12T05:34:05.068231+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-12T05:34:23.076818+00:00",
+    "tracking_number": "SPXID06918545384A"
+  },
+  "261011CASVRAWK": {
+    "first_seen": "2026-10-12T05:33:36.622149+00:00",
+    "items": [
+      {
+        "qty": 30,
+        "sku": "ITBISA-RESISTOR-10K-1/4W"
+      },
+      {
+        "qty": 11,
+        "sku": "ITBISA-RESISTOR-1K-1/4W"
+      },
+      {
+        "qty": 30,
+        "sku": "ITBISA-RESISTOR-27K-1/4W"
+      },
+      {
+        "qty": 30,
+        "sku": "ITBISA-RESISTOR-2K2-1/4W"
+      }
+    ],
+    "last_seen": "2026-10-12T05:34:05.068231+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-12T05:34:37.171211+00:00",
+    "tracking_number": "SPXID06376480703A"
+  },
+  "261011CKRDA2QP": {
+    "first_seen": "2026-10-12T05:33:36.622149+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-JACK-DC-005-FEMALE"
+      }
+    ],
+    "last_seen": "2026-10-12T05:34:05.068231+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-12T05:34:52.489493+00:00",
+    "tracking_number": "SPXID06565643338A"
+  },
+  "261012DJD3VH7K": {
+    "first_seen": "2026-10-12T05:33:36.622149+00:00",
+    "items": [
+      {
+        "qty": 2,
+        "sku": "ITBISA-ABC-BATERAI-AA-ALKALINE"
+      }
+    ],
+    "last_seen": "2026-10-12T05:34:05.068231+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-12T05:35:06.099966+00:00",
+    "tracking_number": "SPXID06025714637A"
+  },
+  "261012DP8RMU8V": {
+    "first_seen": "2026-10-12T05:33:36.622149+00:00",
+    "items": [
+      {
+        "qty": 500,
+        "sku": "ITBISA-IC-CD4017BE-DIP16"
+      }
+    ],
+    "last_seen": "2026-10-12T05:34:05.068231+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-12T05:35:19.487894+00:00",
+    "tracking_number": "SPXID06655755501A"
+  },
+  "261012DPSW2UN4": {
+    "first_seen": "2026-10-12T05:33:36.622149+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-7SEGMENT-CATHODE-RED-2.30-1BIT"
+      },
+      {
+        "qty": 6,
+        "sku": "ITBISA-IC-74HC595N-DIP16"
+      }
+    ],
+    "last_seen": "2026-10-12T05:34:05.068231+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-12T05:35:33.469516+00:00",
+    "tracking_number": "SPXID06205958427A"
   }
 }
