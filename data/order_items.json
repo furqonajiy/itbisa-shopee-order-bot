@@ -3646,5 +3646,145 @@
     "pending_items": false,
     "shipped_at": "2026-10-12T05:35:33.469516+00:00",
     "tracking_number": "SPXID06205958427A"
+  },
+  "261012E1XV5QFV": {
+    "first_seen": "2026-10-13T09:18:40.293028+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
+      }
+    ],
+    "last_seen": "2026-10-13T09:19:04.313194+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-13T09:19:25.854534+00:00",
+    "tracking_number": "SPXID06039563032A"
+  },
+  "261012EFKUUDBT": {
+    "first_seen": "2026-10-13T09:18:40.293028+00:00",
+    "items": [
+      {
+        "qty": 4,
+        "sku": "ITBISA-IC-74HC245N-DIP20"
+      }
+    ],
+    "last_seen": "2026-10-13T09:19:04.313194+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-13T09:19:39.045804+00:00",
+    "tracking_number": "SPXID06605486285A"
+  },
+  "261012ERQ7XG0C": {
+    "first_seen": "2026-10-13T09:18:40.293028+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-ARDUINO-UNO-R3-328P-SMD"
+      }
+    ],
+    "last_seen": "2026-10-13T09:19:04.313194+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-13T09:19:52.678061+00:00",
+    "tracking_number": "SPXID06541977803A"
+  },
+  "261012ERSM7FDM": {
+    "first_seen": "2026-10-13T09:18:40.293028+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-13T09:19:04.313194+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-13T09:20:05.997789+00:00",
+    "tracking_number": "SPXID06007843106A"
+  },
+  "261012ETWCWM7Q": {
+    "first_seen": "2026-10-13T09:18:40.293028+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-USB-A-TO-B-30CM"
+      }
+    ],
+    "last_seen": "2026-10-13T09:19:04.313194+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-13T09:20:19.476685+00:00",
+    "tracking_number": "SPXID06550411547A"
+  },
+  "261013FUY1US8K": {
+    "first_seen": "2026-10-13T09:18:40.293028+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-ARDUINO-UNO-R3-328P-SMD"
+      }
+    ],
+    "last_seen": "2026-10-13T09:19:04.313194+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-13T09:20:32.883027+00:00",
+    "tracking_number": "SPXID06632387346A"
+  },
+  "261013G2HHNY0U": {
+    "first_seen": "2026-10-13T09:18:40.293028+00:00",
+    "items": [
+      {
+        "qty": 12,
+        "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-13T09:19:04.313194+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-13T09:20:46.803349+00:00",
+    "tracking_number": "SPXID06211798203A"
+  },
+  "261013G4MHGR13": {
+    "first_seen": "2026-10-13T09:18:40.293028+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-13T09:19:04.313194+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-13T09:20:59.924349+00:00",
+    "tracking_number": "SPXID06297402515A"
+  },
+  "261013G7NNJ63K": {
+    "first_seen": "2026-10-13T09:18:40.293028+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "40PCS-ITBISA-JUMPER-FF-10CM"
+      }
+    ],
+    "last_seen": "2026-10-13T09:19:04.313194+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-13T09:21:12.915028+00:00",
+    "tracking_number": "SPXID06722095721A"
+  },
+  "261013G9W79S4G": {
+    "first_seen": "2026-10-13T09:18:40.293028+00:00",
+    "items": [
+      {
+        "qty": 4,
+        "sku": "ITBISA-IC-74HC245N-DIP20"
+      }
+    ],
+    "last_seen": "2026-10-13T09:19:04.313194+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-13T09:21:26.252004+00:00",
+    "tracking_number": "SPXID06151063055A"
   }
 }
