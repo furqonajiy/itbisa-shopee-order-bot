@@ -3786,5 +3786,103 @@
     "pending_items": false,
     "shipped_at": "2026-10-13T09:21:26.252004+00:00",
     "tracking_number": "SPXID06151063055A"
+  },
+  "261013H8FU35P4": {
+    "first_seen": "2026-10-14T06:12:39.679062+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-14T06:13:01.707877+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-14T06:13:20.423480+00:00",
+    "tracking_number": "SPXID06143401943A"
+  },
+  "261013HDU6RE1W": {
+    "first_seen": "2026-10-14T06:12:39.679062+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-JACK-DC-005-FEMALE"
+      }
+    ],
+    "last_seen": "2026-10-14T06:13:01.707877+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-14T06:13:34.213783+00:00",
+    "tracking_number": "SPXID06628555995A"
+  },
+  "261013HEFEA7R6": {
+    "first_seen": "2026-10-14T06:12:39.679062+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
+      }
+    ],
+    "last_seen": "2026-10-14T06:13:01.707877+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-14T06:13:48.234296+00:00",
+    "tracking_number": "SPXID06424176132A"
+  },
+  "261014HQG6FDCN": {
+    "first_seen": "2026-10-14T06:12:39.679062+00:00",
+    "items": [
+      {
+        "qty": 6,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-14T06:13:01.707877+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-14T06:14:01.757224+00:00",
+    "tracking_number": "SPXID06799341803A"
+  },
+  "261014J6TBGPF2": {
+    "first_seen": "2026-10-14T06:12:39.679062+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-14T06:13:01.707877+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-14T06:14:15.235044+00:00",
+    "tracking_number": "SPXID06403239617A"
+  },
+  "261014JM0XM5AP": {
+    "first_seen": "2026-10-14T06:12:39.679062+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "40PCS-ITBISA-JUMPER-MF-20CM"
+      }
+    ],
+    "last_seen": "2026-10-14T06:13:01.707877+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-14T06:14:28.253044+00:00",
+    "tracking_number": "SPXID06912906242A"
+  },
+  "261014JPPDQYM4": {
+    "first_seen": "2026-10-14T06:12:39.679062+00:00",
+    "items": [
+      {
+        "qty": 50,
+        "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-14T06:13:01.707877+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-14T06:14:41.294775+00:00",
+    "tracking_number": "SPXID06346227357A"
   }
 }
