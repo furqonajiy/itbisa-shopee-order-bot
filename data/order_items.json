@@ -3893,8 +3893,8 @@
         "sku": "ITBISA-IDC-2X5-AMPHENOL-FEMALE"
       }
     ],
-    "last_seen": "2026-10-14T11:54:58.498984+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-15T06:45:17.978890+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-14T11:55:12.612909+00:00",
     "tracking_number": "SPXID06966819178A"
@@ -3907,8 +3907,8 @@
         "sku": "ITBISA-7SEGMENT-ANODE-RED-2.30-1BIT"
       }
     ],
-    "last_seen": "2026-10-14T11:54:58.498984+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-15T06:45:17.978890+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-14T11:55:25.810414+00:00",
     "tracking_number": "SPXID06799049497A"
@@ -3921,10 +3921,152 @@
         "sku": "ITBISA-IC-74HC245N-DIP20"
       }
     ],
-    "last_seen": "2026-10-14T11:54:58.498984+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-15T06:45:17.978890+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-14T11:55:39.080895+00:00",
     "tracking_number": "SPXID06217377226A"
+  },
+  "261015M7BTU0TY": {
+    "first_seen": "2026-10-15T06:45:02.471901+00:00",
+    "items": [
+      {
+        "qty": 40,
+        "sku": "ITBISA-ABC-BATERAI-AA-ALKALINE"
+      },
+      {
+        "qty": 40,
+        "sku": "ITBISA-ABC-BATERAI-AAA-ALKALINE"
+      }
+    ],
+    "last_seen": "2026-10-15T06:45:17.978890+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-15T06:45:36.420328+00:00",
+    "tracking_number": "SPXID06263859080A"
+  },
+  "261015M7K7C81P": {
+    "first_seen": "2026-10-15T06:45:02.471901+00:00",
+    "items": [
+      {
+        "qty": 6,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-15T06:45:17.978890+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-15T06:45:49.516045+00:00",
+    "tracking_number": "SPXID06346175869A"
+  },
+  "261015MABG69V9": {
+    "first_seen": "2026-10-15T06:45:02.471901+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-LED-MAX7219-4IN1-TIGHT"
+      }
+    ],
+    "last_seen": "2026-10-15T06:45:17.978890+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-15T06:46:02.489530+00:00",
+    "tracking_number": "SPXID06106494967A"
+  },
+  "261015MTBRV1J3": {
+    "first_seen": "2026-10-15T06:45:02.471901+00:00",
+    "items": [
+      {
+        "qty": 4,
+        "sku": "ITBISA-IC-74HC245N-DIP20"
+      },
+      {
+        "qty": 15,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      }
+    ],
+    "last_seen": "2026-10-15T06:45:17.978890+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-15T06:46:15.349898+00:00",
+    "tracking_number": "SPXID06322299749A"
+  },
+  "261015N1JUNTJN": {
+    "first_seen": "2026-10-15T06:45:02.471901+00:00",
+    "items": [
+      {
+        "qty": 270,
+        "sku": "ITBISA-IC-74HC245N-DIP20"
+      }
+    ],
+    "last_seen": "2026-10-15T06:45:17.978890+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-15T06:46:27.927215+00:00",
+    "tracking_number": "SPXID06903988087A"
+  },
+  "261015N3HVPFVG": {
+    "first_seen": "2026-10-15T06:45:02.471901+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      }
+    ],
+    "last_seen": "2026-10-15T06:45:17.978890+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-15T06:46:40.810298+00:00",
+    "tracking_number": "SPXID06069064823A"
+  },
+  "261015N7PKEMAK": {
+    "first_seen": "2026-10-15T06:45:02.471901+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-NPN-2N5551-TO92"
+      },
+      {
+        "qty": 10,
+        "sku": "ITBISA-PNP-2N5401-TO92"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-15T06:45:17.978890+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-15T06:46:53.453408+00:00",
+    "tracking_number": "SPXID06702140048A"
+  },
+  "261015NBC6MNE2": {
+    "first_seen": "2026-10-15T06:45:02.471901+00:00",
+    "items": [
+      {
+        "qty": 100,
+        "sku": "ITBISA-LED-SUPERBRIGHT-5MM-RED"
+      }
+    ],
+    "last_seen": "2026-10-15T06:45:17.978890+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-15T06:47:05.986603+00:00",
+    "tracking_number": "SPXID06891605563A"
+  },
+  "261015NMT0FESG": {
+    "first_seen": "2026-10-15T06:45:02.471901+00:00",
+    "items": [
+      {
+        "qty": 6,
+        "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
+      }
+    ],
+    "last_seen": "2026-10-15T06:45:17.978890+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-15T06:47:18.350288+00:00",
+    "tracking_number": "SPXID06313134996A"
   }
 }
