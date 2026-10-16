@@ -51,6 +51,9 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r requirements.txt
 
+      - name: Install poppler
+        run: sudo apt-get install -y poppler-utils || (sudo apt-get update && sudo apt-get install -y poppler-utils)
+
       - name: Fetch label PDFs
         env:
           SHOPEE_PARTNER_ID: ${{ secrets.SHOPEE_PARTNER_ID }}
@@ -60,6 +63,7 @@ jobs:
           # cannot send anything to Telegram.
           TELEGRAM_BOT_TOKEN: unused
           TELEGRAM_CHAT_ID: unused
+          STOCK_DISPATCH_TOKEN: ${{ secrets.STOCK_DISPATCH_TOKEN }}
           ORDERS: ${{ inputs.orders }}
           ATUR: ${{ inputs.atur_kirim && '--atur-kirim' || '' }}
         run: python scripts/fetch_label_sample.py $ATUR $ORDERS
@@ -69,7 +73,7 @@ jobs:
       # private key can read the artifact; no secret is needed here.
       - name: Encrypt label PDFs
         run: |
-          for f in out/*.pdf; do
+          for f in out/*.pdf out/*.png; do
             openssl rand -hex 32 > /tmp/k
             openssl enc -aes-256-cbc -pbkdf2 -salt -pass file:/tmp/k -in "$f" -out "$f.enc"
             openssl pkeyutl -encrypt -pubin -inkey .github/label_sample_pub.pem -pkeyopt rsa_padding_mode:oaep -in /tmp/k -out "$f.key"

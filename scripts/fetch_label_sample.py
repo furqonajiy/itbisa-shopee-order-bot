@@ -1,7 +1,9 @@
 """
 fetch_label_sample.py
 ---------------------
-Downloads the label PDF of already-labelled orders into out/, untouched.
+Downloads the label PDF of already-labelled orders into out/, untouched, plus
+the images /resi_shopee would send for it (out/<order>_<n>.png, packing names
+on), so a rendering change can be checked without sending anything.
 
 Why this file exists:
   Telegram only ever receives the rendered PNG, so the original PDF (its text
@@ -30,7 +32,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from src import main as bot, shopee_client  # noqa: E402
+from src import label_processor, packing_names, main as bot, shopee_client  # noqa: E402
 
 OUT_DIR = PROJECT_ROOT / "out"
 
@@ -58,6 +60,8 @@ def main(order_sns, atur_kirim=False):
     OUT_DIR.mkdir(exist_ok=True)
     if atur_kirim:
         arrange(order_sns)
+    names, names_error = packing_names.load()
+    print(f"Nama packing: {len(names)} SKU" + (f" (gagal dimuat: {names_error})" if names_error else ""))
     failed = 0
     for order_sn in order_sns:
         try:
@@ -71,7 +75,11 @@ def main(order_sns, atur_kirim=False):
             failed += 1
             continue
         (OUT_DIR / f"{order_sn}.pdf").write_bytes(pdf_bytes)
-        print(f"✓ {order_sn}: {len(pdf_bytes)} bytes")
+        label_pdf, renamed = label_processor.with_packing_names(pdf_bytes, names)
+        pngs = label_processor.pdf_to_pngs(label_pdf)
+        for n, png in enumerate(pngs, 1):
+            (OUT_DIR / f"{order_sn}_{n}.png").write_bytes(png)
+        print(f"✓ {order_sn}: {len(pdf_bytes)} bytes, {renamed} nama packing, {len(pngs)} gambar")
     return 1 if failed == len(order_sns) else 0
 
 
