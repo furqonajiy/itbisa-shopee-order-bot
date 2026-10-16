@@ -23,7 +23,7 @@ from pathlib import Path
 from PIL import Image
 from pdf2image import convert_from_bytes
 
-from src import config
+from src import config, packing_names
 
 _MERGED_PAGE_GAP_PX = 12
 
@@ -239,3 +239,133 @@ def keep_pdf(name, pdf_bytes, out_dir=None):
         (out / f"{name}.pdf").write_bytes(pdf_bytes)
     except Exception as e:                                  # noqa: BLE001
         print(f"  ⚠ PDF resi {name} tidak disimpan: {e}")
+
+
+# ============================================================
+# Packing names on the label
+# ============================================================
+
+# The product table's header line, per marketplace layout. Columns are found
+# from these words, so a layout change that renames them simply leaves the
+# label untouched (see with_packing_names).
+_TABLE_END_WORDS = ("Pesan:", "Total:", "Order")
+_RGB = {packing_names.RED: (0.8, 0, 0), packing_names.BLACK: (0, 0, 0)}
+_NAME_FONT = "hebo"            # Helvetica-Bold, built into PyMuPDF
+_NAME_SIZE_MAX = 9.0
+_NAME_SIZE_MIN = 6.0
+_NAME_LEADING = 1.12
+
+
+def _table_columns(line):
+    """(name_x0, name_x1, sku_x0, sku_x1) from a header line's words, or None."""
+    texts = [w[4] for w in line]
+    x = {}
+    for w in line:
+        x.setdefault(w[4], w[0])
+    if {"Nama", "Produk", "SKU", "Variasi"} <= set(texts):              # Shopee
+        return x["Nama"], x["SKU"] - 3, x["SKU"], x["Variasi"] - 3
+    if {"Product", "Seller", "SKU"} <= set(texts):                      # TikTok Shop
+        return x["Product"], x["SKU"] - 3, x["Seller"], x["Qty"] - 3
+    return None
+
+
+def _table_rows(words, page_bottom):
+    """[(name words, SKU words, name_x1)] per product row, or [] if no table.
+
+    A row starts at its Qty number; it ends where the next row starts, or at
+    the line below the table ("Pesan:" on Shopee, "Qty Total:" on TikTok Shop).
+    """
+    for qty in (w for w in words if w[4] == "Qty"):
+        line = sorted((w for w in words if abs(w[1] - qty[1]) < 1), key=lambda w: w[0])
+        columns = _table_columns(line)
+        if columns:
+            break
+    else:
+        return []
+    name_x0, name_x1, sku_x0, sku_x1 = columns
+    below = [w for w in words if w[1] > qty[3]]
+    end = min((w[1] for w in below if w[4] in _TABLE_END_WORDS), default=page_bottom)
+    starts = sorted({round(w[1], 1) for w in below
+                     if w[0] >= qty[0] - 6 and w[4].isdigit() and w[1] < end})
+    rows = []
+    for i, top in enumerate(starts):
+        bottom = starts[i + 1] if i + 1 < len(starts) else end
+        cell = [w for w in below if top - 0.5 <= w[1] < bottom - 0.5]
+        rows.append(([w for w in cell if name_x0 - 1 <= w[0] < name_x1],
+                     [w for w in cell if sku_x0 - 1 <= w[0] < sku_x1],
+                     name_x1))
+    return rows
+
+
+def with_packing_names(pdf_bytes, names):
+    """Returns (pdf_bytes, rows changed) with the packing names on the label.
+
+    In the product table, each listed SKU's Nama Produk cell is replaced by its
+    packing name (bold, the [red] part and a pack count in red), and a pack SKU
+    ("10PCS-...") gets a red box around it in the SKU column. Everything else
+    on the label, the table lines included, stays exactly as printed. A SKU
+    missing from the list keeps the marketplace's name.
+
+    Never raises: on any failure the untouched PDF is returned, because a label
+    must always go out.
+    """
+    if not names:
+        return pdf_bytes, 0
+    try:
+        import pymupdf
+        doc = pymupdf.open(stream=pdf_bytes, filetype="pdf")
+        font = pymupdf.Font(_NAME_FONT)
+        changed = 0
+        for page in doc:
+            plans = []
+            for name_w, sku_w, name_x1 in _table_rows(page.get_text("words"), page.rect.y1):
+                if not name_w or not sku_w:
+                    continue
+                ordered = sorted(sku_w, key=lambda w: (round(w[1], 1), w[0]))
+                sku = "".join(w[4] for w in ordered).upper()
+                segments = packing_names.runs(sku, names)
+                area = pymupdf.Rect(min(w[0] for w in name_w), min(w[1] for w in name_w),
+                                    name_x1, max(w[3] for w in name_w))
+                box = None
+                if packing_names.PACK_SKU.match(sku):
+                    box = pymupdf.Rect(min(w[0] for w in sku_w), min(w[1] for w in sku_w),
+                                       max(w[2] for w in sku_w), max(w[3] for w in sku_w))
+                if segments:
+                    # Remove the old text only; no fill, so table lines stay.
+                    page.add_redact_annot(area + (-0.5, -0.3, 0.5, 0.3), fill=None)
+                if segments or box:
+                    plans.append((segments, area, box))
+            if not plans:
+                continue
+            page.apply_redactions(images=pymupdf.PDF_REDACT_IMAGE_NONE,
+                                  graphics=pymupdf.PDF_REDACT_LINE_ART_NONE,
+                                  text=pymupdf.PDF_REDACT_TEXT_REMOVE)
+            for segments, area, box in plans:
+                if segments:
+                    _draw_name(page, font, segments, area)
+                if box:
+                    page.draw_rect(box + (-1.5, -1.0, 1.5, 1.0), color=_RGB[packing_names.RED], width=1.2)
+                changed += 1
+        out = doc.tobytes(garbage=3, deflate=True) if changed else pdf_bytes
+        doc.close()
+        return out, changed
+    except Exception as e:                                  # noqa: BLE001
+        print(f"  ⚠ nama packing tidak dipasang, resi asli dipakai: {e}")
+        return pdf_bytes, 0
+
+
+def _draw_name(page, font, segments, area):
+    """Writes the name into area: the largest size whose wrapped lines fit."""
+    size = _NAME_SIZE_MAX
+    while True:
+        lines = packing_names.wrap(segments, area.width,
+                                   lambda t: font.text_length(t, fontsize=size))
+        if len(lines) * size * _NAME_LEADING <= area.height + 1 or size <= _NAME_SIZE_MIN:
+            break
+        size -= 0.5
+    for j, line in enumerate(lines):
+        x = area.x0
+        y = area.y0 + size * 0.9 + j * size * _NAME_LEADING
+        for text, colour in line:
+            page.insert_text((x, y), text, fontname=_NAME_FONT, fontsize=size, color=_RGB[colour])
+            x += font.text_length(text, fontsize=size)

@@ -86,6 +86,7 @@ itbisa-shopee-order-bot/
 │   ├── shopee_auth.py               # Shopee token lifecycle + rotation save
 │   ├── shopee_client.py             # Shopee API calls + HMAC signing
 │   ├── label_processor.py           # PDF → Telegram PNGs, 2 pages per image
+│   ├── packing_names.py             # Packer's short names from the stock bot's packing_names.txt
 │   ├── telegram_sender.py           # Sends images + summaries in Bahasa
 │   ├── state_manager.py             # Loads/saves processed_orders.json
 │   ├── balance_dispatcher.py        # Dispatches /stok_balance once after the run

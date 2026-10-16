@@ -5,3 +5,4 @@ requests==2.32.3        # HTTP calls to Shopee and Telegram APIs
 pdf2image==1.17.0       # Convert shipping label PDF -> PNG image
 Pillow==10.4.0          # Image library that pdf2image uses internally
 python-dotenv==1.0.1    # Loads .env file for local development (ignored in production)
+pymupdf==1.28.2         # Puts the packing names into the label PDF (label_processor)
