@@ -12,6 +12,10 @@ on:
       orders:
         description: "Order SN(s), separated by spaces"
         required: true
+      atur_kirim:
+        description: "Arrange dropoff first for orders still READY_TO_SHIP (marketplace write)"
+        type: boolean
+        default: false
 
 jobs:
   fetch:
@@ -57,7 +61,8 @@ jobs:
           TELEGRAM_BOT_TOKEN: unused
           TELEGRAM_CHAT_ID: unused
           ORDERS: ${{ inputs.orders }}
-        run: python scripts/fetch_label_sample.py $ORDERS
+          ATUR: ${{ inputs.atur_kirim && '--atur-kirim' || '' }}
+        run: python scripts/fetch_label_sample.py $ATUR $ORDERS
 
       # Each PDF gets its own random AES key, and that key is encrypted with
       # the public key in .github/label_sample_pub.pem. Only the holder of the
