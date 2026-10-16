@@ -25,3 +25,4 @@ data/order_items.json
 *.swp
 .DS_Store
 .iml
+out/

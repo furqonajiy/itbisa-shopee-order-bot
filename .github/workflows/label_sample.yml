@@ -1,0 +1,89 @@
+# Downloads the label PDF of orders the bot already labelled, for testing
+# label rendering. Each PDF is encrypted to .github/label_sample_pub.pem
+# before upload (the repo is public; a label carries buyer data) and the
+# artifact is kept one day. Nothing is sent to Telegram and no order state
+# changes; only a refreshed token is written back to bot-state.
+
+name: Label Sample
+
+on:
+  workflow_dispatch:
+    inputs:
+      orders:
+        description: "Order SN(s), separated by spaces"
+        required: true
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    # Same group as run.yml: both read and rotate shopee_tokens.json.
+    concurrency:
+      group: bot-state-${{ github.repository }}
+      cancel-in-progress: false
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out code from main
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Pull tokens from bot-state
+        run: |
+          git fetch origin bot-state
+          git checkout origin/bot-state -- data/shopee_tokens.json
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch label PDFs
+        env:
+          SHOPEE_PARTNER_ID: ${{ secrets.SHOPEE_PARTNER_ID }}
+          SHOPEE_PARTNER_KEY: ${{ secrets.SHOPEE_PARTNER_KEY }}
+          SHOPEE_SHOP_ID: ${{ secrets.SHOPEE_SHOP_ID }}
+          ORDERS: ${{ inputs.orders }}
+        run: python scripts/fetch_label_sample.py $ORDERS
+
+      # Each PDF gets its own random AES key, and that key is encrypted with
+      # the public key in .github/label_sample_pub.pem. Only the holder of the
+      # private key can read the artifact; no secret is needed here.
+      - name: Encrypt label PDFs
+        run: |
+          for f in out/*.pdf; do
+            openssl rand -hex 32 > /tmp/k
+            openssl enc -aes-256-cbc -pbkdf2 -salt -pass file:/tmp/k -in "$f" -out "$f.enc"
+            openssl pkeyutl -encrypt -pubin -inkey .github/label_sample_pub.pem -pkeyopt rsa_padding_mode:oaep -in /tmp/k -out "$f.key"
+            rm "$f" /tmp/k
+          done
+
+      - name: Upload encrypted labels
+        uses: actions/upload-artifact@v4
+        with:
+          name: label-sample
+          path: |
+            out/*.enc
+            out/*.key
+          retention-days: 1
+
+      - name: Commit refreshed token to bot-state
+        if: always()
+        run: |
+          git config user.name "itbisa-bot"
+          git config user.email "bot@itbisa.local"
+          cp data/shopee_tokens.json /tmp/shopee_tokens.json
+          git checkout -B bot-state origin/bot-state
+          cp /tmp/shopee_tokens.json data/shopee_tokens.json
+          git add data/shopee_tokens.json
+          git diff --staged --quiet || git commit -m "Update state [skip ci]"
+          git push origin bot-state
