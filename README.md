@@ -68,7 +68,8 @@ cloud VM, and no database.
 itbisa-shopee-order-bot/
 ├── .github/workflows/
 │   ├── run.yml                      # GitHub Actions workflow_dispatch (manual / Telegram Worker)
-│   └── ci.yml                       # PR quality gate: runs pytest, no secrets, never touches bot-state
+│   ├── ci.yml                       # PR quality gate: runs pytest, no secrets, never touches bot-state
+│   └── label_sample.yml             # Manual: label PDFs of labelled orders, encrypted, 1-day artifact
 ├── data/                            # Runtime state, source of truth is bot-state
 │   ├── processed_orders.json        # order_sn values already sent to Telegram
 │   ├── shopee_tokens.json           # Current access + refresh tokens
@@ -76,6 +77,7 @@ itbisa-shopee-order-bot/
 ├── scripts/
 │   ├── bootstrap_tokens.py          # One-time script to seed shopee_tokens.json
 │   ├── cleanup_branches.py          # Repo maintenance: delete merged/AI-named branches (dry-run by default)
+│   ├── fetch_label_sample.py        # Label PDFs of labelled orders into out/ (run by label_sample.yml)
 │   └── test_telegram.py             # Diagnostic Telegram send
 ├── src/
 │   ├── __init__.py
