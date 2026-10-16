@@ -63,7 +63,6 @@ jobs:
           # cannot send anything to Telegram.
           TELEGRAM_BOT_TOKEN: unused
           TELEGRAM_CHAT_ID: unused
-          STOCK_DISPATCH_TOKEN: ${{ secrets.STOCK_DISPATCH_TOKEN }}
           ORDERS: ${{ inputs.orders }}
           ATUR: ${{ inputs.atur_kirim && '--atur-kirim' || '' }}
         run: python scripts/fetch_label_sample.py $ATUR $ORDERS

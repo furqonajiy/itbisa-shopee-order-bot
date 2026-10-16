@@ -127,3 +127,14 @@ def test_no_table_returns_input_untouched():
     doc.new_page().insert_text((50, 50), "Qty tanpa tabel")
     pdf = doc.tobytes()
     assert label_processor.with_packing_names(pdf, NAMES) == (pdf, 0)
+
+
+def test_load_reads_local_file(tmp_path):
+    f = tmp_path / "packing_names.txt"
+    f.write_text("ITBISA-X = Barang [X]" + chr(10), encoding="utf-8")
+    assert packing_names.load(local_file=f) == ({"ITBISA-X": "Barang [X]"}, None)
+
+
+def test_load_never_raises(tmp_path):
+    names, error = packing_names.load(local_file=tmp_path / "none.txt", url="http://127.0.0.1:9/x")
+    assert names == {} and error

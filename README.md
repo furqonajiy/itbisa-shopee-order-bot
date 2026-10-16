@@ -74,6 +74,7 @@ itbisa-shopee-order-bot/
 │   ├── processed_orders.json        # order_sn values already sent to Telegram
 │   ├── shopee_tokens.json           # Current access + refresh tokens
 │   └── balance_throttle.json        # Balance dispatch throttle: last dispatch time + pending SKUs
+├── packing_names.txt                # Packer's short names per SKU, read by BOTH order bots
 ├── scripts/
 │   ├── bootstrap_tokens.py          # One-time script to seed shopee_tokens.json
 │   ├── cleanup_branches.py          # Repo maintenance: delete merged/AI-named branches (dry-run by default)
