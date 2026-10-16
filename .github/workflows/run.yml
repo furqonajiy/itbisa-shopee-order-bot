@@ -113,6 +113,33 @@ jobs:
           STOCK_DISPATCH_TOKEN: ${{ secrets.STOCK_DISPATCH_TOKEN }}
         run: python -m src.main
 
+      # Keep each label PDF of this run (label_processor.keep_pdf) as a
+      # one-day artifact for testing label rendering. The repo is public and a
+      # label carries buyer data, so each PDF is encrypted first: a random AES
+      # key per file, itself encrypted to .github/label_sample_pub.pem. Never
+      # fails the run.
+      - name: Encrypt label PDFs
+        if: always() && hashFiles('out/*.pdf') != ''
+        continue-on-error: true
+        run: |
+          for f in out/*.pdf; do
+            openssl rand -hex 32 > /tmp/k
+            openssl enc -aes-256-cbc -pbkdf2 -salt -pass file:/tmp/k -in "$f" -out "$f.enc"
+            openssl pkeyutl -encrypt -pubin -inkey .github/label_sample_pub.pem -pkeyopt rsa_padding_mode:oaep -in /tmp/k -out "$f.key"
+            rm "$f" /tmp/k
+          done
+
+      - name: Upload encrypted label PDFs
+        if: always() && hashFiles('out/*.enc') != ''
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: label-pdf
+          path: |
+            out/*.enc
+            out/*.key
+          retention-days: 1
+
       # STEP 8: Commit the updated state files to the bot-state branch.
       # We save the updated state to a temp location, switch to bot-state,
       # restore the files, and push. This keeps bot-state minimal (only

@@ -145,3 +145,15 @@ def test_barcode_like_row_still_binds_the_crop():
 
     out = label_processor._crop_bottom_whitespace(img)
     assert out.height >= 1010, f"barcode row was cropped away: {out.height}"
+
+
+def test_keep_pdf_writes_untouched_bytes(tmp_path):
+    label_processor.keep_pdf("A1", b"%PDF-1.4 x", out_dir=tmp_path / "out")
+    assert (tmp_path / "out" / "A1.pdf").read_bytes() == b"%PDF-1.4 x"
+
+
+def test_keep_pdf_never_raises(tmp_path):
+    # out_dir is a file, so mkdir fails: the label must still go out.
+    blocker = tmp_path / "out"
+    blocker.write_text("not a dir")
+    label_processor.keep_pdf("A1", b"%PDF", out_dir=blocker)
