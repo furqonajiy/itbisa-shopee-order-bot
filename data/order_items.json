@@ -4055,6 +4055,20 @@
     "shipped_at": "2026-10-15T06:47:05.986603+00:00",
     "tracking_number": "SPXID06891605563A"
   },
+  "261015NHE70YAB": {
+    "first_seen": "2026-10-16T07:24:10.172868+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-SOCKET-IC-DIP14-NARROW"
+      }
+    ],
+    "last_seen": "2026-10-16T07:24:59.580171+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-16T07:25:22.503508+00:00",
+    "tracking_number": "SPXID06795897492A"
+  },
   "261015NMT0FESG": {
     "first_seen": "2026-10-15T06:45:02.471901+00:00",
     "items": [
@@ -4068,5 +4082,211 @@
     "pending_items": false,
     "shipped_at": "2026-10-15T06:47:18.350288+00:00",
     "tracking_number": "SPXID06313134996A"
+  },
+  "261015NPUT5E19": {
+    "first_seen": "2026-10-16T07:24:10.172868+00:00",
+    "items": [
+      {
+        "qty": 4,
+        "sku": "ITBISA-IC-74HC245N-DIP20"
+      },
+      {
+        "qty": 6,
+        "sku": "ITBISA-IC-74HC595N-DIP16"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-JACK-DC-005-FEMALE"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-PNP-2N3906-TO92"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-PNP-A1015-TO92"
+      },
+      {
+        "qty": 1,
+        "sku": "ITBISA-PNP-BC558-TO92"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-PNP-S9012-TO92"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      },
+      {
+        "qty": 10,
+        "sku": "ITBISA-RESISTOR-100K-1/4W"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-10K-1/4W"
+      }
+    ],
+    "last_seen": "2026-10-16T07:24:59.580171+00:00",
+    "order_status": "PROCESSED",
+    "pending_items": false,
+    "shipped_at": "2026-10-16T07:24:21.801104+00:00",
+    "tracking_number": "SPXID06447041967A"
+  },
+  "261015NW02407E": {
+    "first_seen": "2026-10-16T07:24:10.172868+00:00",
+    "items": [
+      {
+        "qty": 15,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      }
+    ],
+    "last_seen": "2026-10-16T07:24:59.580171+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-16T07:25:48.253743+00:00",
+    "tracking_number": "SPXID06780777399A"
+  },
+  "261015P4Y2R321": {
+    "first_seen": "2026-10-16T07:24:10.172868+00:00",
+    "items": [
+      {
+        "qty": 50,
+        "sku": "ITBISA-JACK-DC-005-FEMALE"
+      }
+    ],
+    "last_seen": "2026-10-16T07:24:59.580171+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-16T07:26:01.849632+00:00",
+    "tracking_number": "SPXID06186861003A"
+  },
+  "261015PGAW4CE0": {
+    "first_seen": "2026-10-16T07:24:10.172868+00:00",
+    "items": [
+      {
+        "qty": 30,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-16T07:24:59.580171+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-16T07:26:15.420485+00:00",
+    "tracking_number": "SPXID06462752041A"
+  },
+  "261015PHKG40G3": {
+    "first_seen": "2026-10-16T07:24:10.172868+00:00",
+    "items": [
+      {
+        "qty": 8,
+        "sku": "ITBISA-IC-74HC245N-DIP20"
+      },
+      {
+        "qty": 15,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      },
+      {
+        "qty": 10,
+        "sku": "ITBISA-KAPASITOR-ELCO-2200UF-25V"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-5PIN-BLUE"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-2K2-1/4W"
+      }
+    ],
+    "last_seen": "2026-10-16T07:24:59.580171+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-16T07:26:28.826181+00:00",
+    "tracking_number": "SPXID06885380589A"
+  },
+  "261015PN0DSCJ2": {
+    "first_seen": "2026-10-16T07:24:10.172868+00:00",
+    "items": [
+      {
+        "qty": 6,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-16T07:24:59.580171+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-16T07:26:42.304008+00:00",
+    "tracking_number": "SPXID06629359824A"
+  },
+  "261015PN2NABGP": {
+    "first_seen": "2026-10-16T07:24:10.172868+00:00",
+    "items": [
+      {
+        "qty": 6,
+        "sku": "ITBISA-7SEGMENT-CATHODE-RED-0.56-1BIT"
+      }
+    ],
+    "last_seen": "2026-10-16T07:24:59.580171+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-16T07:26:55.906156+00:00",
+    "tracking_number": "SPXID06526932049A"
+  },
+  "261016QD5H03R0": {
+    "first_seen": "2026-10-16T07:24:10.172868+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
+      }
+    ],
+    "last_seen": "2026-10-16T07:24:59.580171+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-16T07:27:09.074719+00:00",
+    "tracking_number": "SPXID06227169979A"
+  },
+  "261016QFVTB2N1": {
+    "first_seen": "2026-10-16T07:24:10.172868+00:00",
+    "items": [
+      {
+        "qty": 500,
+        "sku": "ITBISA-IC-NE555P-DIP8"
+      }
+    ],
+    "last_seen": "2026-10-16T07:24:59.580171+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-16T07:27:22.797419+00:00",
+    "tracking_number": "SPXID06020115575A"
+  },
+  "261016QH3AGSYS": {
+    "first_seen": "2026-10-16T07:24:10.172868+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-USB-A-TO-B-30CM"
+      }
+    ],
+    "last_seen": "2026-10-16T07:24:59.580171+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-16T07:27:36.098443+00:00",
+    "tracking_number": "SPXID06314604060A"
+  },
+  "261016QQ2YGGMA": {
+    "first_seen": "2026-10-16T07:24:10.172868+00:00",
+    "items": [
+      {
+        "qty": 40,
+        "sku": "ITBISA-7SEGMENT-CATHODE-RED-0.56-1BIT"
+      }
+    ],
+    "last_seen": "2026-10-16T07:24:59.580171+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-16T07:27:49.396784+00:00",
+    "tracking_number": "SPXID06030515392A"
   }
 }
