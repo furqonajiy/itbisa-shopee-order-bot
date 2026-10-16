@@ -52,6 +52,10 @@ jobs:
           SHOPEE_PARTNER_ID: ${{ secrets.SHOPEE_PARTNER_ID }}
           SHOPEE_PARTNER_KEY: ${{ secrets.SHOPEE_PARTNER_KEY }}
           SHOPEE_SHOP_ID: ${{ secrets.SHOPEE_SHOP_ID }}
+          # config.py requires these at import; placeholders, so this job
+          # cannot send anything to Telegram.
+          TELEGRAM_BOT_TOKEN: unused
+          TELEGRAM_CHAT_ID: unused
           ORDERS: ${{ inputs.orders }}
         run: python scripts/fetch_label_sample.py $ORDERS
 
