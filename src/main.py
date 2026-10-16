@@ -461,6 +461,10 @@ def _do_run(precheck=False):
             waiting.append((order_sn, "label belum siap"))
             continue
 
+        # Keep the untouched PDF for run.yml's encrypted one-day artifact
+        # (keep_pdf explains why). Never raises, so it cannot block the label.
+        label_processor.keep_pdf(order_sn, pdf_bytes)
+
         # A label exists, so Shopee has issued a resi and these goods are
         # committed to shipping. Record it now — this is the moment the stock
         # physically leaves, and the resi is what the operator quotes to the
