@@ -8,10 +8,12 @@ Why this file exists:
   A marketplace title is written for search ("ITBisa - Relay 5V 4 Pin
   SRD-05VDC-SL-A SPST-NO 10A | Relay Songle Biru 4P PCB THT ..."), so the packer
   has to read four lines to find the one word that tells two products apart.
-  The operator keeps one simple name per base SKU in packing_names.txt in
-  itbisa-shop-stock-bot (main), where the [bracketed] part is the word that
-  tells a product from its siblings and is printed red. The list is read fresh
-  on every run, so an edit there reaches the next label with no deploy here.
+  The operator keeps one simple name per base SKU in packing_names.txt at the
+  root of itbisa-shopee-order-bot (main), where the [bracketed] part is the
+  word that tells a product from its siblings and is printed red. That repo is
+  public, so both order bots read the one list without a token: the Shopee bot
+  from its own checkout, the TikTok Shop bot from the raw file on main. It is
+  read on every run, so an edit reaches the next label with no deploy.
 
 File format (one line per base SKU; '#' lines are comments):
   <BASE_SKU> = <name with [red part]> [| <pack count>=<text>]
@@ -21,16 +23,14 @@ This file is duplicated across both order bots on purpose (like
 balance_dispatcher.py): keep the two copies identical.
 """
 
-import base64
-import json
-import os
 import re
+from pathlib import Path
 from urllib import request
 
-GH_OWNER = "furqonajiy"
-STOCK_REPO = "itbisa-shop-stock-bot"
-NAMES_PATH = "packing_names.txt"
-NAMES_REF = "main"
+NAMES_FILE = "packing_names.txt"
+NAMES_URL = ("https://raw.githubusercontent.com/furqonajiy/itbisa-shopee-order-bot"
+             f"/main/{NAMES_FILE}")
+LOCAL_FILE = Path(__file__).resolve().parent.parent / NAMES_FILE
 
 RED = "red"
 BLACK = "black"
@@ -49,27 +49,20 @@ def parse(text):
     return names
 
 
-def load():
-    """Reads the list from the stock bot's main branch. Never raises.
+def load(local_file=LOCAL_FILE, url=NAMES_URL):
+    """Reads the list: the repo's own copy if it has one, else the raw file
+    on itbisa-shopee-order-bot main. Never raises.
 
     Returns ({BASE_SKU: line}, None) or ({}, short reason). An empty list
     leaves every label exactly as the marketplace printed it.
     """
-    token = os.environ.get("STOCK_DISPATCH_TOKEN")
-    if not token:
-        return {}, "STOCK_DISPATCH_TOKEN tidak ada"
-    url = (f"https://api.github.com/repos/{GH_OWNER}/{STOCK_REPO}"
-           f"/contents/{NAMES_PATH}?ref={NAMES_REF}")
-    req = request.Request(url, headers={
-        "Accept": "application/vnd.github+json",
-        "Authorization": f"Bearer {token}",
-        "X-GitHub-Api-Version": "2022-11-28",
-        "User-Agent": "itbisa-packing-names",
-    })
     try:
-        with request.urlopen(req, timeout=15) as resp:
-            body = json.loads(resp.read().decode("utf-8"))
-        text = base64.b64decode(body["content"]).decode("utf-8")
+        if local_file and Path(local_file).is_file():
+            text = Path(local_file).read_text(encoding="utf-8")
+        else:
+            req = request.Request(url, headers={"User-Agent": "itbisa-packing-names"})
+            with request.urlopen(req, timeout=15) as resp:
+                text = resp.read().decode("utf-8")
     except Exception as e:                                  # noqa: BLE001
         return {}, f"{type(e).__name__}: {e}"[:160]
     names = parse(text)
