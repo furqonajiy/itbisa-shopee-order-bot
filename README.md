@@ -398,6 +398,22 @@ To fix: make sure `SHOPEE_API_BASE_URL` in `src/config.py` matches the
 environment you want, and re-run `python scripts/bootstrap_tokens.py` to get
 tokens for that environment.
 
+### 403 on every run since a given hour: re-authorize through Actions
+
+When every run fails with `403 Client Error: Forbidden for url: …/api/v2/auth/access_token/get`,
+Shopee no longer accepts the refresh token, so the shop must be authorized again. No laptop is
+needed:
+
+1. In Shopee Open Platform Console, click **Authorize** on the app and approve the shop.
+2. Copy the `code` value from the redirect URL (`…?code=XXXX&shop_id=…`). It is single-use and
+   expires in about 10 minutes.
+3. Actions → **Shopee Auth** → Run workflow, and paste the code. The workflow exchanges it with
+   the repo secrets and writes `data/shopee_tokens.json` to `bot-state`.
+4. Run **Run Shopee Order Bot** once to confirm.
+
+The stock bot has its own token pair: authorize again for a second code and run the stock bot's
+own **Shopee Auth** workflow.
+
 ### invalid_code during bootstrap
 
 The authorization code you pasted has expired, was already used, or was from
