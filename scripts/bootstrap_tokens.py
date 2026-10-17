@@ -39,6 +39,16 @@ sys.path.insert(0, str(PROJECT_ROOT))
 from src import config
 
 
+def _code_from_args():
+    """The authorization code from `--code X` or SHOPEE_AUTH_CODE, else None."""
+    import os
+    if "--code" in sys.argv:
+        i = sys.argv.index("--code")
+        return sys.argv[i + 1].strip() if i + 1 < len(sys.argv) else ""
+    env = os.environ.get("SHOPEE_AUTH_CODE")
+    return env.strip() if env is not None else None
+
+
 def main():
     """Interactive bootstrap flow."""
 
@@ -55,7 +65,11 @@ def main():
     print()
 
     # STEP 1: Prompt for the authorization code.
-    code = input("Paste the authorization code from the Shopee Console URL: ").strip()
+    # From Actions (shopee_auth.yml) the code arrives as --code or SHOPEE_AUTH_CODE;
+    # run by hand it is still asked for.
+    code = _code_from_args()
+    if code is None:
+        code = input("Paste the authorization code from the Shopee Console URL: ").strip()
     if not code:
         print("No code provided. Aborting.")
         sys.exit(1)
@@ -122,8 +136,6 @@ def main():
         json.dump(tokens, f, indent=2, sort_keys=True)
 
     print(f"\n✓ Wrote tokens to {tokens_path}")
-    print(f"  access_token:  {access_token[:12]}... (truncated)")
-    print(f"  refresh_token: {refresh_token[:12]}... (truncated)")
     print(f"  expires at:    {expires_at.isoformat()}")
     print(f"\nYou can now run the bot normally. The bot will auto-refresh")
     print(f"the access_token every 4 hours. You only need to run this")

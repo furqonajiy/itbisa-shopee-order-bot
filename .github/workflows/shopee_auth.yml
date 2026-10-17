@@ -1,0 +1,75 @@
+# Re-authorizes the bot with Shopee from a fresh authorization code, without a
+# laptop: Shopee Open Platform Console → Authorize → copy `code` from the redirect
+# URL → run this workflow with it (the code is single-use and expires in ~10
+# minutes). The exchange runs with the repo secrets, and the new token pair is
+# written to bot-state. Needed when every run fails with 403 on
+# /api/v2/auth/access_token/get (the refresh token is no longer accepted).
+#
+# The stock bot holds its own token pair: authorize again for a second code and
+# run its own `Shopee Auth` workflow with it.
+
+name: Shopee Auth
+
+on:
+  workflow_dispatch:
+    inputs:
+      code:
+        description: "Authorization code from the Shopee Console redirect URL (?code=…)"
+        required: true
+        type: string
+
+jobs:
+  auth:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    # Same group as run.yml: both write shopee_tokens.json.
+    concurrency:
+      group: bot-state-${{ github.repository }}
+      cancel-in-progress: false
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Mask the code
+        env:
+          CODE: ${{ inputs.code }}
+        run: echo "::add-mask::$CODE"
+
+      - name: Check out code from main
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Exchange the code for tokens
+        env:
+          SHOPEE_PARTNER_ID: ${{ secrets.SHOPEE_PARTNER_ID }}
+          SHOPEE_PARTNER_KEY: ${{ secrets.SHOPEE_PARTNER_KEY }}
+          SHOPEE_SHOP_ID: ${{ secrets.SHOPEE_SHOP_ID }}
+          TELEGRAM_BOT_TOKEN: unused
+          TELEGRAM_CHAT_ID: unused
+          SHOPEE_AUTH_CODE: ${{ inputs.code }}
+        run: python scripts/bootstrap_tokens.py
+
+      - name: Commit the new tokens to bot-state
+        run: |
+          git config user.name "itbisa-bot"
+          git config user.email "bot@itbisa.local"
+          cp data/shopee_tokens.json /tmp/shopee_tokens.json
+          git fetch origin bot-state
+          git checkout -B bot-state origin/bot-state
+          cp /tmp/shopee_tokens.json data/shopee_tokens.json
+          git add data/shopee_tokens.json
+          git diff --staged --quiet || git commit -m "Re-authorize Shopee [skip ci]"
+          git push origin bot-state
