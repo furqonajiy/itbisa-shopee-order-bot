@@ -4127,7 +4127,7 @@
         "sku": "ITBISA-RESISTOR-10K-1/4W"
       }
     ],
-    "last_seen": "2026-10-17T11:18:02.476666+00:00",
+    "last_seen": "2026-10-17T12:27:41.402019+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-16T07:24:21.801104+00:00",
@@ -4199,7 +4199,7 @@
         "sku": "ITBISA-RESISTOR-2K2-1/4W"
       }
     ],
-    "last_seen": "2026-10-17T11:18:02.476666+00:00",
+    "last_seen": "2026-10-17T12:27:41.402019+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-16T07:26:28.826181+00:00",
@@ -4311,7 +4311,7 @@
         "sku": "ITBISA-PIN-HEADER-MALE-1X40PIN-LURUS"
       }
     ],
-    "last_seen": "2026-10-17T11:18:02.476666+00:00",
+    "last_seen": "2026-10-17T12:27:41.402019+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-17T08:15:35.025832+00:00",
@@ -4329,7 +4329,7 @@
         "sku": "40PCS-ITBISA-JUMPER-MF-10CM"
       }
     ],
-    "last_seen": "2026-10-17T11:18:02.476666+00:00",
+    "last_seen": "2026-10-17T12:27:41.402019+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-17T08:15:48.336454+00:00",
@@ -4355,7 +4355,7 @@
         "sku": "ITBISA-RESISTOR-2K2-1/4W"
       }
     ],
-    "last_seen": "2026-10-17T11:18:02.476666+00:00",
+    "last_seen": "2026-10-17T12:27:41.402019+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-17T08:16:01.344227+00:00",
@@ -4369,7 +4369,7 @@
         "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
       }
     ],
-    "last_seen": "2026-10-17T11:18:02.476666+00:00",
+    "last_seen": "2026-10-17T12:27:41.402019+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-17T08:16:14.576539+00:00",
@@ -4383,7 +4383,7 @@
         "sku": "ITBISA-JACK-DC-005-FEMALE"
       }
     ],
-    "last_seen": "2026-10-17T11:18:02.476666+00:00",
+    "last_seen": "2026-10-17T12:27:41.402019+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-17T08:16:27.546767+00:00",
@@ -4401,7 +4401,7 @@
         "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
       }
     ],
-    "last_seen": "2026-10-17T11:18:02.476666+00:00",
+    "last_seen": "2026-10-17T12:27:41.402019+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-17T08:16:40.519578+00:00",
@@ -4415,7 +4415,7 @@
         "sku": "ITBISA-IC-74HC595N-DIP16"
       }
     ],
-    "last_seen": "2026-10-17T11:18:02.476666+00:00",
+    "last_seen": "2026-10-17T12:27:41.402019+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-17T08:16:53.024157+00:00",
@@ -4429,7 +4429,7 @@
         "sku": "ITBISA-7SEGMENT-CATHODE-RED-2.30-1BIT"
       }
     ],
-    "last_seen": "2026-10-17T11:18:02.476666+00:00",
+    "last_seen": "2026-10-17T12:27:41.402019+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-17T08:17:05.297694+00:00",
@@ -4455,10 +4455,24 @@
         "sku": "ITBISA-SOCKET-IC-DIP16-NARROW"
       }
     ],
-    "last_seen": "2026-10-17T11:18:02.476666+00:00",
+    "last_seen": "2026-10-17T12:27:41.402019+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-17T10:13:34.348180+00:00",
     "tracking_number": "SPXID06587722130A"
+  },
+  "261017U9QADCDS": {
+    "first_seen": "2026-10-17T12:27:29.508259+00:00",
+    "items": [
+      {
+        "qty": 100,
+        "sku": "ITBISA-IC-74HC595N-DIP16"
+      }
+    ],
+    "last_seen": "2026-10-17T12:27:41.402019+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-17T12:27:54.417912+00:00",
+    "tracking_number": "SPXID06666144935A"
   }
 }
