@@ -66,7 +66,9 @@ jobs:
         run: |
           git config user.name "itbisa-bot"
           git config user.email "bot@itbisa.local"
-          cp data/shopee_tokens.json /tmp/shopee_tokens.json
+          # Move (not copy): main has no data/shopee_tokens.json, so a copy left behind
+          # is an untracked file that blocks the checkout of bot-state.
+          mv data/shopee_tokens.json /tmp/shopee_tokens.json
           git fetch origin bot-state
           git checkout -B bot-state origin/bot-state
           cp /tmp/shopee_tokens.json data/shopee_tokens.json
