@@ -4741,9 +4741,11 @@
         "sku": "ITBISA-SOCKET-IC-DIP16-NARROW"
       }
     ],
-    "last_seen": "2026-10-19T15:57:48.740127+00:00",
+    "last_seen": "2026-10-19T20:39:53.917730+00:00",
     "order_status": "READY_TO_SHIP",
-    "pending_items": false
+    "pending_items": false,
+    "shipped_at": "2026-10-19T20:40:08.928796+00:00",
+    "tracking_number": "SPXID06876713493A"
   },
   "2610193A1TQ9Y9": {
     "first_seen": "2026-10-19T15:57:28.330099+00:00",
@@ -4753,9 +4755,11 @@
         "sku": "ITBISA-JACK-DC-005-FEMALE"
       }
     ],
-    "last_seen": "2026-10-19T15:57:48.740127+00:00",
+    "last_seen": "2026-10-19T20:39:53.917730+00:00",
     "order_status": "READY_TO_SHIP",
-    "pending_items": false
+    "pending_items": false,
+    "shipped_at": "2026-10-19T20:40:24.515112+00:00",
+    "tracking_number": "SPXID06397929396A"
   },
   "2610193AKN3AXC": {
     "first_seen": "2026-10-19T15:57:28.330099+00:00",
@@ -4765,8 +4769,10 @@
         "sku": "ITBISA-JACK-DC-005-FEMALE"
       }
     ],
-    "last_seen": "2026-10-19T15:57:48.740127+00:00",
+    "last_seen": "2026-10-19T20:39:53.917730+00:00",
     "order_status": "READY_TO_SHIP",
-    "pending_items": false
+    "pending_items": false,
+    "shipped_at": "2026-10-19T20:40:38.049392+00:00",
+    "tracking_number": "SPXID06601663643A"
   }
 }
