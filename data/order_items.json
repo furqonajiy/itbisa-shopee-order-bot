@@ -4571,7 +4571,7 @@
         "sku": "ITBISA-JACK-DC-005-FEMALE"
       }
     ],
-    "last_seen": "2026-10-19T06:20:38.711845+00:00",
+    "last_seen": "2026-10-19T08:33:45.701140+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-19T06:09:27.244589+00:00",
@@ -4585,7 +4585,7 @@
         "sku": "ITBISA-RELAY-24V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-10-19T06:20:38.711845+00:00",
+    "last_seen": "2026-10-19T08:33:45.701140+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-19T06:09:40.954759+00:00",
@@ -4599,7 +4599,7 @@
         "sku": "ITBISA-SOCKET-IC-DIP14-NARROW"
       }
     ],
-    "last_seen": "2026-10-19T06:20:38.711845+00:00",
+    "last_seen": "2026-10-19T08:33:45.701140+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-19T06:09:54.849087+00:00",
@@ -4613,7 +4613,7 @@
         "sku": "ITBISA-JACK-DC-005-FEMALE"
       }
     ],
-    "last_seen": "2026-10-19T06:20:38.711845+00:00",
+    "last_seen": "2026-10-19T08:33:45.701140+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-19T06:10:08.527791+00:00",
@@ -4659,7 +4659,7 @@
         "sku": "40PCS-ITBISA-JUMPER-MF-10CM"
       }
     ],
-    "last_seen": "2026-10-19T06:20:38.711845+00:00",
+    "last_seen": "2026-10-19T08:33:45.701140+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-18T07:31:00.193692+00:00",
@@ -4673,7 +4673,7 @@
         "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-10-19T06:20:38.711845+00:00",
+    "last_seen": "2026-10-19T08:33:45.701140+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-19T06:10:21.935599+00:00",
@@ -4687,7 +4687,7 @@
         "sku": "ITBISA-RELAY-24V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-10-19T06:20:38.711845+00:00",
+    "last_seen": "2026-10-19T08:33:45.701140+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-19T06:10:35.843399+00:00",
@@ -4713,7 +4713,7 @@
         "sku": "ITBISA-RTC-DS3231M"
       }
     ],
-    "last_seen": "2026-10-19T06:20:38.711845+00:00",
+    "last_seen": "2026-10-19T08:33:45.701140+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-19T06:10:49.351559+00:00",
@@ -4727,10 +4727,22 @@
         "sku": "ITBISA-IDC-2X5-AMPHENOL-FEMALE"
       }
     ],
-    "last_seen": "2026-10-19T06:20:38.711845+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-19T08:33:45.701140+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-19T06:20:51.721644+00:00",
     "tracking_number": "CM44570792342"
+  },
+  "2610192RR798SN": {
+    "first_seen": "2026-10-19T08:33:31.001648+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-SOCKET-IC-DIP16-NARROW"
+      }
+    ],
+    "last_seen": "2026-10-19T08:33:45.701140+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false
   }
 }
