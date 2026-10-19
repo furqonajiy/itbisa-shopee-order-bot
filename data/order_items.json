@@ -4741,7 +4741,31 @@
         "sku": "ITBISA-SOCKET-IC-DIP16-NARROW"
       }
     ],
-    "last_seen": "2026-10-19T10:32:07.419618+00:00",
+    "last_seen": "2026-10-19T15:57:48.740127+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false
+  },
+  "2610193A1TQ9Y9": {
+    "first_seen": "2026-10-19T15:57:28.330099+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-JACK-DC-005-FEMALE"
+      }
+    ],
+    "last_seen": "2026-10-19T15:57:48.740127+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false
+  },
+  "2610193AKN3AXC": {
+    "first_seen": "2026-10-19T15:57:28.330099+00:00",
+    "items": [
+      {
+        "qty": 100,
+        "sku": "ITBISA-JACK-DC-005-FEMALE"
+      }
+    ],
+    "last_seen": "2026-10-19T15:57:48.740127+00:00",
     "order_status": "READY_TO_SHIP",
     "pending_items": false
   }
