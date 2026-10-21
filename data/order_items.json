@@ -4893,7 +4893,7 @@
         "sku": "ITBISA-IC-NE555P-DIP8"
       }
     ],
-    "last_seen": "2026-10-21T05:57:21.009922+00:00",
+    "last_seen": "2026-10-21T06:27:22.273140+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-20T17:10:57.249813+00:00",
@@ -4907,7 +4907,7 @@
         "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-10-21T05:57:21.009922+00:00",
+    "last_seen": "2026-10-21T06:27:22.273140+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-20T17:11:11.338571+00:00",
@@ -4921,7 +4921,7 @@
         "sku": "ITBISA-IC-PC817-DIP4"
       }
     ],
-    "last_seen": "2026-10-21T05:57:21.009922+00:00",
+    "last_seen": "2026-10-21T06:27:22.273140+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-20T17:11:25.048713+00:00",
@@ -4935,8 +4935,8 @@
         "sku": "ITBISA-IC-PC817-DIP4"
       }
     ],
-    "last_seen": "2026-10-21T05:57:21.009922+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-21T06:27:22.273140+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-21T05:57:35.849052+00:00",
     "tracking_number": "SPXID06381400155A"
@@ -4949,8 +4949,8 @@
         "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
       }
     ],
-    "last_seen": "2026-10-21T05:57:21.009922+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-21T06:27:22.273140+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-21T05:57:49.555111+00:00",
     "tracking_number": "SPXID06751520272A"
@@ -4963,8 +4963,8 @@
         "sku": "ITBISA-USB-A-TO-B-30CM"
       }
     ],
-    "last_seen": "2026-10-21T05:57:21.009922+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-21T06:27:22.273140+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-21T05:58:03.060437+00:00",
     "tracking_number": "SPXID06545186493A"
