@@ -4893,8 +4893,8 @@
         "sku": "ITBISA-IC-NE555P-DIP8"
       }
     ],
-    "last_seen": "2026-10-20T17:10:42.591331+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-21T05:57:21.009922+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-20T17:10:57.249813+00:00",
     "tracking_number": "SPXID06790250603A"
@@ -4907,8 +4907,8 @@
         "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-10-20T17:10:42.591331+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-21T05:57:21.009922+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-20T17:11:11.338571+00:00",
     "tracking_number": "SPXID06961583309A"
@@ -4921,10 +4921,52 @@
         "sku": "ITBISA-IC-PC817-DIP4"
       }
     ],
-    "last_seen": "2026-10-20T17:10:42.591331+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-21T05:57:21.009922+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-20T17:11:25.048713+00:00",
     "tracking_number": "SPXID06613831541A"
+  },
+  "2610216USPUEPF": {
+    "first_seen": "2026-10-21T05:57:09.872000+00:00",
+    "items": [
+      {
+        "qty": 200,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      }
+    ],
+    "last_seen": "2026-10-21T05:57:21.009922+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-21T05:57:35.849052+00:00",
+    "tracking_number": "SPXID06381400155A"
+  },
+  "2610217BVJGB32": {
+    "first_seen": "2026-10-21T05:57:09.872000+00:00",
+    "items": [
+      {
+        "qty": 17,
+        "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
+      }
+    ],
+    "last_seen": "2026-10-21T05:57:21.009922+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-21T05:57:49.555111+00:00",
+    "tracking_number": "SPXID06751520272A"
+  },
+  "2610217JHVWEGH": {
+    "first_seen": "2026-10-21T05:57:09.872000+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-USB-A-TO-B-30CM"
+      }
+    ],
+    "last_seen": "2026-10-21T05:57:21.009922+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-21T05:58:03.060437+00:00",
+    "tracking_number": "SPXID06545186493A"
   }
 }
