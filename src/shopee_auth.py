@@ -223,7 +223,14 @@ def _refresh_tokens(refresh_token):
 
     # STEP 2: Call the refresh endpoint.
     response = requests.post(url, json=body, timeout=30)
-    response.raise_for_status()
+    # A refused refresh (HTTP 4xx) carries Shopee's reason in the body
+    # (`error` + `message`, never a token): put it in the error so the
+    # Telegram alert says WHY, e.g. the shop's authorization was cancelled.
+    if not response.ok:
+        raise requests.HTTPError(
+            f"{response.status_code} refresh token ditolak Shopee: {response.text[:300]}",
+            response=response,
+        )
     data = response.json()
 
     # STEP 3: Check for the "refresh token expired" error. Shopee returns this
