@@ -5162,5 +5162,83 @@
     "pending_items": false,
     "shipped_at": "2026-10-22T08:27:46.984958+00:00",
     "tracking_number": "SPXID06045342225A"
+  },
+  "261022AHFACGS7": {
+    "first_seen": "2026-10-22T15:14:46.427455+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-22T15:16:49.261610+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-22T15:17:03.433511+00:00",
+    "tracking_number": "SPXID06052831452A"
+  },
+  "261022AJA7JVQD": {
+    "first_seen": "2026-10-22T15:14:46.427455+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-24V-4PIN-BLUE"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-24V-5PIN-BLUE"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-5PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-22T15:16:49.261610+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-22T15:17:16.834494+00:00",
+    "tracking_number": "SPXID06380122154A"
+  },
+  "261022AJMBUYFW": {
+    "first_seen": "2026-10-22T15:14:46.427455+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-22T15:16:49.261610+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false
+  },
+  "261022B272KKSY": {
+    "first_seen": "2026-10-22T15:14:46.427455+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
+      },
+      {
+        "qty": 10,
+        "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
+      }
+    ],
+    "last_seen": "2026-10-22T15:16:49.261610+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-22T15:17:33.151232+00:00",
+    "tracking_number": "SPXID06533080622A"
   }
 }
