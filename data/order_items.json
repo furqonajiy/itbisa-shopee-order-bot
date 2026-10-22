@@ -4968,5 +4968,163 @@
     "pending_items": false,
     "shipped_at": "2026-10-21T05:58:03.060437+00:00",
     "tracking_number": "SPXID06545186493A"
+  },
+  "2610217T9KT28U": {
+    "first_seen": "2026-10-22T06:15:40.104375+00:00",
+    "items": [
+      {
+        "qty": 2,
+        "sku": "ITBISA-RTC-DS3231M"
+      }
+    ],
+    "last_seen": "2026-10-22T06:16:05.445572+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-22T06:16:23.825726+00:00",
+    "tracking_number": "CM11952986293"
+  },
+  "26102184WQ6NPT": {
+    "first_seen": "2026-10-22T06:15:40.104375+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-24V-4PIN-BLUE"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-22T06:16:05.445572+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-22T06:16:37.326771+00:00",
+    "tracking_number": "SPXID06200582271A"
+  },
+  "2610228R1M1EB8": {
+    "first_seen": "2026-10-22T06:15:40.104375+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-USB-A-TO-B-30CM"
+      }
+    ],
+    "last_seen": "2026-10-22T06:16:05.445572+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-22T06:16:50.728598+00:00",
+    "tracking_number": "SPXID06510514582A"
+  },
+  "2610228U4XJ0PQ": {
+    "first_seen": "2026-10-22T06:15:40.104375+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-22T06:16:05.445572+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-22T06:17:03.878257+00:00",
+    "tracking_number": "SPXID06159493807A"
+  },
+  "2610229DHRBR2P": {
+    "first_seen": "2026-10-22T06:15:40.104375+00:00",
+    "items": [
+      {
+        "qty": 7,
+        "sku": "ITBISA-IC-JRC4558D-DIP8"
+      },
+      {
+        "qty": 10,
+        "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
+      }
+    ],
+    "last_seen": "2026-10-22T06:16:05.445572+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-22T06:17:16.655037+00:00",
+    "tracking_number": "SPXID06510319156A"
+  },
+  "2610229H05P1EC": {
+    "first_seen": "2026-10-22T06:15:40.104375+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-RESISTOR-100K-1/4W"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-10K-1/4W"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-27K-1/4W"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-4K7-1/4W"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-RESISTOR-560-1/4W"
+      },
+      {
+        "qty": 30,
+        "sku": "ITBISA-RESISTOR-5K6-1/4W"
+      }
+    ],
+    "last_seen": "2026-10-22T06:16:05.445572+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-22T06:17:30.457675+00:00",
+    "tracking_number": "SPXID06855813448A"
+  },
+  "2610229KRM6EP2": {
+    "first_seen": "2026-10-22T06:15:40.104375+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
+      }
+    ],
+    "last_seen": "2026-10-22T06:16:05.445572+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-22T06:17:43.394450+00:00",
+    "tracking_number": "SPXID06196937694A"
+  },
+  "2610229TUQ7DT4": {
+    "first_seen": "2026-10-22T06:15:40.104375+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-SOCKET-IC-DIP14-NARROW"
+      }
+    ],
+    "last_seen": "2026-10-22T06:16:05.445572+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-22T06:17:55.793089+00:00",
+    "tracking_number": "SPXID06363125554A"
+  },
+  "2610229YMU72KN": {
+    "first_seen": "2026-10-22T06:15:40.104375+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-JACK-DC-005-FEMALE"
+      }
+    ],
+    "last_seen": "2026-10-22T06:16:05.445572+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-22T06:18:08.543360+00:00",
+    "tracking_number": "SPXID06483861315A"
   }
 }
