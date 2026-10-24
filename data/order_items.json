@@ -5377,8 +5377,8 @@
         "sku": "ITBISA-IC-NE555P-DIP8"
       }
     ],
-    "last_seen": "2026-10-24T07:01:50.417467+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-24T12:51:44.355605+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-24T07:02:07.017324+00:00",
     "tracking_number": "SPXID06832256872A"
@@ -5391,8 +5391,8 @@
         "sku": "ITBISA-IC-74HC595N-DIP16"
       }
     ],
-    "last_seen": "2026-10-24T07:01:50.417467+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-24T12:51:44.355605+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-24T07:02:20.846442+00:00",
     "tracking_number": "SPXID06795251775A"
@@ -5405,8 +5405,8 @@
         "sku": "ITBISA-USB-A-TO-B-30CM"
       }
     ],
-    "last_seen": "2026-10-24T07:01:50.417467+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-24T12:51:44.355605+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-24T07:02:34.382864+00:00",
     "tracking_number": "SPXID06023888867A"
@@ -5427,8 +5427,8 @@
         "sku": "ITBISA-KAPASITOR-ELCO-100UF-25V"
       }
     ],
-    "last_seen": "2026-10-24T07:01:50.417467+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-24T12:51:44.355605+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-24T07:02:47.825198+00:00",
     "tracking_number": "SPXID06245003662A"
@@ -5441,10 +5441,52 @@
         "sku": "ITBISA-USB-A-TO-B-30CM"
       }
     ],
-    "last_seen": "2026-10-24T07:01:50.417467+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-24T12:51:44.355605+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-24T07:03:01.567525+00:00",
     "tracking_number": "SPXID06321238237A"
+  },
+  "261024FCD1X28R": {
+    "first_seen": "2026-10-24T12:51:26.207032+00:00",
+    "items": [
+      {
+        "qty": 260,
+        "sku": "ITBISA-SOCKET-IC-DIP16-NARROW"
+      }
+    ],
+    "last_seen": "2026-10-24T12:51:44.355605+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-24T12:51:59.020926+00:00",
+    "tracking_number": "SPXID06837926230A"
+  },
+  "261024FCKC5FPD": {
+    "first_seen": "2026-10-24T12:51:26.207032+00:00",
+    "items": [
+      {
+        "qty": 234,
+        "sku": "ITBISA-7SEGMENT-ANODE-RED-0.56-1BIT"
+      }
+    ],
+    "last_seen": "2026-10-24T12:51:44.355605+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-24T12:52:12.829161+00:00",
+    "tracking_number": "SPXID06700969227A"
+  },
+  "261024FH69RSW4": {
+    "first_seen": "2026-10-24T12:51:26.207032+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-ARDUINO-UNO-R3-328P-SMD"
+      }
+    ],
+    "last_seen": "2026-10-24T12:51:44.355605+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-24T12:52:26.240092+00:00",
+    "tracking_number": "SPXID06015356263A"
   }
 }
