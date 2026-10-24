@@ -5368,5 +5368,83 @@
     "pending_items": false,
     "shipped_at": "2026-10-23T09:06:24.718911+00:00",
     "tracking_number": "SPXID06397473500A"
+  },
+  "261024EFDCW7WV": {
+    "first_seen": "2026-10-24T07:01:22.969319+00:00",
+    "items": [
+      {
+        "qty": 100,
+        "sku": "ITBISA-IC-NE555P-DIP8"
+      }
+    ],
+    "last_seen": "2026-10-24T07:01:50.417467+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-24T07:02:07.017324+00:00",
+    "tracking_number": "SPXID06832256872A"
+  },
+  "261024EKRBVKPH": {
+    "first_seen": "2026-10-24T07:01:22.969319+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-IC-74HC595N-DIP16"
+      }
+    ],
+    "last_seen": "2026-10-24T07:01:50.417467+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-24T07:02:20.846442+00:00",
+    "tracking_number": "SPXID06795251775A"
+  },
+  "261024ES2UV9YU": {
+    "first_seen": "2026-10-24T07:01:22.969319+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-USB-A-TO-B-30CM"
+      }
+    ],
+    "last_seen": "2026-10-24T07:01:50.417467+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-24T07:02:34.382864+00:00",
+    "tracking_number": "SPXID06023888867A"
+  },
+  "261024F11PQE0J": {
+    "first_seen": "2026-10-24T07:01:22.969319+00:00",
+    "items": [
+      {
+        "qty": 50,
+        "sku": "ITBISA-DIODA-1N4007-DO41"
+      },
+      {
+        "qty": 50,
+        "sku": "ITBISA-IC-NE555P-DIP8"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-KAPASITOR-ELCO-100UF-25V"
+      }
+    ],
+    "last_seen": "2026-10-24T07:01:50.417467+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-24T07:02:47.825198+00:00",
+    "tracking_number": "SPXID06245003662A"
+  },
+  "261024F7SECM5A": {
+    "first_seen": "2026-10-24T07:01:22.969319+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-USB-A-TO-B-30CM"
+      }
+    ],
+    "last_seen": "2026-10-24T07:01:50.417467+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-24T07:03:01.567525+00:00",
+    "tracking_number": "SPXID06321238237A"
   }
 }
