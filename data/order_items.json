@@ -5455,7 +5455,7 @@
         "sku": "ITBISA-SOCKET-IC-DIP16-NARROW"
       }
     ],
-    "last_seen": "2026-10-25T09:31:46.696030+00:00",
+    "last_seen": "2026-10-25T09:34:11.506161+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-24T12:51:59.020926+00:00",
@@ -5469,7 +5469,7 @@
         "sku": "ITBISA-7SEGMENT-ANODE-RED-0.56-1BIT"
       }
     ],
-    "last_seen": "2026-10-25T09:31:46.696030+00:00",
+    "last_seen": "2026-10-25T09:34:11.506161+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-24T12:52:12.829161+00:00",
@@ -5483,7 +5483,7 @@
         "sku": "ITBISA-ARDUINO-UNO-R3-328P-SMD"
       }
     ],
-    "last_seen": "2026-10-25T09:31:46.696030+00:00",
+    "last_seen": "2026-10-25T09:34:11.506161+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-24T12:52:26.240092+00:00",
@@ -5497,8 +5497,8 @@
         "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
       }
     ],
-    "last_seen": "2026-10-25T09:31:46.696030+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-25T09:34:11.506161+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-25T09:32:02.818239+00:00",
     "tracking_number": "SPXID06304285083A"
@@ -5519,8 +5519,8 @@
         "sku": "ITBISA-RESISTOR-2K2-1/4W"
       }
     ],
-    "last_seen": "2026-10-25T09:31:46.696030+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-25T09:34:11.506161+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-25T09:32:15.669526+00:00",
     "tracking_number": "SPXID06777406438A"
@@ -5533,8 +5533,8 @@
         "sku": "ITBISA-ABC-BATERAI-AA-ALKALINE"
       }
     ],
-    "last_seen": "2026-10-25T09:31:46.696030+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-25T09:34:11.506161+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-25T09:32:28.882001+00:00",
     "tracking_number": "SPXID06240013599A"
@@ -5547,8 +5547,8 @@
         "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-10-25T09:31:46.696030+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-25T09:34:11.506161+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-25T09:32:42.417941+00:00",
     "tracking_number": "CM32808903587"
@@ -5561,8 +5561,8 @@
         "sku": "ITBISA-ARDUINO-UNO-R3-328P-SMD"
       }
     ],
-    "last_seen": "2026-10-25T09:31:46.696030+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-25T09:34:11.506161+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-25T09:32:54.914233+00:00",
     "tracking_number": "SPXID06629232452A"
@@ -5575,9 +5575,11 @@
         "sku": "ITBISA-IC-ULN2003AN-DIP16"
       }
     ],
-    "last_seen": "2026-10-25T09:31:46.696030+00:00",
-    "order_status": "READY_TO_SHIP",
-    "pending_items": false
+    "last_seen": "2026-10-25T09:34:11.506161+00:00",
+    "order_status": "PROCESSED",
+    "pending_items": false,
+    "shipped_at": "2026-10-25T09:33:56.272040+00:00",
+    "tracking_number": "SPXID06064533551A"
   },
   "261025HR0PTFPQ": {
     "first_seen": "2026-10-25T09:31:16.121789+00:00",
@@ -5587,8 +5589,8 @@
         "sku": "ITBISA-IC-NE555P-DIP8"
       }
     ],
-    "last_seen": "2026-10-25T09:31:46.696030+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-25T09:34:11.506161+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-25T09:33:11.091430+00:00",
     "tracking_number": "SPXID06483209316A"
