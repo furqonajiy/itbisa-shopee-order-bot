@@ -5789,7 +5789,7 @@
         "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
       }
     ],
-    "last_seen": "2026-10-26T23:40:49.207885+00:00",
+    "last_seen": "2026-10-27T06:04:51.664843+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-26T16:24:33.681752+00:00",
@@ -5803,7 +5803,7 @@
         "sku": "ITBISA-IC-CD4017BE-DIP16"
       }
     ],
-    "last_seen": "2026-10-26T23:40:49.207885+00:00",
+    "last_seen": "2026-10-27T06:04:51.664843+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-26T16:24:46.410310+00:00",
@@ -5817,10 +5817,36 @@
         "sku": "ITBISA-LED-SUPERBRIGHT-5MM-WHITE"
       }
     ],
-    "last_seen": "2026-10-26T23:40:49.207885+00:00",
+    "last_seen": "2026-10-27T06:04:51.664843+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-26T23:39:12.730931+00:00",
     "tracking_number": "SPXID06754512495A"
+  },
+  "261027PH33JTKB": {
+    "first_seen": "2026-10-27T06:04:36.371732+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-27T06:04:51.664843+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-27T06:05:06.175551+00:00",
+    "tracking_number": "SPXID06064838748A"
+  },
+  "261027PKH845E9": {
+    "first_seen": "2026-10-27T06:04:36.371732+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-27T06:04:51.664843+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false
   }
 }
