@@ -5823,6 +5823,20 @@
     "shipped_at": "2026-10-26T23:39:12.730931+00:00",
     "tracking_number": "SPXID06754512495A"
   },
+  "261027NHY3Q666": {
+    "first_seen": "2026-10-27T21:36:09.123984+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-7SEGMENT-CATHODE-RED-2.30-1BIT"
+      }
+    ],
+    "last_seen": "2026-10-27T21:36:25.564377+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-27T21:36:39.425224+00:00",
+    "tracking_number": "SPXID06699664056A"
+  },
   "261027PH33JTKB": {
     "first_seen": "2026-10-27T06:04:36.371732+00:00",
     "items": [
@@ -5859,8 +5873,8 @@
         "sku": "ITBISA-USB-A-TO-B-30CM"
       }
     ],
-    "last_seen": "2026-10-27T15:54:56.072748+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-27T21:36:25.564377+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-27T15:55:11.575548+00:00",
     "tracking_number": "SPXID06481852176A"
@@ -5873,8 +5887,8 @@
         "sku": "ITBISA-IC-74HC245N-DIP20"
       }
     ],
-    "last_seen": "2026-10-27T15:54:56.072748+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-27T21:36:25.564377+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-27T15:55:26.116770+00:00",
     "tracking_number": "SPXID06546813045A"
@@ -5887,8 +5901,8 @@
         "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
       }
     ],
-    "last_seen": "2026-10-27T15:54:56.072748+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-27T21:36:25.564377+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-27T15:55:40.478121+00:00",
     "tracking_number": "SPXID06080962412A"
@@ -5901,10 +5915,24 @@
         "sku": "ITBISA-USB-A-TO-B-30CM"
       }
     ],
-    "last_seen": "2026-10-27T15:54:56.072748+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-27T21:36:25.564377+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-27T15:55:53.870242+00:00",
     "tracking_number": "SPXID06647811116A"
+  },
+  "261028QWKSWBS5": {
+    "first_seen": "2026-10-27T21:36:09.123984+00:00",
+    "items": [
+      {
+        "qty": 200,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      }
+    ],
+    "last_seen": "2026-10-27T21:36:25.564377+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-27T21:36:53.217604+00:00",
+    "tracking_number": "SPXID06950965905A"
   }
 }
