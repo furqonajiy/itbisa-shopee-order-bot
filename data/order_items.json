@@ -6109,8 +6109,8 @@
         "sku": "ITBISA-IC-CD4017BE-DIP16"
       }
     ],
-    "last_seen": "2026-10-28T13:29:25.911680+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-28T14:46:48.423322+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-28T13:29:40.277148+00:00",
     "tracking_number": "SPXID06800327732A"
@@ -6123,8 +6123,8 @@
         "sku": "ITBISA-USB-A-TO-B-30CM"
       }
     ],
-    "last_seen": "2026-10-28T13:29:25.911680+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-28T14:46:48.423322+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-28T13:29:54.481509+00:00",
     "tracking_number": "SPXID06087701521A"
