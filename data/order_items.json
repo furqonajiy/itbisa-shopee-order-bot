@@ -5971,7 +5971,7 @@
         "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
       }
     ],
-    "last_seen": "2026-10-28T08:25:16.809722+00:00",
+    "last_seen": "2026-10-28T13:29:25.911680+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-28T06:55:30.425872+00:00",
@@ -6100,5 +6100,33 @@
     "pending_items": false,
     "shipped_at": "2026-10-28T08:25:42.007408+00:00",
     "tracking_number": "SPXID06020825106A"
+  },
+  "261028SGGQVK5C": {
+    "first_seen": "2026-10-28T13:29:13.734530+00:00",
+    "items": [
+      {
+        "qty": 500,
+        "sku": "ITBISA-IC-CD4017BE-DIP16"
+      }
+    ],
+    "last_seen": "2026-10-28T13:29:25.911680+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-28T13:29:40.277148+00:00",
+    "tracking_number": "SPXID06800327732A"
+  },
+  "261028SSH6FWV3": {
+    "first_seen": "2026-10-28T13:29:13.734530+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-USB-A-TO-B-30CM"
+      }
+    ],
+    "last_seen": "2026-10-28T13:29:25.911680+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-28T13:29:54.481509+00:00",
+    "tracking_number": "SPXID06087701521A"
   }
 }
