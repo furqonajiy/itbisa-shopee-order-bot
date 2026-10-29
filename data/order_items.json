@@ -6109,7 +6109,7 @@
         "sku": "ITBISA-IC-CD4017BE-DIP16"
       }
     ],
-    "last_seen": "2026-10-29T06:22:05.260285+00:00",
+    "last_seen": "2026-10-29T07:04:23.389727+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-28T13:29:40.277148+00:00",
@@ -6123,7 +6123,7 @@
         "sku": "ITBISA-USB-A-TO-B-30CM"
       }
     ],
-    "last_seen": "2026-10-29T06:22:05.260285+00:00",
+    "last_seen": "2026-10-29T07:04:23.389727+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-28T13:29:54.481509+00:00",
@@ -6137,8 +6137,8 @@
         "sku": "ITBISA-IC-ULN2003AN-DIP16"
       }
     ],
-    "last_seen": "2026-10-29T06:22:05.260285+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-29T07:04:23.389727+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-29T06:22:21.507734+00:00",
     "tracking_number": "SPXID06833987736A"
@@ -6151,7 +6151,7 @@
         "sku": "ITBISA-IC-ULN2003AN-DIP16"
       }
     ],
-    "last_seen": "2026-10-29T06:22:05.260285+00:00",
+    "last_seen": "2026-10-29T07:04:23.389727+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-28T16:04:50.294620+00:00",
@@ -6165,7 +6165,7 @@
         "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-10-29T06:22:05.260285+00:00",
+    "last_seen": "2026-10-29T07:04:23.389727+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-28T16:05:04.391610+00:00",
@@ -6179,7 +6179,7 @@
         "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-10-29T06:22:05.260285+00:00",
+    "last_seen": "2026-10-29T07:04:23.389727+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-28T16:05:18.157082+00:00",
@@ -6193,7 +6193,7 @@
         "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
       }
     ],
-    "last_seen": "2026-10-29T06:22:05.260285+00:00",
+    "last_seen": "2026-10-29T07:04:23.389727+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-28T17:36:44.739378+00:00",
@@ -6207,7 +6207,7 @@
         "sku": "ITBISA-7SEGMENT-ANODE-RED-1.00-1BIT"
       }
     ],
-    "last_seen": "2026-10-29T06:22:05.260285+00:00",
+    "last_seen": "2026-10-29T07:04:23.389727+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-28T20:45:31.483586+00:00",
@@ -6225,7 +6225,7 @@
         "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
       }
     ],
-    "last_seen": "2026-10-29T06:22:05.260285+00:00",
+    "last_seen": "2026-10-29T07:04:23.389727+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-28T20:45:44.253084+00:00",
@@ -6239,8 +6239,8 @@
         "sku": "ITBISA-SOCKET-IC-DIP14-NARROW"
       }
     ],
-    "last_seen": "2026-10-29T06:22:05.260285+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-29T07:04:23.389727+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-29T06:22:34.989929+00:00",
     "tracking_number": "SPXID06603459752A"
@@ -6253,8 +6253,8 @@
         "sku": "ITBISA-IC-ULN2003AN-DIP16"
       }
     ],
-    "last_seen": "2026-10-29T06:22:05.260285+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-29T07:04:23.389727+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-29T06:22:48.106508+00:00",
     "tracking_number": "SPXID06016318260A"
@@ -6275,9 +6275,11 @@
         "sku": "ITBISA-RTC-DS3231M"
       }
     ],
-    "last_seen": "2026-10-29T06:22:05.260285+00:00",
-    "order_status": "READY_TO_SHIP",
-    "pending_items": false
+    "last_seen": "2026-10-29T07:04:23.389727+00:00",
+    "order_status": "PROCESSED",
+    "pending_items": false,
+    "shipped_at": "2026-10-29T07:04:11.897864+00:00",
+    "tracking_number": "SPXID06685958735A"
   },
   "261029UDHHC4SS": {
     "first_seen": "2026-10-29T06:21:45.690673+00:00",
@@ -6291,9 +6293,11 @@
         "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-10-29T06:22:05.260285+00:00",
-    "order_status": "READY_TO_SHIP",
-    "pending_items": false
+    "last_seen": "2026-10-29T07:04:23.389727+00:00",
+    "order_status": "PROCESSED",
+    "pending_items": false,
+    "shipped_at": "2026-10-29T07:04:11.080211+00:00",
+    "tracking_number": "CM62205199995"
   },
   "261029UK4NWJ5B": {
     "first_seen": "2026-10-29T06:21:45.690673+00:00",
@@ -6303,9 +6307,11 @@
         "sku": "ITBISA-IC-ULN2003AN-DIP16"
       }
     ],
-    "last_seen": "2026-10-29T06:22:05.260285+00:00",
-    "order_status": "READY_TO_SHIP",
-    "pending_items": false
+    "last_seen": "2026-10-29T07:04:23.389727+00:00",
+    "order_status": "PROCESSED",
+    "pending_items": false,
+    "shipped_at": "2026-10-29T07:04:13.575776+00:00",
+    "tracking_number": "SPXID06106611409A"
   },
   "261029UNPV5UCP": {
     "first_seen": "2026-10-29T06:21:45.690673+00:00",
@@ -6315,8 +6321,24 @@
         "sku": "ITBISA-7SEGMENT-ANODE-RED-1.00-1BIT"
       }
     ],
-    "last_seen": "2026-10-29T06:22:05.260285+00:00",
+    "last_seen": "2026-10-29T07:04:23.389727+00:00",
+    "order_status": "PROCESSED",
+    "pending_items": false,
+    "shipped_at": "2026-10-29T07:04:12.753781+00:00",
+    "tracking_number": "SPXID06359132488A"
+  },
+  "261029USFR9JN1": {
+    "first_seen": "2026-10-29T07:04:09.325866+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RTC-DS3231M"
+      }
+    ],
+    "last_seen": "2026-10-29T07:04:23.389727+00:00",
     "order_status": "READY_TO_SHIP",
-    "pending_items": false
+    "pending_items": false,
+    "shipped_at": "2026-10-29T07:05:20.804066+00:00",
+    "tracking_number": "CM75288592803"
   }
 }
