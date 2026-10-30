@@ -6315,8 +6315,8 @@
         "sku": "40PCS-ITBISA-JUMPER-MM-20CM"
       }
     ],
-    "last_seen": "2026-10-29T13:22:57.362357+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-30T11:13:21.217205+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-29T13:23:11.558948+00:00",
     "tracking_number": "SPXID06865253664A"
@@ -6371,8 +6371,8 @@
         "sku": "ITBISA-ABC-BATERAI-9V-POWER"
       }
     ],
-    "last_seen": "2026-10-29T13:22:57.362357+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-30T11:13:21.217205+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-29T13:23:24.742367+00:00",
     "tracking_number": "SPXID06724099425A"
@@ -6385,8 +6385,8 @@
         "sku": "ITBISA-ABC-BATERAI-AA-ALKALINE"
       }
     ],
-    "last_seen": "2026-10-29T13:22:57.362357+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-30T11:13:21.217205+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-29T13:23:37.552228+00:00",
     "tracking_number": "SPXID06956105028A"
@@ -6399,10 +6399,98 @@
         "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-10-29T13:22:57.362357+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-30T11:13:21.217205+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-29T13:23:51.275023+00:00",
     "tracking_number": "SPXID06205075216A"
+  },
+  "261029VMFXXGFN": {
+    "first_seen": "2026-10-30T11:12:59.363835+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-30T11:13:21.217205+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-30T11:13:37.343384+00:00",
+    "tracking_number": "SPXID06452673301A"
+  },
+  "261029VQ605XAX": {
+    "first_seen": "2026-10-30T11:12:59.363835+00:00",
+    "items": [
+      {
+        "qty": 4,
+        "sku": "ITBISA-IC-74HC245N-DIP20"
+      },
+      {
+        "qty": 8,
+        "sku": "ITBISA-RELAY-5V-5PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-30T11:13:21.217205+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-30T11:13:50.960748+00:00",
+    "tracking_number": "SPXID06671537076A"
+  },
+  "26103004ER9J6W": {
+    "first_seen": "2026-10-30T11:12:59.363835+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-5PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-30T11:13:21.217205+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-30T11:14:03.873080+00:00",
+    "tracking_number": "SPXID06533801924A"
+  },
+  "2610300S24ATEW": {
+    "first_seen": "2026-10-30T11:12:59.363835+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-30T11:13:21.217205+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-30T11:14:16.860904+00:00",
+    "tracking_number": "SPXID06734106620A"
+  },
+  "2610301DX5VYWK": {
+    "first_seen": "2026-10-30T11:12:59.363835+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-ARDUINO-UNO-R3-328P-SMD"
+      }
+    ],
+    "last_seen": "2026-10-30T11:13:21.217205+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-30T11:14:29.864897+00:00",
+    "tracking_number": "SPXID06408752807A"
+  },
+  "2610301JAW51X6": {
+    "first_seen": "2026-10-30T11:12:59.363835+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
+      }
+    ],
+    "last_seen": "2026-10-30T11:13:21.217205+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-30T11:14:42.362208+00:00",
+    "tracking_number": "SPXID06903603551A"
   }
 }
