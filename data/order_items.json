@@ -6580,5 +6580,19 @@
     "pending_items": false,
     "shipped_at": "2026-10-31T09:38:02.293848+00:00",
     "tracking_number": "SPXID06318700269A"
+  },
+  "2610314ABNRN93": {
+    "first_seen": "2026-10-31T13:10:55.958324+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-10-31T13:11:05.705527+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-10-31T13:11:19.338357+00:00",
+    "tracking_number": "SPXID06349346490A"
   }
 }
