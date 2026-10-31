@@ -6501,7 +6501,7 @@
         "sku": "ITBISA-USB-A-TO-B-30CM"
       }
     ],
-    "last_seen": "2026-10-31T09:37:34.667771+00:00",
+    "last_seen": "2026-10-31T10:30:51.704726+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-30T17:42:52.235296+00:00",
@@ -6519,7 +6519,7 @@
         "sku": "ITBISA-USB-A-TO-B-30CM"
       }
     ],
-    "last_seen": "2026-10-31T09:37:34.667771+00:00",
+    "last_seen": "2026-10-31T10:30:51.704726+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-30T17:43:06.325563+00:00",
@@ -6533,7 +6533,7 @@
         "sku": "ITBISA-IC-PC817-DIP4"
       }
     ],
-    "last_seen": "2026-10-31T09:37:34.667771+00:00",
+    "last_seen": "2026-10-31T10:30:51.704726+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-30T17:43:20.647517+00:00",
@@ -6547,7 +6547,7 @@
         "sku": "ITBISA-IC-74HC245N-DIP20"
       }
     ],
-    "last_seen": "2026-10-31T09:37:34.667771+00:00",
+    "last_seen": "2026-10-31T10:30:51.704726+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-30T17:43:34.128265+00:00",
@@ -6561,8 +6561,8 @@
         "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-10-31T09:37:34.667771+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-31T10:30:51.704726+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-31T09:37:48.506022+00:00",
     "tracking_number": "SPXID06813989576A"
@@ -6575,8 +6575,8 @@
         "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
       }
     ],
-    "last_seen": "2026-10-31T09:37:34.667771+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-10-31T10:30:51.704726+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-31T09:38:02.293848+00:00",
     "tracking_number": "SPXID06318700269A"
