@@ -6589,7 +6589,7 @@
         "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-11-01T09:15:15.836851+00:00",
+    "last_seen": "2026-11-01T12:51:35.000908+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-31T13:11:19.338357+00:00",
@@ -6603,7 +6603,7 @@
         "sku": "ITBISA-RTC-DS3231M"
       }
     ],
-    "last_seen": "2026-11-01T09:15:15.836851+00:00",
+    "last_seen": "2026-11-01T12:51:35.000908+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-31T22:11:19.161848+00:00",
@@ -6621,7 +6621,7 @@
         "sku": "ITBISA-7SEGMENT-CATHODE-RED-0.56-1BIT"
       }
     ],
-    "last_seen": "2026-11-01T09:15:15.836851+00:00",
+    "last_seen": "2026-11-01T12:51:35.000908+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-10-31T22:11:32.820245+00:00",
@@ -6635,8 +6635,8 @@
         "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-11-01T09:15:15.836851+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-01T12:51:35.000908+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-01T09:15:29.763174+00:00",
     "tracking_number": "SPXID06568840013B"
@@ -6649,8 +6649,8 @@
         "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-11-01T09:15:15.836851+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-01T12:51:35.000908+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-01T09:15:42.868134+00:00",
     "tracking_number": "SPXID06416904400B"
@@ -6663,8 +6663,8 @@
         "sku": "ITBISA-JACK-DC-005-FEMALE"
       }
     ],
-    "last_seen": "2026-11-01T09:15:15.836851+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-01T12:51:35.000908+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-01T09:15:55.822674+00:00",
     "tracking_number": "SPXID06438474157B"
@@ -6677,8 +6677,8 @@
         "sku": "ITBISA-ARDUINO-UNO-R3-328P-SMD"
       }
     ],
-    "last_seen": "2026-11-01T09:15:15.836851+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-01T12:51:35.000908+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-01T09:16:08.638688+00:00",
     "tracking_number": "SPXID06756431184B"
