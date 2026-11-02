@@ -6677,7 +6677,7 @@
         "sku": "ITBISA-ARDUINO-UNO-R3-328P-SMD"
       }
     ],
-    "last_seen": "2026-11-02T09:40:46.126546+00:00",
+    "last_seen": "2026-11-02T12:11:09.964724+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-01T09:16:08.638688+00:00",
@@ -6691,8 +6691,8 @@
         "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
       }
     ],
-    "last_seen": "2026-11-02T09:40:46.126546+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-02T12:11:09.964724+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-02T09:41:01.920690+00:00",
     "tracking_number": "SPXID06200471317B"
@@ -6705,9 +6705,11 @@
         "sku": "ITBISA-ABC-BATERAI-AA-ALKALINE"
       }
     ],
-    "last_seen": "2026-11-02T09:40:46.126546+00:00",
-    "order_status": "READY_TO_SHIP",
-    "pending_items": false
+    "last_seen": "2026-11-02T12:11:09.964724+00:00",
+    "order_status": "PROCESSED",
+    "pending_items": false,
+    "shipped_at": "2026-11-02T12:10:57.788681+00:00",
+    "tracking_number": "SPXID06651299087B"
   },
   "2611028A0SMQPN": {
     "first_seen": "2026-11-02T09:40:29.546305+00:00",
@@ -6717,8 +6719,8 @@
         "sku": "ITBISA-JACK-DC-005-FEMALE"
       }
     ],
-    "last_seen": "2026-11-02T09:40:46.126546+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-02T12:11:09.964724+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-02T09:41:20.599520+00:00",
     "tracking_number": "SPXID06899040489B"
@@ -6731,8 +6733,8 @@
         "sku": "ITBISA-7SEGMENT-CATHODE-RED-2.30-1BIT"
       }
     ],
-    "last_seen": "2026-11-02T09:40:46.126546+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-02T12:11:09.964724+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-02T09:41:34.255046+00:00",
     "tracking_number": "SPXID06085753794B"
@@ -6757,8 +6759,8 @@
         "sku": "ITBISA-IC-PC817-DIP4"
       }
     ],
-    "last_seen": "2026-11-02T09:40:46.126546+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-02T12:11:09.964724+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-02T09:41:47.182540+00:00",
     "tracking_number": "SPXID06406799057B"
@@ -6771,8 +6773,8 @@
         "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-11-02T09:40:46.126546+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-02T12:11:09.964724+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-02T09:42:00.081852+00:00",
     "tracking_number": "SPXID06003342146B"
