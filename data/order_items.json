@@ -6778,5 +6778,111 @@
     "pending_items": false,
     "shipped_at": "2026-11-02T09:42:00.081852+00:00",
     "tracking_number": "SPXID06003342146B"
+  },
+  "2611029EMRW3DC": {
+    "first_seen": "2026-11-03T06:49:52.423713+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-5PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-11-03T06:50:09.805635+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-03T06:50:28.543872+00:00",
+    "tracking_number": "SPXID06398590262B"
+  },
+  "2611029KNACFDD": {
+    "first_seen": "2026-11-03T06:49:52.423713+00:00",
+    "items": [
+      {
+        "qty": 2,
+        "sku": "40PCS-ITBISA-JUMPER-FF-20CM"
+      },
+      {
+        "qty": 2,
+        "sku": "40PCS-ITBISA-JUMPER-MF-20CM"
+      },
+      {
+        "qty": 2,
+        "sku": "40PCS-ITBISA-JUMPER-MM-20CM"
+      },
+      {
+        "qty": 1,
+        "sku": "ITBISA-ARDUINO-UNO-R3-328P-SMD"
+      }
+    ],
+    "last_seen": "2026-11-03T06:50:09.805635+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-03T06:50:43.961617+00:00",
+    "tracking_number": "SPXID06615783554B"
+  },
+  "261103AU853QFB": {
+    "first_seen": "2026-11-03T06:49:52.423713+00:00",
+    "items": [
+      {
+        "qty": 12,
+        "sku": "ITBISA-DIODA-1N4007-DO41"
+      },
+      {
+        "qty": 6,
+        "sku": "ITBISA-IC-74HC245N-DIP20"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-LED-SUPERBRIGHT-5MM-RED"
+      },
+      {
+        "qty": 5,
+        "sku": "ITBISA-PIN-HEADER-MALE-1X40PIN-LURUS"
+      }
+    ],
+    "last_seen": "2026-11-03T06:50:09.805635+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-03T06:50:58.233796+00:00",
+    "tracking_number": "SPXID06685609515B"
+  },
+  "261103B0N842R0": {
+    "first_seen": "2026-11-03T06:49:52.423713+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-11-03T06:50:09.805635+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-03T06:51:12.278688+00:00",
+    "tracking_number": "SPXID06801051784B"
+  },
+  "261103B8HE256C": {
+    "first_seen": "2026-11-03T06:49:52.423713+00:00",
+    "items": [
+      {
+        "qty": 300,
+        "sku": "ITBISA-IC-NE555P-DIP8"
+      }
+    ],
+    "last_seen": "2026-11-03T06:50:09.805635+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-03T06:51:25.691770+00:00",
+    "tracking_number": "SPXID06641067156B"
+  },
+  "261103B93F32ES": {
+    "first_seen": "2026-11-03T06:49:52.423713+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-BLUETOOTH-MODULE-HC05"
+      }
+    ],
+    "last_seen": "2026-11-03T06:49:52.423713+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false
   }
 }
