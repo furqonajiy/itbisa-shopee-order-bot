@@ -6787,11 +6787,25 @@
         "sku": "ITBISA-RELAY-5V-5PIN-BLUE"
       }
     ],
-    "last_seen": "2026-11-03T06:50:09.805635+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-03T12:05:15.762895+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-03T06:50:28.543872+00:00",
     "tracking_number": "SPXID06398590262B"
+  },
+  "2611029GD59NP8": {
+    "first_seen": "2026-11-03T12:04:55.903997+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-PIN-HEADER-MALE-1X40PIN-LURUS"
+      }
+    ],
+    "last_seen": "2026-11-03T12:05:15.762895+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-03T12:05:30.947198+00:00",
+    "tracking_number": "SPXID06247008183B"
   },
   "2611029KNACFDD": {
     "first_seen": "2026-11-03T06:49:52.423713+00:00",
@@ -6813,8 +6827,8 @@
         "sku": "ITBISA-ARDUINO-UNO-R3-328P-SMD"
       }
     ],
-    "last_seen": "2026-11-03T06:50:09.805635+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-03T12:05:15.762895+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-03T06:50:43.961617+00:00",
     "tracking_number": "SPXID06615783554B"
@@ -6839,8 +6853,8 @@
         "sku": "ITBISA-PIN-HEADER-MALE-1X40PIN-LURUS"
       }
     ],
-    "last_seen": "2026-11-03T06:50:09.805635+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-03T12:05:15.762895+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-03T06:50:58.233796+00:00",
     "tracking_number": "SPXID06685609515B"
@@ -6853,8 +6867,8 @@
         "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-11-03T06:50:09.805635+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-03T12:05:15.762895+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-03T06:51:12.278688+00:00",
     "tracking_number": "SPXID06801051784B"
@@ -6867,8 +6881,8 @@
         "sku": "ITBISA-IC-NE555P-DIP8"
       }
     ],
-    "last_seen": "2026-11-03T06:50:09.805635+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-03T12:05:15.762895+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-03T06:51:25.691770+00:00",
     "tracking_number": "SPXID06641067156B"
@@ -6884,5 +6898,33 @@
     "last_seen": "2026-11-03T06:49:52.423713+00:00",
     "order_status": "READY_TO_SHIP",
     "pending_items": false
+  },
+  "261103BHKM0BFY": {
+    "first_seen": "2026-11-03T12:04:55.903997+00:00",
+    "items": [
+      {
+        "qty": 15,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      }
+    ],
+    "last_seen": "2026-11-03T12:05:15.762895+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-03T12:05:45.039188+00:00",
+    "tracking_number": "SPXID06435743610B"
+  },
+  "261103BHWHJYUN": {
+    "first_seen": "2026-11-03T12:04:55.903997+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
+      }
+    ],
+    "last_seen": "2026-11-03T12:05:15.762895+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-03T12:05:59.193030+00:00",
+    "tracking_number": "SPXID06404890042B"
   }
 }
