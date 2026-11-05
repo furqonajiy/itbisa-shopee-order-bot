@@ -6827,7 +6827,7 @@
         "sku": "ITBISA-ARDUINO-UNO-R3-328P-SMD"
       }
     ],
-    "last_seen": "2026-11-05T13:53:28.098479+00:00",
+    "last_seen": "2026-11-05T13:56:13.235536+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-03T06:50:43.961617+00:00",
@@ -7139,7 +7139,7 @@
         "sku": "ITBISA-RTC-DS3231M"
       }
     ],
-    "last_seen": "2026-11-05T13:53:28.098479+00:00",
+    "last_seen": "2026-11-05T13:56:13.235536+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-05T09:16:35.686288+00:00",
@@ -7251,8 +7251,8 @@
         "sku": "ITBISA-IC-74HC245N-DIP20"
       }
     ],
-    "last_seen": "2026-11-05T13:53:28.098479+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-05T13:56:13.235536+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-05T13:53:40.589716+00:00",
     "tracking_number": "SPXID06243612633B"
@@ -7265,8 +7265,10 @@
         "sku": "ITBISA-7SEGMENT-ANODE-RED-0.56-1BIT"
       }
     ],
-    "last_seen": "2026-11-05T13:53:28.098479+00:00",
-    "order_status": "READY_TO_SHIP",
-    "pending_items": false
+    "last_seen": "2026-11-05T13:56:13.235536+00:00",
+    "order_status": "PROCESSED",
+    "pending_items": false,
+    "shipped_at": "2026-11-05T13:54:28.129499+00:00",
+    "tracking_number": "SPXID06714487439B"
   }
 }
