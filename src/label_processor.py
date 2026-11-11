@@ -272,7 +272,11 @@ def _table_columns(line):
 def _table_rows(words, page_bottom):
     """[(name words, SKU words, name_x1)] per product row, or [] if no table.
 
-    A row starts at its Qty number; it ends where the next row starts, or at
+    A row starts at its number in the "#" column (Shopee), or at its Qty
+    number where there is no "#" column (TikTok Shop). Shopee's Qty column is
+    too narrow for four digits, so 1000 prints as "100" over "0": starting rows
+    at the Qty numbers there split one product in two and cut its SKU in half,
+    so no packing name matched. A row ends where the next row starts, or at
     the line below the table ("Pesan:" on Shopee, "Qty Total:" on TikTok Shop).
     """
     for qty in (w for w in words if w[4] == "Qty"):
@@ -285,8 +289,14 @@ def _table_rows(words, page_bottom):
     name_x0, name_x1, sku_x0, sku_x1 = columns
     below = [w for w in words if w[1] > qty[3]]
     end = min((w[1] for w in below if w[4] in _TABLE_END_WORDS), default=page_bottom)
-    starts = sorted({round(w[1], 1) for w in below
-                     if w[0] >= qty[0] - 6 and w[4].isdigit() and w[1] < end})
+    number = next((w for w in line if w[4] == "#"), None)
+    starts = []
+    if number:
+        starts = sorted({round(w[1], 1) for w in below
+                         if abs(w[0] - number[0]) < 6 and w[4].isdigit() and w[1] < end})
+    if not starts:
+        starts = sorted({round(w[1], 1) for w in below
+                         if w[0] >= qty[0] - 6 and w[4].isdigit() and w[1] < end})
     rows = []
     for i, top in enumerate(starts):
         bottom = starts[i + 1] if i + 1 < len(starts) else end
