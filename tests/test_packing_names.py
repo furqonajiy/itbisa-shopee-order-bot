@@ -63,7 +63,8 @@ def _label(rows, tiktok=False):
     for i, (name_lines, sku_lines, qty) in enumerate(rows, 1):
         if not tiktok:
             page.insert_text((9.2, y), str(i), fontsize=7)
-        page.insert_text((qty_x, y), str(qty), fontsize=7)
+        for j, t in enumerate(str(qty).split()):              # Shopee wraps 1000 as "100" over "0"
+            page.insert_text((qty_x, y + j * 7.5), t, fontsize=7)
         for j, t in enumerate(name_lines):
             page.insert_text((name_x, y + j * 7.5), t, fontsize=7)
         for j, t in enumerate(sku_lines):
@@ -102,6 +103,17 @@ def test_shopee_names_replaced_unlisted_kept_pack_boxed():
     assert "(4+2)PCS" in text and "A3 Kecil" in text
     assert "ITBISA-UNKNOWN" in text and "4PIN-BLUE" in text  # SKU column untouched
     assert len(_red_boxes(out)) == 1                         # only the pack SKU
+
+
+def test_shopee_wrapped_qty_stays_one_row():
+    # Shopee's Qty column is too narrow for 4 digits: 1000 prints as "100" over "0".
+    # The wrapped "0" must not start a row, or the SKU is cut in half and no name fits.
+    rows = [(name, sku, "100 0") for name, sku, _ in ROWS]
+    out, changed = label_processor.with_packing_names(_label(rows), NAMES)
+    text = _text(out)
+    assert changed == 2
+    assert "SRD-05VDC" not in text and "5V 4 Pin" in text and "(4+2)PCS" in text
+    assert len(_red_boxes(out)) == 1
 
 
 def test_tiktok_layout():
