@@ -8327,8 +8327,8 @@
         "sku": "ITBISA-IC-74HC245N-DIP20"
       }
     ],
-    "last_seen": "2026-11-11T12:43:24.454916+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-11T13:40:25.550249+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-11T12:43:36.857009+00:00",
     "tracking_number": "SPXID06391065594B"
@@ -8341,10 +8341,24 @@
         "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-11-11T12:43:24.454916+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-11T13:40:25.550249+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-11T12:43:50.219683+00:00",
     "tracking_number": "SPXID06846524110B"
+  },
+  "2611112X2U2TAY": {
+    "first_seen": "2026-11-11T13:40:14.839536+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-11-11T13:40:25.550249+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-11T13:40:37.229287+00:00",
+    "tracking_number": "SPXID06080890479B"
   }
 }
