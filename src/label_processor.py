@@ -254,6 +254,9 @@ _NAME_FONT = "hebo"            # Helvetica-Bold, built into PyMuPDF
 _NAME_SIZE_MAX = 9.0
 _NAME_SIZE_MIN = 6.0
 _NAME_LEADING = 1.12
+_QTY_SIZE_MIN = 4.5            # a wrapped Qty shrinks to this at most to stay on one line
+_WORD_HEIGHT_PER_PT = 1.144    # Helvetica word box height per point of font size
+_BASELINE_PER_WORD_HEIGHT = 0.815
 
 
 def _table_columns(line):
@@ -270,7 +273,8 @@ def _table_columns(line):
 
 
 def _table_rows(words, page_bottom):
-    """[(name words, SKU words, name_x1)] per product row, or [] if no table.
+    """[(name words, SKU words, name_x1, Qty words, qty_x1)] per product row,
+    or [] if no table.
 
     A row starts at its number in the "#" column (Shopee), or at its Qty
     number where there is no "#" column (TikTok Shop). Shopee's Qty column is
@@ -278,6 +282,7 @@ def _table_rows(words, page_bottom):
     at the Qty numbers there split one product in two and cut its SKU in half,
     so no packing name matched. A row ends where the next row starts, or at
     the line below the table ("Pesan:" on Shopee, "Qty Total:" on TikTok Shop).
+    qty_x1 is the right edge of the Qty column (its header or widest number).
     """
     for qty in (w for w in words if w[4] == "Qty"):
         line = sorted((w for w in words if abs(w[1] - qty[1]) < 1), key=lambda w: w[0])
@@ -289,22 +294,33 @@ def _table_rows(words, page_bottom):
     name_x0, name_x1, sku_x0, sku_x1 = columns
     below = [w for w in words if w[1] > qty[3]]
     end = min((w[1] for w in below if w[4] in _TABLE_END_WORDS), default=page_bottom)
+    qty_x0 = qty[0] - 6
+    qty_column = [w for w in below if w[0] >= qty_x0 and w[4].isdigit() and w[1] < end]
+    qty_x1 = max([qty[2]] + [w[2] for w in qty_column])
     number = next((w for w in line if w[4] == "#"), None)
     starts = []
     if number:
         starts = sorted({round(w[1], 1) for w in below
                          if abs(w[0] - number[0]) < 6 and w[4].isdigit() and w[1] < end})
     if not starts:
-        starts = sorted({round(w[1], 1) for w in below
-                         if w[0] >= qty[0] - 6 and w[4].isdigit() and w[1] < end})
+        starts = sorted({round(w[1], 1) for w in qty_column})
     rows = []
     for i, top in enumerate(starts):
         bottom = starts[i + 1] if i + 1 < len(starts) else end
         cell = [w for w in below if top - 0.5 <= w[1] < bottom - 0.5]
         rows.append(([w for w in cell if name_x0 - 1 <= w[0] < name_x1],
                      [w for w in cell if sku_x0 - 1 <= w[0] < sku_x1],
-                     name_x1))
+                     name_x1,
+                     [w for w in cell if w[0] >= qty_x0 and w[4].isdigit()],
+                     qty_x1))
     return rows
+
+
+def _words_rect(pymupdf, words, x1=None):
+    """The rectangle around words (its right edge at x1 when given)."""
+    return pymupdf.Rect(min(w[0] for w in words), min(w[1] for w in words),
+                        max(w[2] for w in words) if x1 is None else x1,
+                        max(w[3] for w in words))
 
 
 def with_packing_names(pdf_bytes, names):
@@ -312,15 +328,16 @@ def with_packing_names(pdf_bytes, names):
 
     In the product table, each listed SKU's Nama Produk cell is replaced by its
     packing name (bold, the [red] part and a pack count in red), and a pack SKU
-    ("10PCS-...") gets a red box around it in the SKU column. Everything else
-    on the label, the table lines included, stays exactly as printed. A SKU
-    missing from the list keeps the marketplace's name.
+    ("10PCS-...") gets a red box around it in the SKU column. A Qty the
+    marketplace wrapped over two lines ("100" over "0", which a packer reads as
+    100) is rewritten as one number on one line ("1000"), bold, shrunk only to
+    fit its column. Everything else on the label, the table lines included,
+    stays exactly as printed. A SKU missing from the list keeps the
+    marketplace's name.
 
     Never raises: on any failure the untouched PDF is returned, because a label
     must always go out.
     """
-    if not names:
-        return pdf_bytes, 0
     try:
         import pymupdf
         doc = pymupdf.open(stream=pdf_bytes, filetype="pdf")
@@ -328,33 +345,39 @@ def with_packing_names(pdf_bytes, names):
         changed = 0
         for page in doc:
             plans = []
-            for name_w, sku_w, name_x1 in _table_rows(page.get_text("words"), page.rect.y1):
-                if not name_w or not sku_w:
-                    continue
-                ordered = sorted(sku_w, key=lambda w: (round(w[1], 1), w[0]))
-                sku = "".join(w[4] for w in ordered).upper()
-                segments = packing_names.runs(sku, names)
-                area = pymupdf.Rect(min(w[0] for w in name_w), min(w[1] for w in name_w),
-                                    name_x1, max(w[3] for w in name_w))
-                box = None
-                if packing_names.PACK_SKU.match(sku):
-                    box = pymupdf.Rect(min(w[0] for w in sku_w), min(w[1] for w in sku_w),
-                                       max(w[2] for w in sku_w), max(w[3] for w in sku_w))
-                if segments:
-                    # Remove the old text only; no fill, so table lines stay.
-                    page.add_redact_annot(area + (-0.5, -0.3, 0.5, 0.3), fill=None)
-                if segments or box:
-                    plans.append((segments, area, box))
+            for name_w, sku_w, name_x1, qty_w, qty_x1 in _table_rows(page.get_text("words"),
+                                                                      page.rect.y1):
+                segments = area = box = qty = None
+                if name_w and sku_w and names:
+                    ordered = sorted(sku_w, key=lambda w: (round(w[1], 1), w[0]))
+                    sku = "".join(w[4] for w in ordered).upper()
+                    segments = packing_names.runs(sku, names)
+                    area = _words_rect(pymupdf, name_w, name_x1)
+                    if packing_names.PACK_SKU.match(sku):
+                        box = _words_rect(pymupdf, sku_w)
+                    if segments:
+                        # Remove the old text only; no fill, so table lines stay.
+                        page.add_redact_annot(area + (-0.5, -0.3, 0.5, 0.3), fill=None)
+                if len(qty_w) > 1:
+                    ordered = sorted(qty_w, key=lambda w: (round(w[1], 1), w[0]))
+                    qty = ("".join(w[4] for w in ordered), _words_rect(pymupdf, qty_w, qty_x1 + 1),
+                           ordered[0][3] - ordered[0][1])
+                    page.add_redact_annot(_words_rect(pymupdf, qty_w) + (-0.5, -0.3, 0.5, 0.3),
+                                          fill=None)
+                if segments or box or qty:
+                    plans.append((segments, area, box, qty))
             if not plans:
                 continue
             page.apply_redactions(images=pymupdf.PDF_REDACT_IMAGE_NONE,
                                   graphics=pymupdf.PDF_REDACT_LINE_ART_NONE,
                                   text=pymupdf.PDF_REDACT_TEXT_REMOVE)
-            for segments, area, box in plans:
+            for segments, area, box, qty in plans:
                 if segments:
                     _draw_name(page, font, segments, area)
                 if box:
                     page.draw_rect(box + (-1.5, -1.0, 1.5, 1.0), color=_RGB[packing_names.RED], width=1.2)
+                if qty:
+                    _draw_qty(page, font, *qty)
                 changed += 1
         out = doc.tobytes(garbage=3, deflate=True) if changed else pdf_bytes
         doc.close()
@@ -379,3 +402,13 @@ def _draw_name(page, font, segments, area):
         for text, colour in line:
             page.insert_text((x, y), text, fontname=_NAME_FONT, fontsize=size, color=_RGB[colour])
             x += font.text_length(text, fontsize=size)
+
+
+def _draw_qty(page, font, text, area, line_height):
+    """Writes a wrapped Qty as one line in its column, on the first line's
+    baseline: the printed size, shrunk only until the whole number fits."""
+    size = line_height / _WORD_HEIGHT_PER_PT
+    while font.text_length(text, fontsize=size) > area.width and size > _QTY_SIZE_MIN:
+        size -= 0.25
+    page.insert_text((area.x0, area.y0 + line_height * _BASELINE_PER_WORD_HEIGHT), text,
+                     fontname=_NAME_FONT, fontsize=size, color=_RGB[packing_names.BLACK])
