@@ -111,9 +111,22 @@ def test_shopee_wrapped_qty_stays_one_row():
     rows = [(name, sku, "100 0") for name, sku, _ in ROWS]
     out, changed = label_processor.with_packing_names(_label(rows), NAMES)
     text = _text(out)
-    assert changed == 2
+    assert changed == 3                                      # 2 names; every row's Qty rewritten
     assert "SRD-05VDC" not in text and "5V 4 Pin" in text and "(4+2)PCS" in text
     assert len(_red_boxes(out)) == 1
+
+
+def test_wrapped_qty_is_rewritten_as_one_number():
+    # "100" over "0" reads as 100: it must print as "1000", on one line, in its column.
+    rows = [(name, sku, q) for (name, sku, _), q in zip(ROWS, ("100 0", "200 0", 2))]
+    out, _ = label_processor.with_packing_names(_label(rows), NAMES)
+    words = pymupdf.open(stream=out, filetype="pdf")[0].get_text("words")
+    qty = [w for w in words if w[0] > 265 and w[4].isdigit()]
+    assert sorted(w[4] for w in qty) == ["1000", "2", "2000"]
+    assert all(w[2] <= 297 for w in qty)                     # stays on the page
+    # Without a packing list the quantity is still fixed.
+    out, changed = label_processor.with_packing_names(_label(rows), {})
+    assert changed == 2 and "1000" in _text(out) and "Relay Songle" in _text(out)
 
 
 def test_tiktok_layout():
