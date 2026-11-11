@@ -1,4 +1,8 @@
 {
   "last_dispatch_at": "2026-11-11T09:27:25.199965+00:00",
-  "pending_skus": []
+  "pending_skus": [
+    "ITBISA-ABC-BATERAI-AAA-ALKALINE",
+    "ITBISA-IC-CD4017BE-DIP16",
+    "ITBISA-IC-NE555P-DIP8"
+  ]
 }
