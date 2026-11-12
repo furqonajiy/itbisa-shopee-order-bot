@@ -8576,5 +8576,61 @@
     "pending_items": false,
     "shipped_at": "2026-11-12T10:52:01.323786+00:00",
     "tracking_number": "SPXID06149425050B"
+  },
+  "2611125B8BE708": {
+    "first_seen": "2026-11-12T19:53:26.563096+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-IC-74HC245N-DIP20"
+      }
+    ],
+    "last_seen": "2026-11-12T19:53:41.107930+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-12T19:53:56.502439+00:00",
+    "tracking_number": "SPXID06829101121B"
+  },
+  "2611135S3273YJ": {
+    "first_seen": "2026-11-12T19:53:26.563096+00:00",
+    "items": [
+      {
+        "qty": 12,
+        "sku": "ITBISA-SOCKET-IC-DIP14-NARROW"
+      }
+    ],
+    "last_seen": "2026-11-12T19:53:41.107930+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-12T19:54:10.342915+00:00",
+    "tracking_number": "SPXID06912792124B"
+  },
+  "26111362YXPJ3K": {
+    "first_seen": "2026-11-12T19:53:26.563096+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-11-12T19:53:41.107930+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-12T19:54:23.956785+00:00",
+    "tracking_number": "SPXID06086225535B"
+  },
+  "26111363986VRH": {
+    "first_seen": "2026-11-12T19:53:26.563096+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-IC-74HC245N-DIP20"
+      }
+    ],
+    "last_seen": "2026-11-12T19:53:41.107930+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-12T19:54:37.611804+00:00",
+    "tracking_number": "SPXID06417344593B"
   }
 }
