@@ -8585,8 +8585,8 @@
         "sku": "ITBISA-IC-74HC245N-DIP20"
       }
     ],
-    "last_seen": "2026-11-12T19:53:41.107930+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-13T07:43:32.323865+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-12T19:53:56.502439+00:00",
     "tracking_number": "SPXID06829101121B"
@@ -8599,8 +8599,8 @@
         "sku": "ITBISA-SOCKET-IC-DIP14-NARROW"
       }
     ],
-    "last_seen": "2026-11-12T19:53:41.107930+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-13T07:43:32.323865+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-12T19:54:10.342915+00:00",
     "tracking_number": "SPXID06912792124B"
@@ -8613,8 +8613,8 @@
         "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-11-12T19:53:41.107930+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-13T07:43:32.323865+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-12T19:54:23.956785+00:00",
     "tracking_number": "SPXID06086225535B"
@@ -8627,10 +8627,80 @@
         "sku": "ITBISA-IC-74HC245N-DIP20"
       }
     ],
-    "last_seen": "2026-11-12T19:53:41.107930+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-13T07:43:32.323865+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-12T19:54:37.611804+00:00",
     "tracking_number": "SPXID06417344593B"
+  },
+  "2611136FQ3Q5J2": {
+    "first_seen": "2026-11-13T07:43:15.790045+00:00",
+    "items": [
+      {
+        "qty": 6,
+        "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-11-13T07:43:32.323865+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-13T07:43:48.235007+00:00",
+    "tracking_number": "SPXID06289169067B"
+  },
+  "2611136P598MFT": {
+    "first_seen": "2026-11-13T07:43:15.790045+00:00",
+    "items": [
+      {
+        "qty": 50,
+        "sku": "ITBISA-IC-NE555P-DIP8"
+      }
+    ],
+    "last_seen": "2026-11-13T07:43:32.323865+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-13T07:44:01.828226+00:00",
+    "tracking_number": "SPXID06461652078B"
+  },
+  "2611136S1UBNFM": {
+    "first_seen": "2026-11-13T07:43:15.790045+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "40PCS-ITBISA-JUMPER-MF-20CM"
+      }
+    ],
+    "last_seen": "2026-11-13T07:43:32.323865+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-13T07:44:15.250613+00:00",
+    "tracking_number": "SPXID06094553526B"
+  },
+  "26111370VU8PCA": {
+    "first_seen": "2026-11-13T07:43:15.790045+00:00",
+    "items": [
+      {
+        "qty": 200,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      }
+    ],
+    "last_seen": "2026-11-13T07:43:32.323865+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-13T07:44:28.454699+00:00",
+    "tracking_number": "SPXID06579675141B"
+  },
+  "2611137CXX1D4U": {
+    "first_seen": "2026-11-13T07:43:15.790045+00:00",
+    "items": [
+      {
+        "qty": 8,
+        "sku": "ITBISA-7SEGMENT-ANODE-RED-1.00-1BIT"
+      }
+    ],
+    "last_seen": "2026-11-13T07:43:32.323865+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-13T07:44:41.563171+00:00",
+    "tracking_number": "SPXID06814767026B"
   }
 }
