@@ -8697,7 +8697,7 @@
         "sku": "ITBISA-7SEGMENT-ANODE-RED-1.00-1BIT"
       }
     ],
-    "last_seen": "2026-11-14T07:02:05.447690+00:00",
+    "last_seen": "2026-11-14T07:03:51.984625+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-13T07:44:41.563171+00:00",
@@ -8711,7 +8711,7 @@
         "sku": "ITBISA-RELAY-24V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-11-14T07:02:05.447690+00:00",
+    "last_seen": "2026-11-14T07:03:51.984625+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-13T15:42:38.750414+00:00",
@@ -8729,7 +8729,7 @@
         "sku": "ITBISA-SOCKET-IC-DIP16-NARROW"
       }
     ],
-    "last_seen": "2026-11-14T07:02:05.447690+00:00",
+    "last_seen": "2026-11-14T07:03:51.984625+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-13T15:42:52.742586+00:00",
@@ -8743,7 +8743,7 @@
         "sku": "ITBISA-IC-74HC245N-DIP20"
       }
     ],
-    "last_seen": "2026-11-14T07:02:05.447690+00:00",
+    "last_seen": "2026-11-14T07:03:51.984625+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-13T15:43:06.544615+00:00",
@@ -8757,8 +8757,8 @@
         "sku": "ITBISA-SOCKET-IC-DIP16-NARROW"
       }
     ],
-    "last_seen": "2026-11-14T07:02:05.447690+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-14T07:03:51.984625+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-14T07:02:22.656574+00:00",
     "tracking_number": "SPXID06131616259B"
@@ -8771,8 +8771,8 @@
         "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
       }
     ],
-    "last_seen": "2026-11-14T07:02:05.447690+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-14T07:03:51.984625+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-14T07:02:37.537333+00:00",
     "tracking_number": "SPXID06131046809B"
@@ -8785,8 +8785,8 @@
         "sku": "ITBISA-LED-MAX7219-4IN1-TIGHT"
       }
     ],
-    "last_seen": "2026-11-14T07:02:05.447690+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-14T07:03:51.984625+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-14T07:02:51.589410+00:00",
     "tracking_number": "SPXID06685715736B"
@@ -8799,8 +8799,8 @@
         "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
       }
     ],
-    "last_seen": "2026-11-14T07:02:05.447690+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-14T07:03:51.984625+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-14T07:03:05.724244+00:00",
     "tracking_number": "SPXID06707480303B"
@@ -8813,8 +8813,10 @@
         "sku": "ITBISA-JACK-DC-005-FEMALE"
       }
     ],
-    "last_seen": "2026-11-14T07:02:05.447690+00:00",
-    "order_status": "READY_TO_SHIP",
-    "pending_items": false
+    "last_seen": "2026-11-14T07:03:51.984625+00:00",
+    "order_status": "PROCESSED",
+    "pending_items": false,
+    "shipped_at": "2026-11-14T07:03:43.277748+00:00",
+    "tracking_number": "SPXID06711428104B"
   }
 }
