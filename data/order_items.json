@@ -8827,7 +8827,7 @@
         "sku": "ITBISA-ABC-BATERAI-9V-POWER"
       }
     ],
-    "last_seen": "2026-11-16T03:22:49.015679+00:00",
+    "last_seen": "2026-11-16T03:25:16.926005+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-14T09:48:30.239571+00:00",
@@ -8919,7 +8919,7 @@
         "sku": "40PCS-ITBISA-JUMPER-MF-10CM"
       }
     ],
-    "last_seen": "2026-11-16T03:22:49.015679+00:00",
+    "last_seen": "2026-11-16T03:25:16.926005+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-15T08:45:49.341414+00:00",
@@ -8997,8 +8997,8 @@
         "sku": "ITBISA-IC-PC817-DIP4"
       }
     ],
-    "last_seen": "2026-11-16T03:22:49.015679+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-16T03:25:16.926005+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-16T03:23:05.553126+00:00",
     "tracking_number": "SPXID06608566846B"
@@ -9011,9 +9011,11 @@
         "sku": "ITBISA-ABC-BATERAI-AA-ALKALINE"
       }
     ],
-    "last_seen": "2026-11-16T03:22:49.015679+00:00",
-    "order_status": "READY_TO_SHIP",
-    "pending_items": false
+    "last_seen": "2026-11-16T03:25:16.926005+00:00",
+    "order_status": "PROCESSED",
+    "pending_items": false,
+    "shipped_at": "2026-11-16T03:25:05.859187+00:00",
+    "tracking_number": "SPXID06552845985B"
   },
   "261115CTW7KXQE": {
     "first_seen": "2026-11-16T03:22:16.787955+00:00",
@@ -9023,8 +9025,8 @@
         "sku": "ITBISA-SOCKET-IC-DIP14-NARROW"
       }
     ],
-    "last_seen": "2026-11-16T03:22:49.015679+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-16T03:25:16.926005+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-16T03:23:23.403045+00:00",
     "tracking_number": "SPXID06175793406B"
@@ -9037,8 +9039,8 @@
         "sku": "ITBISA-SOCKET-IC-DIP8-NARROW"
       }
     ],
-    "last_seen": "2026-11-16T03:22:49.015679+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-16T03:25:16.926005+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-16T03:23:36.610359+00:00",
     "tracking_number": "SPXID06236061144B"
@@ -9051,8 +9053,8 @@
         "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-11-16T03:22:49.015679+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-16T03:25:16.926005+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-16T03:23:49.527841+00:00",
     "tracking_number": "SPXID06802388317B"
@@ -9065,8 +9067,8 @@
         "sku": "ITBISA-IC-74HC595N-DIP16"
       }
     ],
-    "last_seen": "2026-11-16T03:22:49.015679+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-16T03:25:16.926005+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-16T03:24:02.538871+00:00",
     "tracking_number": "SPXID06589186152B"
