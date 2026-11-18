@@ -9341,7 +9341,7 @@
         "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
       }
     ],
-    "last_seen": "2026-11-18T11:23:33.925218+00:00",
+    "last_seen": "2026-11-18T11:34:57.882033+00:00",
     "order_status": "IN_CANCEL",
     "pending_items": false,
     "shipped_at": "2026-11-17T12:03:44.451323+00:00",
@@ -9383,8 +9383,8 @@
         "sku": "ITBISA-PIN-HEADER-MALE-1X40PIN-LURUS"
       }
     ],
-    "last_seen": "2026-11-18T11:23:33.925218+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-18T11:34:57.882033+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-18T11:24:07.531382+00:00",
     "tracking_number": "SPXID06341927902B"
@@ -9397,8 +9397,8 @@
         "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-11-18T11:23:33.925218+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-18T11:34:57.882033+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-18T11:24:21.777323+00:00",
     "tracking_number": "SPXID06704853562B"
@@ -9411,8 +9411,8 @@
         "sku": "ITBISA-LED-SUPERBRIGHT-5MM-RED"
       }
     ],
-    "last_seen": "2026-11-18T11:23:33.925218+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-18T11:34:57.882033+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-18T11:24:35.389221+00:00",
     "tracking_number": "SPXID06407611588B"
@@ -9425,8 +9425,8 @@
         "sku": "ITBISA-LED-SUPERBRIGHT-5MM-GREEN"
       }
     ],
-    "last_seen": "2026-11-18T11:23:33.925218+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-18T11:34:57.882033+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-18T11:24:48.821082+00:00",
     "tracking_number": "SPXID06273979797B"
@@ -9443,8 +9443,8 @@
         "sku": "40PCS-ITBISA-JUMPER-MF-10CM"
       }
     ],
-    "last_seen": "2026-11-18T11:23:33.925218+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-18T11:34:57.882033+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-18T11:25:01.876355+00:00",
     "tracking_number": "SPXID06840999288B"
@@ -9457,8 +9457,8 @@
         "sku": "ITBISA-IC-PC817-DIP4"
       }
     ],
-    "last_seen": "2026-11-18T11:23:33.925218+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-18T11:34:57.882033+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-18T11:25:15.673115+00:00",
     "tracking_number": "SPXID06789380482B"
@@ -9475,9 +9475,11 @@
         "sku": "ITBISA-IC-NE555P-DIP8"
       }
     ],
-    "last_seen": "2026-11-18T11:23:33.925218+00:00",
-    "order_status": "READY_TO_SHIP",
-    "pending_items": false
+    "last_seen": "2026-11-18T11:34:57.882033+00:00",
+    "order_status": "PROCESSED",
+    "pending_items": false,
+    "shipped_at": "2026-11-18T11:34:49.386786+00:00",
+    "tracking_number": "SPXID06652747258B"
   },
   "261118KPM1NYM3": {
     "first_seen": "2026-11-18T11:23:15.451219+00:00",
@@ -9487,8 +9489,8 @@
         "sku": "ITBISA-ABC-BATERAI-9V-POWER"
       }
     ],
-    "last_seen": "2026-11-18T11:23:33.925218+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-18T11:34:57.882033+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-18T11:25:33.760030+00:00",
     "tracking_number": "SPXID06321568038B"
@@ -9501,8 +9503,8 @@
         "sku": "ITBISA-JACK-DC-005-FEMALE"
       }
     ],
-    "last_seen": "2026-11-18T11:23:33.925218+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-18T11:34:57.882033+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-18T11:25:46.896492+00:00",
     "tracking_number": "SPXID06305782190B"
@@ -9527,8 +9529,8 @@
         "sku": "ITBISA-NPN-BC547-TO92"
       }
     ],
-    "last_seen": "2026-11-18T11:23:33.925218+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-18T11:34:57.882033+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-18T11:26:00.180961+00:00",
     "tracking_number": "SPXID06342197849B"
