@@ -9341,8 +9341,8 @@
         "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
       }
     ],
-    "last_seen": "2026-11-17T12:03:28.780258+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-18T11:23:33.925218+00:00",
+    "order_status": "IN_CANCEL",
     "pending_items": false,
     "shipped_at": "2026-11-17T12:03:44.451323+00:00",
     "tracking_number": "SPXID06032476701B"
@@ -9374,5 +9374,163 @@
     "pending_items": false,
     "shipped_at": "2026-11-17T12:04:12.760532+00:00",
     "tracking_number": "SPXID06565559828B"
+  },
+  "261117HY121NGJ": {
+    "first_seen": "2026-11-18T11:23:15.451219+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-PIN-HEADER-MALE-1X40PIN-LURUS"
+      }
+    ],
+    "last_seen": "2026-11-18T11:23:33.925218+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-18T11:24:07.531382+00:00",
+    "tracking_number": "SPXID06341927902B"
+  },
+  "261117J128MR95": {
+    "first_seen": "2026-11-18T11:23:15.451219+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-11-18T11:23:33.925218+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-18T11:24:21.777323+00:00",
+    "tracking_number": "SPXID06704853562B"
+  },
+  "261117J2GNH70F": {
+    "first_seen": "2026-11-18T11:23:15.451219+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-LED-SUPERBRIGHT-5MM-RED"
+      }
+    ],
+    "last_seen": "2026-11-18T11:23:33.925218+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-18T11:24:35.389221+00:00",
+    "tracking_number": "SPXID06407611588B"
+  },
+  "261117J2HUPUYX": {
+    "first_seen": "2026-11-18T11:23:15.451219+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-LED-SUPERBRIGHT-5MM-GREEN"
+      }
+    ],
+    "last_seen": "2026-11-18T11:23:33.925218+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-18T11:24:48.821082+00:00",
+    "tracking_number": "SPXID06273979797B"
+  },
+  "261117J3D83F1X": {
+    "first_seen": "2026-11-18T11:23:15.451219+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "40PCS-ITBISA-JUMPER-FF-10CM"
+      },
+      {
+        "qty": 1,
+        "sku": "40PCS-ITBISA-JUMPER-MF-10CM"
+      }
+    ],
+    "last_seen": "2026-11-18T11:23:33.925218+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-18T11:25:01.876355+00:00",
+    "tracking_number": "SPXID06840999288B"
+  },
+  "261118K63J6PPU": {
+    "first_seen": "2026-11-18T11:23:15.451219+00:00",
+    "items": [
+      {
+        "qty": 26,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      }
+    ],
+    "last_seen": "2026-11-18T11:23:33.925218+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-18T11:25:15.673115+00:00",
+    "tracking_number": "SPXID06789380482B"
+  },
+  "261118K722R429": {
+    "first_seen": "2026-11-18T11:23:15.451219+00:00",
+    "items": [
+      {
+        "qty": 50,
+        "sku": "ITBISA-IC-CD4017BE-DIP16"
+      },
+      {
+        "qty": 50,
+        "sku": "ITBISA-IC-NE555P-DIP8"
+      }
+    ],
+    "last_seen": "2026-11-18T11:23:33.925218+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false
+  },
+  "261118KPM1NYM3": {
+    "first_seen": "2026-11-18T11:23:15.451219+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "ITBISA-ABC-BATERAI-9V-POWER"
+      }
+    ],
+    "last_seen": "2026-11-18T11:23:33.925218+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-18T11:25:33.760030+00:00",
+    "tracking_number": "SPXID06321568038B"
+  },
+  "261118KXG8NSUU": {
+    "first_seen": "2026-11-18T11:23:15.451219+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-JACK-DC-005-FEMALE"
+      }
+    ],
+    "last_seen": "2026-11-18T11:23:33.925218+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-18T11:25:46.896492+00:00",
+    "tracking_number": "SPXID06305782190B"
+  },
+  "261118M6AAWECH": {
+    "first_seen": "2026-11-18T11:23:15.451219+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-IC-74HC595N-DIP16"
+      },
+      {
+        "qty": 10,
+        "sku": "ITBISA-IC-CD4017BE-DIP16"
+      },
+      {
+        "qty": 20,
+        "sku": "ITBISA-IC-PC817-DIP4"
+      },
+      {
+        "qty": 21,
+        "sku": "ITBISA-NPN-BC547-TO92"
+      }
+    ],
+    "last_seen": "2026-11-18T11:23:33.925218+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-18T11:26:00.180961+00:00",
+    "tracking_number": "SPXID06342197849B"
   }
 }
