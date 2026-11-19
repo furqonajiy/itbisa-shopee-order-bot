@@ -9756,5 +9756,75 @@
     "pending_items": false,
     "shipped_at": "2026-11-19T08:58:32.322706+00:00",
     "tracking_number": "SPXID06314541401B"
+  },
+  "261119PXJC4RHJ": {
+    "first_seen": "2026-11-19T19:30:15.959807+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-5V-5PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-11-19T19:30:28.808553+00:00",
+    "order_status": "PROCESSED",
+    "pending_items": false,
+    "shipped_at": "2026-11-19T19:30:19.602580+00:00",
+    "tracking_number": "SPXID06502834821B"
+  },
+  "261119Q3CQ8U5D": {
+    "first_seen": "2026-11-19T19:30:15.959807+00:00",
+    "items": [
+      {
+        "qty": 2,
+        "sku": "ITBISA-7SEGMENT-ANODE-RED-2.30-1BIT"
+      }
+    ],
+    "last_seen": "2026-11-19T19:30:28.808553+00:00",
+    "order_status": "PROCESSED",
+    "pending_items": false,
+    "shipped_at": "2026-11-19T19:30:18.879853+00:00",
+    "tracking_number": "SPXID06322897581B"
+  },
+  "261119Q4GS7U57": {
+    "first_seen": "2026-11-19T19:30:15.959807+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-IC-ULN2003AN-DIP16"
+      }
+    ],
+    "last_seen": "2026-11-19T19:30:28.808553+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-19T19:31:03.487879+00:00",
+    "tracking_number": "SPXID06684644230B"
+  },
+  "261119Q6DQFTYJ": {
+    "first_seen": "2026-11-19T19:30:15.959807+00:00",
+    "items": [
+      {
+        "qty": 1,
+        "sku": "40PCS-ITBISA-JUMPER-FF-10CM"
+      }
+    ],
+    "last_seen": "2026-11-19T19:30:28.808553+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-19T19:31:16.312441+00:00",
+    "tracking_number": "SPXID06657708229B"
+  },
+  "261119Q9SKSEEE": {
+    "first_seen": "2026-11-19T19:30:15.959807+00:00",
+    "items": [
+      {
+        "qty": 5,
+        "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-11-19T19:30:28.808553+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-19T19:31:28.680022+00:00",
+    "tracking_number": "SPXID06183068499B"
   }
 }
