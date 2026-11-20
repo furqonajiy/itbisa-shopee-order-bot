@@ -9765,7 +9765,7 @@
         "sku": "ITBISA-RELAY-5V-5PIN-BLUE"
       }
     ],
-    "last_seen": "2026-11-19T19:30:28.808553+00:00",
+    "last_seen": "2026-11-20T07:34:16.374903+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-19T19:30:19.602580+00:00",
@@ -9779,7 +9779,7 @@
         "sku": "ITBISA-7SEGMENT-ANODE-RED-2.30-1BIT"
       }
     ],
-    "last_seen": "2026-11-19T19:30:28.808553+00:00",
+    "last_seen": "2026-11-20T07:34:16.374903+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-19T19:30:18.879853+00:00",
@@ -9793,8 +9793,8 @@
         "sku": "ITBISA-IC-ULN2003AN-DIP16"
       }
     ],
-    "last_seen": "2026-11-19T19:30:28.808553+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-20T07:34:16.374903+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-19T19:31:03.487879+00:00",
     "tracking_number": "SPXID06684644230B"
@@ -9807,8 +9807,8 @@
         "sku": "40PCS-ITBISA-JUMPER-FF-10CM"
       }
     ],
-    "last_seen": "2026-11-19T19:30:28.808553+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-20T07:34:16.374903+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-19T19:31:16.312441+00:00",
     "tracking_number": "SPXID06657708229B"
@@ -9821,10 +9821,66 @@
         "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-11-19T19:30:28.808553+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-20T07:34:16.374903+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-19T19:31:28.680022+00:00",
     "tracking_number": "SPXID06183068499B"
+  },
+  "261120RKQ98XP6": {
+    "first_seen": "2026-11-20T07:34:04.663196+00:00",
+    "items": [
+      {
+        "qty": 10,
+        "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-11-20T07:34:16.374903+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-20T07:34:31.736251+00:00",
+    "tracking_number": "SPXID06468508962B"
+  },
+  "261120RMK9PC7F": {
+    "first_seen": "2026-11-20T07:34:04.663196+00:00",
+    "items": [
+      {
+        "qty": 14,
+        "sku": "ITBISA-IC-NE555P-DIP8"
+      }
+    ],
+    "last_seen": "2026-11-20T07:34:16.374903+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-20T07:34:44.890569+00:00",
+    "tracking_number": "SPXID06913803378B"
+  },
+  "261120RMNTRAR7": {
+    "first_seen": "2026-11-20T07:34:04.663196+00:00",
+    "items": [
+      {
+        "qty": 30,
+        "sku": "ITBISA-IC-NE555P-DIP8"
+      }
+    ],
+    "last_seen": "2026-11-20T07:34:16.374903+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-20T07:34:58.236330+00:00",
+    "tracking_number": "SPXID06306593820B"
+  },
+  "261120RTV2K0GN": {
+    "first_seen": "2026-11-20T07:34:04.663196+00:00",
+    "items": [
+      {
+        "qty": 20,
+        "sku": "ITBISA-RELAY-12V-5PIN-BLUE"
+      }
+    ],
+    "last_seen": "2026-11-20T07:34:16.374903+00:00",
+    "order_status": "READY_TO_SHIP",
+    "pending_items": false,
+    "shipped_at": "2026-11-20T07:35:11.523261+00:00",
+    "tracking_number": "SPXID06027426253B"
   }
 }
