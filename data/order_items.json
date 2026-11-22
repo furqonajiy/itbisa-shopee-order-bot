@@ -9905,7 +9905,7 @@
         "sku": "ITBISA-RELAY-24V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-11-22T10:10:53.127687+00:00",
+    "last_seen": "2026-11-22T12:58:48.454974+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-21T08:11:09.957464+00:00",
@@ -9933,7 +9933,7 @@
         "sku": "ITBISA-SOCKET-IC-DIP16-NARROW"
       }
     ],
-    "last_seen": "2026-11-22T10:10:53.127687+00:00",
+    "last_seen": "2026-11-22T12:58:48.454974+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-21T08:11:37.268576+00:00",
@@ -9975,7 +9975,7 @@
         "sku": "ITBISA-RELAY-5V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-11-22T10:10:53.127687+00:00",
+    "last_seen": "2026-11-22T12:58:48.454974+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-21T08:12:17.699400+00:00",
@@ -9989,7 +9989,7 @@
         "sku": "ITBISA-DIODA-1N4007-DO41"
       }
     ],
-    "last_seen": "2026-11-22T10:10:53.127687+00:00",
+    "last_seen": "2026-11-22T12:58:48.454974+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-21T08:12:31.340205+00:00",
@@ -10045,7 +10045,7 @@
         "sku": "ITBISA-IC-74HC595N-DIP16"
       }
     ],
-    "last_seen": "2026-11-22T10:10:53.127687+00:00",
+    "last_seen": "2026-11-22T12:58:48.454974+00:00",
     "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-21T08:13:25.071567+00:00",
@@ -10141,8 +10141,8 @@
         "sku": "ITBISA-ABC-BATERAI-AAA-ALKALINE"
       }
     ],
-    "last_seen": "2026-11-22T10:10:53.127687+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-22T12:58:48.454974+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-22T10:11:27.343318+00:00",
     "tracking_number": "SPXID06385359821B"
@@ -10155,8 +10155,8 @@
         "sku": "ITBISA-JACK-DC-005-FEMALE"
       }
     ],
-    "last_seen": "2026-11-22T10:10:53.127687+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-22T12:58:48.454974+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-22T10:11:40.297150+00:00",
     "tracking_number": "SPXID06708634904B"
@@ -10183,8 +10183,8 @@
         "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
       }
     ],
-    "last_seen": "2026-11-22T10:10:53.127687+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-22T12:58:48.454974+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-22T10:12:06.405954+00:00",
     "tracking_number": "SPXID06742275026B"
@@ -10197,8 +10197,8 @@
         "sku": "ITBISA-RELAY-12V-4PIN-BLUE"
       }
     ],
-    "last_seen": "2026-11-22T10:10:53.127687+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-22T12:58:48.454974+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-22T10:12:19.492501+00:00",
     "tracking_number": "SPXID06406315637B"
@@ -10233,8 +10233,8 @@
         "sku": "ITBISA-POTENSIO-WH148-B10K-15MM"
       }
     ],
-    "last_seen": "2026-11-22T10:10:53.127687+00:00",
-    "order_status": "READY_TO_SHIP",
+    "last_seen": "2026-11-22T12:58:48.454974+00:00",
+    "order_status": "PROCESSED",
     "pending_items": false,
     "shipped_at": "2026-11-22T10:12:45.364985+00:00",
     "tracking_number": "SPXID06186181675B"
